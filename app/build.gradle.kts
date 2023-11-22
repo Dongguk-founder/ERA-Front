@@ -1,14 +1,23 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.plugin.serialization") version ("1.9.0")
+}
+
+// 로컬 프로퍼티에 접근
+fun getBaseUrl(propertyKey:String):String{
+    return gradleLocalProperties(rootDir).getProperty(propertyKey)
 }
 
 android {
     namespace = "com.founder.easy_route_assistant"
     compileSdk = 34
 
-    buildFeatures{
+    buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 
     defaultConfig {
@@ -19,6 +28,8 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "auth_base_url", getBaseUrl("auth.base.url"))
     }
 
     buildTypes {
@@ -51,4 +62,14 @@ dependencies {
 
     // SDK 추가
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.aar"))))
+
+    // 서버통신
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1")
+    implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0")
+    // define a BOM and its version
+    implementation(platform("com.squareup.okhttp3:okhttp-bom:4.10.0"))
+    // define any required OkHttp artifacts without version
+    implementation("com.squareup.okhttp3:okhttp")
+    implementation("com.squareup.okhttp3:logging-interceptor")
 }

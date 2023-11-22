@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Easy_Route_Assistant</string>
+    <string name="search_hint">장소, 버스, 지하철, 주소 검색</string>
+
+    <string name="login_text1">간편하게 로그인하고</string>
+    <string name="login_text2">다양한 서비스를 이용하세요</string>
+    <string name="login_kakao">카카오로 이용하기</string>
+    <string name="login_apple">Apple로 이용하기</string>
+    <string name="login_google">구글로 이용하기</string>
+    <string name="btn_login_email">로그인 </string>
+    <string name="btn_login_slash">/</string>
+    <string name="btn_login_signup">회원가입</string>
 </resources>
