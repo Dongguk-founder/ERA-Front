@@ -10,4 +10,12 @@
     <string name="btn_login_email">로그인 </string>
     <string name="btn_login_slash">/</string>
     <string name="btn_login_signup">회원가입</string>
+
+    <string name="tv_login_welcome">당신의 걸음과 \n함께하겠습니다.</string>
+    <string name="tv_login_id">✔ 먼저 로그인이 필요해요.</string>
+    <string name="tv_login_pw">✔ 비밀번호도 알려주세요.</string>
+    <string name="et_login_id_hint">아이디를 입력해주세요.</string>
+    <string name="et_login_pw_hint">비밀번호를 입력해주세요.</string>
+    <string name="btn_login_sing_in">로그인하기</string>
+    <string name="tv_login_sign_up"><u>회원가입이 필요하신가요?</u></string>
 </resources>
