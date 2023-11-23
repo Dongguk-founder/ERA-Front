@@ -1,9 +1,8 @@
 package com.founder.easy_route_assistant.presentation
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.founder.easy_route_assistant.R
+import androidx.appcompat.app.AppCompatActivity
 import com.founder.easy_route_assistant.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {

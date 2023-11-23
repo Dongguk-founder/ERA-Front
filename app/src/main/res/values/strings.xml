@@ -3,7 +3,6 @@
     <string name="search_hint">장소, 버스, 지하철, 주소 검색</string>
     <string name="btn_search">검색</string>
 
-
     <string name="login_text1">간편하게 로그인하고</string>
     <string name="login_text2">다양한 서비스를 이용하세요</string>
     <string name="login_kakao">카카오로 이용하기</string>
@@ -13,7 +12,6 @@
     <string name="btn_login_slash">/</string>
     <string name="btn_login_signup">회원가입</string>
 
-
     <string name="tv_login_welcome">당신의 걸음과 \n함께하겠습니다.</string>
     <string name="tv_login_id">✔ 먼저 로그인이 필요해요.</string>
     <string name="tv_login_pw">✔ 비밀번호도 알려주세요.</string>
@@ -21,4 +19,13 @@
     <string name="et_login_pw_hint">비밀번호를 입력해주세요.</string>
     <string name="btn_login_sing_in">로그인하기</string>
     <string name="tv_login_sign_up"><u>회원가입이 필요하신가요?</u></string>
+
+    <string name="tv_sign_up">기본 정보를 \n입력하세요.</string>
+    <string name="et_sign_up_id_hint">"  아이디"</string>
+    <string name="et_sign_up_pw_hint">"  비밀번호"</string>
+    <string name="et_sign_up_pw_rehint">"  비밀번호 재확인"</string>
+    <string name="tv_sign_up_check">"   비밀번호가 다릅니다."</string>
+    <string name="et_sign_up_name_hint">"  닉네임(10자 이내)"</string>
+    <string name="et_sign_up_email_hint">"  이메일</string>
+    <string name="btn_sign_up">회원가입하기</string>
 </resources>
