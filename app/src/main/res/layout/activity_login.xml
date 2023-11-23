@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_login_text1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:text="@string/login_text1"
+        android:textSize="28sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></TextView>
+
+    <TextView
+        android:id="@+id/tv_login_text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login_text2"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_login_text1" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_login_kakao"
+        android:layout_width="270dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/layout_kakaologin"
+        android:drawableLeft="@drawable/login_kakao_logo_img"
+        android:paddingStart="15dp"
+        android:paddingEnd="20dp"
+        android:text="@string/login_kakao"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_login_text2" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_login_apple"
+        android:layout_width="270dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/layout_applelogin"
+        android:drawableLeft="@drawable/login_apple_logo_img"
+        android:paddingStart="15dp"
+        android:paddingEnd="20dp"
+        android:text="@string/login_apple"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_login_kakao" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_login_google"
+        android:layout_width="270dp"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/layout_googlellogin"
+        android:drawableLeft="@drawable/login_google_logo_img"
+        android:paddingStart="15dp"
+        android:paddingEnd="20dp"
+        android:text="@string/login_google"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_login_apple" />
+
+    <TextView
+        android:id="@+id/tv_login_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="139dp"
+        android:layout_marginTop="8dp"
+        android:paddingBottom="15dp"
+        android:text="@string/btn_login_email"
+        android:textSize="17dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/tv_login_slash"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_login_google" />
+
+    <TextView
+        android:id="@+id/tv_login_slash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/btn_login_slash"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/tv_login_signup"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tv_login_email"
+        app:layout_constraintTop_toBottomOf="@id/btn_login_google" />
+
+    <TextView
+        android:id="@+id/tv_login_signup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="130dp"
+        android:paddingBottom="15dp"
+        android:text="@string/btn_login_signup"
+        android:textSize="17dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_login_slash"
+        app:layout_constraintTop_toBottomOf="@id/btn_login_google" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
