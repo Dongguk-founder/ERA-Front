@@ -18,6 +18,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.SignUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.LoginEmailActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.LoginActivity"
             android:exported="false" />
         <activity
