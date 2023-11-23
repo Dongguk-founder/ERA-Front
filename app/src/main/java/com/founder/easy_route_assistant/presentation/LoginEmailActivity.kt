@@ -4,7 +4,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
-import com.founder.easy_route_assistant.MainActivity
 import com.founder.easy_route_assistant.R
 import com.founder.easy_route_assistant.Utils.MyApplication
 import com.founder.easy_route_assistant.Utils.showToast

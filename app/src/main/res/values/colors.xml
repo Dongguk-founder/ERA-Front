@@ -10,4 +10,6 @@
     <color name="gray">#A4A4A4</color>
     <color name="light_gray">#d4d2d2</color>
     <color name="light_pink">#fceded</color>
+    <color name="blue">#0000FF</color>
+
 </resources>
