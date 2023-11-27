@@ -47,6 +47,11 @@ class MainActivity : AppCompatActivity() {
         // 리스트 아이템 클릭 시 해당 위치로 이동
         listAdapter.setItemClickListener(object: ListAdapter.OnItemClickListener {
             override fun onClick(v: View, position: Int) {
+                binding.layoutList.visibility=View.GONE
+                binding.tvDetailName.text = listItems[position].name
+                binding.tvDetailRoad.text = listItems[position].road
+                binding.tvDetailNumber.text = listItems[position].number
+                binding.layoutDetailList.visibility= VISIBLE
                 val mapPoint = MapPoint.mapPointWithGeoCoord(listItems[position].y, listItems[position].x)
                 binding.mapView.setMapCenterPointAndZoomLevel(mapPoint, 1, true)
             }
@@ -57,6 +62,7 @@ class MainActivity : AppCompatActivity() {
             keyword = binding.etSearchField.text.toString()
             pageNumber = 1
             searchKeyword(keyword, pageNumber)
+            binding.layoutDetailList.visibility= View.GONE
             binding.layoutList.visibility= VISIBLE
             val manager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
             manager.hideSoftInputFromWindow(
@@ -101,6 +107,7 @@ class MainActivity : AppCompatActivity() {
                 // 결과를 리사이클러 뷰에 추가
                 val item = ListLayout(document.place_name,
                     document.road_address_name,
+                    document.phone,
                     document.x.toDouble(),
                     document.y.toDouble())
                 listItems.add(item)
