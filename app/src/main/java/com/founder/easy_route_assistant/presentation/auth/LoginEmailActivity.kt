@@ -1,9 +1,9 @@
-package com.founder.easy_route_assistant.presentation
+package com.founder.easy_route_assistant.presentation.auth
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatActivity
 import com.founder.easy_route_assistant.R
 import com.founder.easy_route_assistant.Utils.MyApplication
 import com.founder.easy_route_assistant.Utils.showToast
@@ -11,6 +11,7 @@ import com.founder.easy_route_assistant.data.model.request.RequestLoginEmailDto
 import com.founder.easy_route_assistant.data.model.response.ResponseLoginEmailDto
 import com.founder.easy_route_assistant.data.service.ServicePool.authService
 import com.founder.easy_route_assistant.databinding.ActivityLoginEmailBinding
+import com.founder.easy_route_assistant.presentation.MainActivity
 import retrofit2.Call
 import retrofit2.Response
 
@@ -22,6 +23,7 @@ class LoginEmailActivity : AppCompatActivity() {
 
         addOnBackPressedCallback()
         loginClick()
+        signup()
     }
 
     // 로그인 버튼 클릭할 경우
@@ -31,26 +33,29 @@ class LoginEmailActivity : AppCompatActivity() {
             val inputPW = binding.etLoginPw.text.toString()
 
             authService.loginEmail(RequestLoginEmailDto(inputID, inputPW))
-                .enqueue(object: retrofit2.Callback<ResponseLoginEmailDto>{
+                .enqueue(object : retrofit2.Callback<ResponseLoginEmailDto> {
                     override fun onResponse(
                         call: Call<ResponseLoginEmailDto>,
-                        response: Response<ResponseLoginEmailDto>
+                        response: Response<ResponseLoginEmailDto>,
                     ) {
-                        when(response.code()){
+                        when (response.code()) {
                             200 -> {
                                 // 로그인 성공
                                 val data: ResponseLoginEmailDto = response.body()!!
-                                MyApplication.prefs.setString("token", data.token)
+                                MyApplication.prefs.setString("jwt", data.token)
                                 showToast("로그인이 성공했습니다.")
-                                //로그인 후 메인 액티비티로 전환
-                                val nextIntent = Intent(this@LoginEmailActivity, MainActivity::class.java)
+                                // 로그인 후 메인 액티비티로 전환
+                                val nextIntent =
+                                    Intent(this@LoginEmailActivity, MainActivity::class.java)
                                 startActivity(nextIntent)
                             }
+
                             400 -> {
                                 // 로그인 실패
                                 showToast("로그인에 실패했습니다.")
                             }
-                            else ->{
+
+                            else -> {
                                 showToast("서버 에러 발생")
                             }
                         }
@@ -86,7 +91,7 @@ class LoginEmailActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun signup(){
+    private fun signup() {
         binding.tvLoginSignUp.setOnClickListener {
             val intent = Intent(this@LoginEmailActivity, SignUpActivity::class.java)
             startActivity(intent)
