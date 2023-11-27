@@ -11,8 +11,12 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.founder.easy_route_assistant.Utils.showToast
+import com.founder.easy_route_assistant.data.model.request.Point
+import com.founder.easy_route_assistant.data.model.request.RequestFavoriteAddDto
+import com.founder.easy_route_assistant.data.model.response.ResponseFavoriteAddDto
+import com.founder.easy_route_assistant.data.service.ServicePool.favorite
 import com.founder.easy_route_assistant.databinding.ActivityMainBinding
-import com.founder.easy_route_assistant.presentation.ListLayout
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
 import retrofit2.Call
@@ -54,6 +58,46 @@ class MainActivity : AppCompatActivity() {
                 binding.layoutDetailList.visibility= VISIBLE
                 val mapPoint = MapPoint.mapPointWithGeoCoord(listItems[position].y, listItems[position].x)
                 binding.mapView.setMapCenterPointAndZoomLevel(mapPoint, 1, true)
+
+
+
+                // 즐겨찾기 버튼
+                binding.btnFavorite.setOnClickListener {
+                    val point = Point(listItems[position].x, listItems[position].y)
+                    val call = favorite.add(
+                        RequestFavoriteAddDto(
+                            listItems[position].name,
+                            listItems[position].road,
+                            point
+                        )
+                    )
+                    call.enqueue(object: Callback<ResponseFavoriteAddDto> {
+                        override fun onResponse(call: Call<ResponseFavoriteAddDto>, response: Response<ResponseFavoriteAddDto>) {
+                            when (response.code()) {
+                                201 -> {
+                                    // 즐겨찾기 추가 성공
+                                    showToast("즐겨찾기 추가 성공!")
+                                }
+
+                                400 -> {
+                                    // 중복값 들어감
+                                    showToast("이미 즐겨찾기에 추가되었습니다.")
+                                }
+
+                                else -> {
+                                    showToast("서버 에러 발생")
+                                }
+                            }
+                        }
+                        override fun onFailure(call: Call<ResponseFavoriteAddDto>, t: Throwable) {
+                            // 통신 실패
+                            Log.w("LocalSearch", "통신 실패: ${t.message}")
+                        }
+                    })
+
+                }
+
+
             }
         })
 
@@ -73,6 +117,8 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
+
 
     // 키워드 검색 함수
     private fun searchKeyword(keyword: String, page: Int) {
