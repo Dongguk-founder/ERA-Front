@@ -11,7 +11,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/imgUser_icon"
+            android:id="@+id/iv_marker"
             android:layout_width="29dp"
             android:layout_height="32dp"
             android:layout_centerVertical="true"
@@ -31,7 +31,7 @@
             android:textColor="@color/blue"
             android:textSize="15sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/imgUser_icon"
+            app:layout_constraintStart_toEndOf="@+id/iv_marker"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView

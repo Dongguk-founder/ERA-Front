@@ -2,6 +2,8 @@
     <string name="app_name">Easy_Route_Assistant</string>
     <string name="search_hint">장소, 버스, 지하철, 주소 검색</string>
     <string name="btn_search">검색</string>
+    <string name="btn_convenient">편의시설 신청</string>
+    <string name="btn_favorite">즐겨찾기 신청</string>
 
     <string name="login_text1">간편하게 로그인하고</string>
     <string name="login_text2">다양한 서비스를 이용하세요</string>
