@@ -50,6 +50,7 @@ class MainActivity : AppCompatActivity() {
                 binding.layoutList.visibility=View.GONE
                 binding.tvDetailName.text = listItems[position].name
                 binding.tvDetailRoad.text = listItems[position].road
+                binding.tvDetailNumber.text = listItems[position].number
                 binding.layoutDetailList.visibility= VISIBLE
                 val mapPoint = MapPoint.mapPointWithGeoCoord(listItems[position].y, listItems[position].x)
                 binding.mapView.setMapCenterPointAndZoomLevel(mapPoint, 1, true)

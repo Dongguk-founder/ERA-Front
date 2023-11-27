@@ -64,8 +64,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_detail_list"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:visibility="gone"
+        android:layout_height="200dp"
         android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="@id/mapView"
         tools:ignore="MissingConstraints">
@@ -95,14 +94,26 @@
         <TextView
             android:id="@+id/tv_detail_road"
             android:layout_width="wrap_content"
-            android:layout_height="32dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:gravity="center"
             android:text="도로명"
             android:textColor="@color/black"
-            android:textSize="15sp"
+            android:textSize="10sp"
             app:layout_constraintStart_toEndOf="@+id/iv_detail_marker"
             app:layout_constraintTop_toTopOf="@+id/iv_detail_marker" />
+
+        <TextView
+            android:id="@+id/tv_detail_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:gravity="center"
+            android:text="전화번호"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            app:layout_constraintStart_toEndOf="@+id/iv_detail_marker"
+            app:layout_constraintTop_toBottomOf="@+id/tv_detail_road" />
 
         <ImageButton
             android:layout_width="wrap_content"
@@ -120,11 +131,11 @@
             android:id="@+id/btn_convenient"
             android:layout_width="120dp"
             android:layout_height="30dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:background="@color/white"
             android:text="@string/btn_convenient"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_detail_road"
+            app:layout_constraintTop_toBottomOf="@+id/tv_detail_number"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.25"/>
 
@@ -132,11 +143,11 @@
             android:id="@+id/btn_favorite"
             android:layout_width="120dp"
             android:layout_height="30dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:background="@color/white"
             android:text="@string/btn_favorite"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_detail_road"
+            app:layout_constraintTop_toBottomOf="@+id/tv_detail_number"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.75" />
 
