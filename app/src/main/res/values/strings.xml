@@ -122,4 +122,10 @@
     <string name="tv_favorite_item_title">즐겨찾기</string>
     <string name="tv_favorite_list_title">즐겨찾기</string>
     <string name="tv_favorite_item_address">서울 중구 필동로1길 30(필동3가)</string>
+    <string name="tv_admin_convenient_request">편의시설 요청 목록</string>
+    <string name="tv_convenient_weekdays">평일 17:00 - 20:00</string>
+    <string name="tv_convenient_saturday">토요일 11:00 - 15:00</string>
+    <string name="tv_convenient_holiday">공휴일 07:00 - 09:00</string>
+    <string name="btn_convenient_register">편의시설에 추가</string>
+    <string name="btn_convenient_delete">요청 삭제</string>
 </resources>

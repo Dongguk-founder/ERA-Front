@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name=".Utils.MyApplication"
@@ -19,6 +19,9 @@
         android:theme="@style/Theme.Easy_Route_Assistant"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".presentation.admin.AdminActivity"
+            android:exported="false" />
         <activity
             android:name=".presentation.auth.SignUpActivity"
             android:exported="false" />
@@ -36,9 +39,10 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <!-- 네이티브 앱 키 추가 -->
-        <meta-data android:name="com.kakao.sdk.AppKey" android:value="a819ea5084d0a632211a9214d0da9f76"/>
+        </activity> <!-- 네이티브 앱 키 추가 -->
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="a819ea5084d0a632211a9214d0da9f76" />
     </application>
 
 </manifest>

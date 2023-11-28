@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.founder.easy_route_assistant.R
 import com.founder.easy_route_assistant.databinding.FragmentFavoriteItemBinding
 
 class FavoriteItemFragment : Fragment() {
