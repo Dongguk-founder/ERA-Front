@@ -5,8 +5,8 @@ import com.founder.easy_route_assistant.data.model.request.RequestLoginEmailDto
 import com.founder.easy_route_assistant.data.model.request.RequestSignUpDto
 import com.founder.easy_route_assistant.data.model.response.ResponseLoginDto
 import com.founder.easy_route_assistant.data.model.response.ResponseLoginEmailDto
-import com.founder.easy_route_assistant.data.model.response.ResponseSignUpDto
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
 
@@ -24,5 +24,5 @@ interface AuthService {
     @POST("/join")
     fun signUp(
         @Body request: RequestSignUpDto,
-    ): Call<ResponseSignUpDto>
+    ): Call<Response<Void>>
 }

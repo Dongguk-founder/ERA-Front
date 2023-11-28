@@ -1,4 +1,4 @@
-package com.founder.easy_route_assistant.presentation
+package com.founder.easy_route_assistant.presentation.auth
 
 import android.content.Intent
 import android.os.Bundle
