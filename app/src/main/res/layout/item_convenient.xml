@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <!--엘리베이터, 휠체어 충전소, 장애인 화장실-->
+    <TextView
+        android:id="@+id/tv_convenient_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_green_radius_20"
+        android:paddingHorizontal="5dp"
+        android:paddingVertical="1dp"
+        android:text="휠체어 충전소"
+        android:textColor="@color/white"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_convenient_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="2dp"
+        android:text="서울 영등포구 국제금융로 8길 26"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_convenient_type" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_convenient_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="20dp"
+        android:background="@color/light_green"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_convenient_address">
+
+        <TextView
+            android:id="@+id/tv_convenient_weekdays"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="4dp"
+            android:text="@string/tv_convenient_weekdays"
+            app:layout_constraintStart_toStartOf="@id/layout_convenient_detail"
+            app:layout_constraintTop_toTopOf="@id/layout_convenient_detail" />
+
+        <TextView
+            android:id="@+id/tv_convenient_saturday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:text="@string/tv_convenient_saturday"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_convenient_weekdays" />
+
+        <TextView
+            android:id="@+id/tv_convenient_holiday"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="2dp"
+            android:layout_marginBottom="4dp"
+            android:text="@string/tv_convenient_holiday"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_convenient_saturday" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_convenient_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/soft_green"
+        android:minHeight="0dp"
+        android:paddingHorizontal="40dp"
+        android:paddingVertical="5dp"
+        android:text="@string/btn_convenient_register"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_convenient_detail" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_convenient_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="21dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/light_gray"
+        android:minHeight="0dp"
+        android:paddingHorizontal="60dp"
+        android:paddingVertical="5dp"
+        android:text="@string/btn_convenient_delete"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_convenient_detail" />
+</androidx.constraintlayout.widget.ConstraintLayout>
