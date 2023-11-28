@@ -38,4 +38,5 @@ object ApiFactory {
 
 object ServicePool {
     val authService = ApiFactory.create<AuthService>()
+    val favorite = ApiFactory.create<Favorite>()
 }
