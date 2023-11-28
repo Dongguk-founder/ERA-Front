@@ -4,17 +4,14 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Point(
-    @SerialName("x")
-    val x: Double,
-    @SerialName("y")
-    val y: Double,
-)
 data class RequestFavoriteAddDto(
+    @SerialName("favoriteId")
+    var favoriteId: Int,
     @SerialName("placeName")
-    val placeName: String,
+    var placeName: String,
     @SerialName("roadNameAddress")
-    val roadNameAddress: String,
+    var roadNameAddress: String,
     @SerialName("point")
-    val point: Point
+    var point: Point
 )
+
