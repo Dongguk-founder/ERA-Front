@@ -8,5 +8,5 @@ data class ResponseLoginEmailDto(
     @SerialName("jwt")
     val token: String,
     @SerialName("role")
-    val role: String
+    val role: String,
 )
