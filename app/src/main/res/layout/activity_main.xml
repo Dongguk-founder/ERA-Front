@@ -216,9 +216,9 @@
             android:background="@color/white"
             android:text="@string/btn_favorite"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_detail_number"
+            app:layout_constraintHorizontal_bias="0.75"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.75" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_detail_number" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
