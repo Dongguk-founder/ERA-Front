@@ -11,7 +11,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 
 object ApiFactory {
-    private const val BASE_URL = BuildConfig.auth_base_url
+    private const val BASE_URL = "http://13.209.200.172/"
     private fun getLogOkHttpClient(): Interceptor {
         val loggingInterceptor = HttpLoggingInterceptor { message ->
             Log.d("Retrofit2", "CONNECTION INFO -> $message")
@@ -23,6 +23,9 @@ object ApiFactory {
 
     private val okHttpClient = OkHttpClient.Builder()
         .addInterceptor(getLogOkHttpClient())
+        .addInterceptor(HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        })
         .build()
 
     val retrofit: Retrofit by lazy {
