@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.founder.easy_route_assistant.R
@@ -13,6 +14,7 @@ import com.founder.easy_route_assistant.data.model.request.RequestSignUpDto
 import com.founder.easy_route_assistant.data.service.ServicePool.authService
 import com.founder.easy_route_assistant.databinding.ActivitySignUpBinding
 import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Response
 
 class SignUpActivity : AppCompatActivity() {
@@ -115,29 +117,20 @@ class SignUpActivity : AppCompatActivity() {
 
     // 회원가입 버튼 클릭 시
     private fun clickSignUpButton() {
-        val id = binding.etSignUpId
-        val pw = binding.etSignUpPw
-        val name = binding.etSignUpName
-        val email = binding.etSignUpEmail
-        val signUpButton = binding.btnSignUp
+        val id = binding.etSignUpId.text
+        val pw = binding.etSignUpPw.text
+        val name = binding.etSignUpName.text
+        val email = binding.etSignUpEmail.text
+        val signUpButton = binding.btnSignUp.text
 
         // 회원가입 버튼 클릭 시
-        signUpButton.setOnClickListener {
-            authService.signUp(
-                RequestSignUpDto(
-                    id.toString(),
-                    pw.toString(),
-                    name.toString(),
-                    email.toString(),
-                ),
-            )
-                .enqueue(object : retrofit2.Callback<Response<Void>> {
-                    override fun onResponse(
-                        call: Call<Response<Void>>,
-                        response: Response<Response<Void>>,
-                    ) {
+        binding.btnSignUp.setOnClickListener {
+            authService.signUp(RequestSignUpDto(id.toString(),pw.toString(),name.toString(),email.toString()))
+                .enqueue(object: Callback<Void>{
+                    override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                        Log.d("Test", "Body: ${response.code()}")
                         when (response.code()) {
-                            201 -> {
+                            202 -> {
                                 // 회원가입 성공
                                 showToast("회원가입 성공!")
                                 val intent =
@@ -156,7 +149,7 @@ class SignUpActivity : AppCompatActivity() {
                         }
                     }
 
-                    override fun onFailure(call: Call<Response<Void>>, t: Throwable) {
+                    override fun onFailure(call: Call<Void>, t: Throwable) {
                         showToast("네트워크 에러 발생")
                     }
                 })

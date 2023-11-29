@@ -11,7 +11,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 
 object ApiFactory {
-    private const val BASE_URL = "https://59322c41-3656-4160-b49d-4cea42e04f8c.mock.pstmn.io/"
+    private const val BASE_URL = "http://13.209.200.172/"
     private fun getLogOkHttpClient(): Interceptor {
         val loggingInterceptor = HttpLoggingInterceptor { message ->
             Log.d("Retrofit2", "CONNECTION INFO -> $message")
@@ -23,6 +23,9 @@ object ApiFactory {
 
     private val okHttpClient = OkHttpClient.Builder()
         .addInterceptor(getLogOkHttpClient())
+        .addInterceptor(HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        })
         .build()
 
     val retrofit: Retrofit by lazy {

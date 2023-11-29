@@ -15,8 +15,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.founder.easy_route_assistant.Utils.MyApplication
 import com.founder.easy_route_assistant.Utils.showToast
+import com.founder.easy_route_assistant.data.model.request.Place
 import com.founder.easy_route_assistant.data.model.request.Point
 import com.founder.easy_route_assistant.data.model.request.RequestFavoriteAddDto
+import com.founder.easy_route_assistant.data.model.response.ResponseFavoriteList
 import com.founder.easy_route_assistant.data.service.ServicePool.favorite
 import com.founder.easy_route_assistant.databinding.ActivityMainBinding
 import com.founder.easy_route_assistant.presentation.auth.LoginEmailActivity
@@ -42,7 +44,7 @@ class MainActivity : AppCompatActivity() {
     private val listAdapter = ListAdapter(listItems)    // 리사이클러 뷰 어댑터
     private var pageNumber = 1      // 검색 페이지 번호
     private var keyword = ""        // 검색 키워드
-    private var id=1
+    private var favoriteId = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -114,14 +116,18 @@ class MainActivity : AppCompatActivity() {
             binding.layoutMenu.visibility= View.GONE
         }
 
+        //즐겨찾기 리스트 텍스트뷰 클릿기
+        binding.tvFavoriteList.setOnClickListener{
+            showFavoriteList()
+        }
+
     }
 
     //즐겨찾기 추가 함수
     private fun addfavorite(position: Int){
-        id++
-        val point = Point(listItems[position].x, listItems[position].y)
+        val point = Point(listItems[position].x,listItems[position].y)
         val header = MyApplication.prefs.getString("jwt", "")
-        favorite.add(header, RequestFavoriteAddDto(id, listItems[position].name, listItems[position].road, point))
+        favorite.add(header, RequestFavoriteAddDto(listItems[position].name, listItems[position].road, point))
             .enqueue(object: Callback<Void>{
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
                     when (response.code()) {
@@ -147,6 +153,25 @@ class MainActivity : AppCompatActivity() {
 
                 }
             })
+    }
+
+    //즐겨찾기 리스트 get 함수
+    private fun showFavoriteList(){
+        val header = MyApplication.prefs.getString("jwt", "")
+        favorite.getFavoriteList(header).enqueue(object: Callback<ResponseFavoriteList> {
+           override fun onResponse(
+                call: Call<ResponseFavoriteList>,
+                response: Response<ResponseFavoriteList>
+            ) {
+                // 통신 성공
+                Log.d("Test", "Body: ${response.body().toString()}")
+            }
+
+            override fun onFailure(call: Call<ResponseFavoriteList>, t: Throwable) {
+                // 통신 실패
+                Log.w("LocalSearch", "통신 실패: ${t.message}")
+            }
+        })
     }
 
 

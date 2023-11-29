@@ -8,7 +8,7 @@ data class RequestSignUpDto(
     @SerialName("userID")
     val userId: String,
     @SerialName("pwd")
-    val userPw: String,
+    val pwd: String,
     @SerialName("userName")
     val userName: String,
     @SerialName("userEmail")
