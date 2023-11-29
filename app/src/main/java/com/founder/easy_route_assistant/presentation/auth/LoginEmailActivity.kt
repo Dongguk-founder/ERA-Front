@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
-import com.founder.easy_route_assistant.R
 import com.founder.easy_route_assistant.Utils.MyApplication
 import com.founder.easy_route_assistant.Utils.showToast
 import com.founder.easy_route_assistant.data.model.request.RequestLoginEmailDto
@@ -19,7 +18,8 @@ class LoginEmailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginEmailBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login_email)
+        binding = ActivityLoginEmailBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         addOnBackPressedCallback()
         loginClick()
@@ -39,7 +39,7 @@ class LoginEmailActivity : AppCompatActivity() {
                         response: Response<ResponseLoginEmailDto>,
                     ) {
                         when (response.code()) {
-                            200 -> {
+                            202 -> {
                                 // 로그인 성공
                                 val data: ResponseLoginEmailDto = response.body()!!
                                 MyApplication.prefs.setString("jwt", data.token)
