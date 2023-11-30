@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/bottom_sheet_convenience_apply"
     style="@style/Widget.Material3.BottomSheet"
     android:layout_width="match_parent"
@@ -75,9 +76,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:padding="5dp"
+        android:layout_marginTop="2dp"
+        android:background="@drawable/bg_spinner_convenience"
+        android:paddingLeft="10dp"
+        android:paddingRight="30dp"
+        android:textSize="18dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_bs_convenience_type" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_bs_convenience_type"
+        tools:text="휠체어 충전소" />
 
     <TextView
         android:id="@+id/tv_bs_convenience_detail"
@@ -103,12 +109,14 @@
         android:hint="상세 정보를 입력해주세요."
         android:lines="5"
         android:maxLength="200"
+        android:paddingLeft="10dp"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_bs_convenience_detail" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
