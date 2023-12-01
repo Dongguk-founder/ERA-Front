@@ -4,16 +4,18 @@ import KakaoAPIKeyword
 import ListAdapter
 import ResultSearchKeyword
 import android.content.ContentValues.TAG
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
+import android.view.LayoutInflater
 import android.view.View
 import android.view.View.VISIBLE
 import android.view.inputmethod.InputMethodManager
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.founder.easy_route_assistant.R
 import com.founder.easy_route_assistant.Utils.MyApplication
@@ -25,7 +27,9 @@ import com.founder.easy_route_assistant.data.model.response.ResponseFavoriteList
 import com.founder.easy_route_assistant.data.service.ServicePool.convenient
 import com.founder.easy_route_assistant.data.service.ServicePool.favorite
 import com.founder.easy_route_assistant.databinding.ActivityMainBinding
+import com.founder.easy_route_assistant.presentation.convenience.ConvenienceListActivity
 import com.founder.easy_route_assistant.presentation.favorite.FavoriteItemFragment
+import net.daum.mf.map.api.CalloutBalloonAdapter
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
 import retrofit2.Call
@@ -33,6 +37,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+
 
 class MainActivity : AppCompatActivity() {
     companion object {
@@ -55,6 +60,7 @@ class MainActivity : AppCompatActivity() {
         binding.rvList.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.rvList.adapter = listAdapter
+        binding.mapView.setCalloutBalloonAdapter(CustomBalloonAdapter(layoutInflater))  // 커스텀 말풍선 등록
 
 
         //activity_main의 구성
@@ -66,12 +72,17 @@ class MainActivity : AppCompatActivity() {
         binding.ivMenu.setOnClickListener {
             val nextIntent = intent.extras
             binding.layoutMenu.visibility = VISIBLE
-            binding.tvUsername.text = nextIntent.toString()
+            binding.tvUsername.text = nextIntent?.getString("id") + "님"
 
         }
         // 메뉴바에서 나가기 버튼 클릭시
         binding.ivExit.setOnClickListener {
             binding.layoutMenu.visibility = View.GONE
+        }
+
+        // 메뉴바에서 나가기 버튼 클릭시
+        binding.ivDetailExit.setOnClickListener {
+            binding.layoutDetailList.visibility = View.GONE
         }
 
         //검색 버튼 클릭시->검색 결과 리스트
@@ -116,7 +127,7 @@ class MainActivity : AppCompatActivity() {
         })
 
         //메뉴바 - 즐겨찾기 리스트 텍스트뷰 클릭시
-        binding.tvFavoriteList.setOnClickListener{
+        binding.tvFavoriteList.setOnClickListener {
             binding.btnSearch1.visibility = View.GONE
             val fragmentManager = supportFragmentManager
             val fragmentTransaction = fragmentManager.beginTransaction()
@@ -125,8 +136,15 @@ class MainActivity : AppCompatActivity() {
             fragmentTransaction.commit()
         }
 
+        //메뉴바 - 요청 목록 확인 텍스트뷰 클릭시
+        binding.tvRequestList.setOnClickListener {
+            val nextIntent =
+                Intent(this@MainActivity, ConvenienceListActivity::class.java)
+            startActivity(nextIntent)
+        }
+
         //즐겨찾기 태그 클릭시
-        binding.btnFavoriteMarker.setOnClickListener{
+        binding.btnFavoriteMarker.setOnClickListener {
             showFavoriteList()
             changeColor()
             binding.btnFavoriteMarker.setBackgroundColor(Color.parseColor("#AECD8C"))
@@ -134,19 +152,29 @@ class MainActivity : AppCompatActivity() {
         }
 
         //엘리베이터 태그 클릭시
-        binding.btnElevator.setOnClickListener{
+        binding.btnElevator.setOnClickListener {
             changeColor()
             binding.btnElevator.setBackgroundColor(Color.parseColor("#AECD8C"))
             showConvenientList("elevator")
         }
 
-        binding.layoutConstraint.setOnClickListener {
-            binding.layoutDetailList.visibility = View.GONE
+        //엘리베이터 태그 클릭시
+        binding.btnCharger.setOnClickListener {
+            changeColor()
+            binding.btnElevator.setBackgroundColor(Color.parseColor("#AECD8C"))
+            showConvenientList("charger")
         }
 
+        //엘리베이터 태그 클릭시
+        binding.btnBathroom.setOnClickListener {
+            changeColor()
+            binding.btnElevator.setBackgroundColor(Color.parseColor("#AECD8C"))
+            showConvenientList("bathroom")
+        }
+
+        binding.etSearchField.setOnClickListener { binding.layoutList.visibility = View.GONE }
+
     }
-
-
 
 
     // 즐겨찾기 신청 버튼 클릭시 서버통신 함수
@@ -200,6 +228,7 @@ class MainActivity : AppCompatActivity() {
                         // 통신 성공
                         Log.d("Test", "Body: ${response.body()}")
                     }
+
                     else -> {
                         showToast("서버 에러 발생")
 
@@ -219,34 +248,36 @@ class MainActivity : AppCompatActivity() {
     //편의시설 태그 클릭시 서버 통신 함수
     private fun showConvenientList(keyword: String) {
         val header = MyApplication.prefs.getString("jwt", "")
-        convenient.getConvenientList(header, keyword).enqueue(object : Callback<ResponseConvenientList> {
-            override fun onResponse(
-                call: Call<ResponseConvenientList>,
-                response: Response<ResponseConvenientList>,
-            ) {
-                when (response.code()) {
-                    200 -> {
-                        // 즐겨찾기 리스트 get 성공
-                        showToast("즐겨찾기 get 성공!")
-                        addconvenientmarker(response.body())
+        convenient.getConvenientList(header, keyword)
+            .enqueue(object : Callback<ResponseConvenientList> {
+                override fun onResponse(
+                    call: Call<ResponseConvenientList>,
+                    response: Response<ResponseConvenientList>,
+                ) {
+                    when (response.code()) {
+                        200 -> {
+                            // 즐겨찾기 리스트 get 성공
+                            showToast("즐겨찾기 get 성공!")
+                            addconvenientmarker(response.body())
 
-                        // 통신 성공
-                        Log.d("Test", "Body: ${response.body()}")
-                    }
-                    else -> {
-                        showToast("서버 에러 발생")
+                            // 통신 성공
+                            Log.d("Test", "Body: ${response.body()}")
+                        }
 
-                        Log.d("Test", "Body: ${response.body()}")
-                        addconvenientmarker(response.body())
+                        else -> {
+                            showToast("서버 에러 발생")
+
+                            Log.d("Test", "Body: ${response.body()}")
+                            addconvenientmarker(response.body())
+                        }
                     }
                 }
-            }
 
-            override fun onFailure(call: Call<ResponseConvenientList>, t: Throwable) {
-                // 통신 실패
-                Log.w("LocalSearch", "통신 실패: ${t.message}")
-            }
-        })
+                override fun onFailure(call: Call<ResponseConvenientList>, t: Throwable) {
+                    // 통신 실패
+                    Log.w("LocalSearch", "통신 실패: ${t.message}")
+                }
+            })
     }
 
     // 검색 버튼 클릭시 서버 통신 함수
@@ -256,7 +287,7 @@ class MainActivity : AppCompatActivity() {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val api = retrofit.create(KakaoAPIKeyword::class.java) // 통신 인터페이스를 객체로 생성
-        val call = api.getSearchKeyword(API_KEY, keyword) // 검색 조건 입력
+        val call = api.getSearchKeyword(API_KEY, keyword,"126.9932215" ,"37.561048", 20000) // 검색 조건 입력
 
         // API 서버에 요청
         call.enqueue(object : Callback<ResultSearchKeyword> {
@@ -294,6 +325,7 @@ class MainActivity : AppCompatActivity() {
                     customImageResourceId = R.drawable.tag_marker
                     isCustomImageAutoscale = true
                     selectedMarkerType = MapPOIItem.MarkerType.RedPin
+                    userObject = arrayListOf(list.roadNameAddress, "", "", "")
 
                 }
                 binding.mapView.addPOIItem(points)
@@ -319,6 +351,7 @@ class MainActivity : AppCompatActivity() {
                     customImageResourceId = R.drawable.tag_marker
                     isCustomImageAutoscale = true
                     selectedMarkerType = MapPOIItem.MarkerType.RedPin
+                    userObject = arrayListOf(list.description, list.holiday, list.weekday, list.saturday)
                 }
                 binding.mapView.addPOIItem(points)
 
@@ -351,8 +384,11 @@ class MainActivity : AppCompatActivity() {
                         document.y.toDouble(),
                         document.x.toDouble(),
                     )
-                    markerType = MapPOIItem.MarkerType.BluePin
+                    markerType = MapPOIItem.MarkerType.CustomImage
+                    customImageResourceId = R.drawable.tag_marker
+                    isCustomImageAutoscale = true
                     selectedMarkerType = MapPOIItem.MarkerType.RedPin
+                    userObject = arrayListOf(document.address_name, "", "", "")
                 }
                 binding.mapView.addPOIItem(point)
             }
@@ -367,10 +403,35 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun changeColor(){
+    private fun changeColor() {
         binding.btnFavoriteMarker.setBackgroundColor(Color.parseColor("#d4d2d2"))
         binding.btnElevator.setBackgroundColor(Color.parseColor("#d4d2d2"))
         binding.btnBathroom.setBackgroundColor(Color.parseColor("#d4d2d2"))
         binding.btnCharger.setBackgroundColor(Color.parseColor("#d4d2d2"))
     }
+
+    // 커스텀 말풍선 클래스
+    class CustomBalloonAdapter(inflater: LayoutInflater) : CalloutBalloonAdapter {
+        val mCalloutBalloon: View = inflater.inflate(R.layout.balloon_layout, null)
+        val name: TextView = mCalloutBalloon.findViewById(R.id.ball_tv_name)
+        val address: TextView = mCalloutBalloon.findViewById(R.id.ball_tv_address)
+
+
+        override fun getCalloutBalloon(poiItem: MapPOIItem?): View {
+            // 마커 클릭 시 나오는 말풍선
+            name.text = poiItem?.itemName   // 해당 마커의 정보 이용 가능
+            val result = poiItem?.userObject.toString().split("[",",","]")
+            address.text = result[1]
+            return mCalloutBalloon
+
+        }
+
+        override fun getPressedCalloutBalloon(poiItem: MapPOIItem?): View {
+            val result = poiItem?.userObject.toString().split("[",",","]")
+            // 말풍선 클릭 시
+            address.text = result[2]+"\n"+result[3]+"\n"+result[4]
+            return mCalloutBalloon
+        }
+    }
 }
+

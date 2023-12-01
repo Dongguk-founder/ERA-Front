@@ -11,7 +11,9 @@ import com.founder.easy_route_assistant.data.model.response.ResponseLoginEmailDt
 import com.founder.easy_route_assistant.data.service.ServicePool.authService
 import com.founder.easy_route_assistant.databinding.ActivityLoginEmailBinding
 import com.founder.easy_route_assistant.presentation.MainActivity
+import com.founder.easy_route_assistant.presentation.convenience.ConvenienceApplyFragment
 import retrofit2.Call
+import retrofit2.Converter
 import retrofit2.Response
 
 class LoginEmailActivity : AppCompatActivity() {
@@ -50,7 +52,6 @@ class LoginEmailActivity : AppCompatActivity() {
                                 nextIntent.putExtra("id", inputID)
                                 startActivity(nextIntent)
                             }
-
                             400 -> {
                                 // 로그인 실패
                                 showToast("로그인에 실패했습니다.")

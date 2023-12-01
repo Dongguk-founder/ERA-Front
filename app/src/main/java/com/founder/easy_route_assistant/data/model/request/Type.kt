@@ -9,10 +9,12 @@ data class Type(
     var convenientType: String,
     @SerialName("description")
     var description: String,
-    @SerialName("roadAddr")
-    var roadAddr: String,
     @SerialName("point")
     var point: Point,
-    @SerialName("content")
-    var content: Point,
+    @SerialName("weekday")
+    var weekday: Point,
+    @SerialName("saturday")
+    var saturday: Point,
+    @SerialName("holiday")
+    var holiday: Point,
 )
