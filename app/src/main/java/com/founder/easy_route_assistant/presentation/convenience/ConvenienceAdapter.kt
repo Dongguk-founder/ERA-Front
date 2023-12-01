@@ -24,7 +24,7 @@ class ConvenienceAdapter(context: Context) : RecyclerView.Adapter<ConvenienceVie
     override fun getItemCount() = convenienceList.size
 
     fun setConvenientList(convenienceList: List<ResponseConvenienceDto.Convenience>) {
-        this.convenienceList = convenienceList
+        this.convenienceList = convenienceList.toList()
         notifyDataSetChanged()
     }
 }
