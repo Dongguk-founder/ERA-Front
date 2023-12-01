@@ -45,4 +45,5 @@ object ServicePool {
     val favorite = ApiFactory.create<Favorite>()
     val convenient = ApiFactory.create<Convenient>()
     val ConvenienceService = ApiFactory.create<ConvenienceService>()
+    val favoriteListService = ApiFactory.create<FavoriteListService>()
 }

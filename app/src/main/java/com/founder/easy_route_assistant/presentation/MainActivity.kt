@@ -8,7 +8,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.VISIBLE
@@ -27,6 +26,7 @@ import com.founder.easy_route_assistant.data.model.response.ResponseFavoriteList
 import com.founder.easy_route_assistant.data.service.ServicePool.convenient
 import com.founder.easy_route_assistant.data.service.ServicePool.favorite
 import com.founder.easy_route_assistant.databinding.ActivityMainBinding
+import com.founder.easy_route_assistant.presentation.convenience.ConvenienceApplyFragment
 import com.founder.easy_route_assistant.presentation.convenience.ConvenienceListActivity
 import com.founder.easy_route_assistant.presentation.favorite.FavoriteItemFragment
 import net.daum.mf.map.api.CalloutBalloonAdapter
@@ -37,7 +37,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-
 
 class MainActivity : AppCompatActivity() {
     companion object {
@@ -60,20 +59,18 @@ class MainActivity : AppCompatActivity() {
         binding.rvList.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.rvList.adapter = listAdapter
-        binding.mapView.setCalloutBalloonAdapter(CustomBalloonAdapter(layoutInflater))  // 커스텀 말풍선 등록
+        binding.mapView.setCalloutBalloonAdapter(CustomBalloonAdapter(layoutInflater)) // 커스텀 말풍선 등록
 
-
-        //activity_main의 구성
-        //메뉴바, 검색창, 검색 버튼, 검색 결과 리스트, 상세정보 리스트
+        // activity_main의 구성
+        // 메뉴바, 검색창, 검색 버튼, 검색 결과 리스트, 상세정보 리스트
         // 메뉴바-즐겨찾기 리스트, 메뉴바-편의시설 리스트
-        //태그 버튼, 즐겨찾기 버튼, 편의시설 버튼
+        // 태그 버튼, 즐겨찾기 버튼, 편의시설 버튼
 
-        //메뉴바 클릭시
+        // 메뉴바 클릭시
         binding.ivMenu.setOnClickListener {
             val nextIntent = intent.extras
             binding.layoutMenu.visibility = VISIBLE
             binding.tvUsername.text = nextIntent?.getString("id") + "님"
-
         }
         // 메뉴바에서 나가기 버튼 클릭시
         binding.ivExit.setOnClickListener {
@@ -85,7 +82,7 @@ class MainActivity : AppCompatActivity() {
             binding.layoutDetailList.visibility = View.GONE
         }
 
-        //검색 버튼 클릭시->검색 결과 리스트
+        // 검색 버튼 클릭시->검색 결과 리스트
         binding.btnSearch1.setOnClickListener {
             keyword = binding.etSearchField.text.toString()
             pageNumber = 1
@@ -103,7 +100,7 @@ class MainActivity : AppCompatActivity() {
             )
         }
 
-        //리스트 아이템 클릭시->상세 정보 리스트
+        // 리스트 아이템 클릭시->상세 정보 리스트
         listAdapter.setItemClickListener(object : ListAdapter.OnItemClickListener {
             override fun onClick(v: View, position: Int) {
                 // 검색 목록 리스트 숨기기
@@ -123,10 +120,26 @@ class MainActivity : AppCompatActivity() {
                 binding.btnFavorite.setOnClickListener {
                     addfavorite(position)
                 }
+                // 편의시설 추가 버튼
+                binding.btnConvenient.setOnClickListener {
+                    val bundle = Bundle()
+                    bundle.putDouble("pointX", listItems[position].x)
+                    bundle.putDouble("pointY", listItems[position].y)
+                    bundle.putString("name", listItems[position].name)
+                    bundle.putString("address", listItems[position].road)
+
+                    val convenienceApplyFragment = ConvenienceApplyFragment()
+                    convenienceApplyFragment.arguments = bundle
+
+                    convenienceApplyFragment.show(
+                        supportFragmentManager,
+                        ConvenienceApplyFragment.TAG,
+                    )
+                }
             }
         })
 
-        //메뉴바 - 즐겨찾기 리스트 텍스트뷰 클릭시
+        // 메뉴바 - 즐겨찾기 리스트 텍스트뷰 클릭시
         binding.tvFavoriteList.setOnClickListener {
             binding.btnSearch1.visibility = View.GONE
             val fragmentManager = supportFragmentManager
@@ -136,36 +149,34 @@ class MainActivity : AppCompatActivity() {
             fragmentTransaction.commit()
         }
 
-        //메뉴바 - 요청 목록 확인 텍스트뷰 클릭시
+        // 메뉴바 - 편의시설 리스트 클릭 시
         binding.tvRequestList.setOnClickListener {
-            val nextIntent =
-                Intent(this@MainActivity, ConvenienceListActivity::class.java)
-            startActivity(nextIntent)
+            val intent = Intent(this, ConvenienceListActivity::class.java)
+            startActivity(intent)
         }
 
-        //즐겨찾기 태그 클릭시
+        // 즐겨찾기 태그 클릭시
         binding.btnFavoriteMarker.setOnClickListener {
             showFavoriteList()
             changeColor()
             binding.btnFavoriteMarker.setBackgroundColor(Color.parseColor("#AECD8C"))
-
         }
 
-        //엘리베이터 태그 클릭시
+        // 엘리베이터 태그 클릭시
         binding.btnElevator.setOnClickListener {
             changeColor()
             binding.btnElevator.setBackgroundColor(Color.parseColor("#AECD8C"))
             showConvenientList("elevator")
         }
 
-        //엘리베이터 태그 클릭시
+        // 엘리베이터 태그 클릭시
         binding.btnCharger.setOnClickListener {
             changeColor()
             binding.btnElevator.setBackgroundColor(Color.parseColor("#AECD8C"))
             showConvenientList("charger")
         }
 
-        //엘리베이터 태그 클릭시
+        // 엘리베이터 태그 클릭시
         binding.btnBathroom.setOnClickListener {
             changeColor()
             binding.btnElevator.setBackgroundColor(Color.parseColor("#AECD8C"))
@@ -173,9 +184,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.etSearchField.setOnClickListener { binding.layoutList.visibility = View.GONE }
-
     }
-
 
     // 즐겨찾기 신청 버튼 클릭시 서버통신 함수
     private fun addfavorite(position: Int) {
@@ -245,7 +254,7 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    //편의시설 태그 클릭시 서버 통신 함수
+    // 편의시설 태그 클릭시 서버 통신 함수
     private fun showConvenientList(keyword: String) {
         val header = MyApplication.prefs.getString("jwt", "")
         convenient.getConvenientList(header, keyword)
@@ -287,7 +296,8 @@ class MainActivity : AppCompatActivity() {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val api = retrofit.create(KakaoAPIKeyword::class.java) // 통신 인터페이스를 객체로 생성
-        val call = api.getSearchKeyword(API_KEY, keyword,"126.9932215" ,"37.561048", 20000) // 검색 조건 입력
+        val call =
+            api.getSearchKeyword(API_KEY, keyword, "126.9932215", "37.561048", 20000) // 검색 조건 입력
 
         // API 서버에 요청
         call.enqueue(object : Callback<ResultSearchKeyword> {
@@ -307,8 +317,7 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-
-    //즐겨찾기 목록 마커 출력
+    // 즐겨찾기 목록 마커 출력
     private fun addfavoritemarker(favoriteList: ResponseFavoriteList?) {
         if (!favoriteList?.favoriteLists.isNullOrEmpty()) {
             binding.mapView.removeAllPOIItems() // 지도의 마커 모두 제거
@@ -319,14 +328,13 @@ class MainActivity : AppCompatActivity() {
                     itemName = list.placeName
                     mapPoint = MapPoint.mapPointWithGeoCoord(
                         list.point.y,
-                        list.point.x
+                        list.point.x,
                     )
                     markerType = MapPOIItem.MarkerType.CustomImage
                     customImageResourceId = R.drawable.tag_marker
                     isCustomImageAutoscale = true
                     selectedMarkerType = MapPOIItem.MarkerType.RedPin
                     userObject = arrayListOf(list.roadNameAddress, "", "", "")
-
                 }
                 binding.mapView.addPOIItem(points)
                 binding.mapView.setMapCenterPointAndZoomLevel(points.mapPoint, 1, true)
@@ -334,7 +342,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    //편의시설 마커 출력
+    // 편의시설 마커 출력
     private fun addconvenientmarker(convenientList: ResponseConvenientList?) {
         if (!convenientList?.convenientLists.isNullOrEmpty()) {
             binding.mapView.removeAllPOIItems() // 지도의 마커 모두 제거
@@ -345,16 +353,16 @@ class MainActivity : AppCompatActivity() {
                     itemName = list.convenientType
                     mapPoint = MapPoint.mapPointWithGeoCoord(
                         list.point.y,
-                        list.point.x
+                        list.point.x,
                     )
                     markerType = MapPOIItem.MarkerType.CustomImage
                     customImageResourceId = R.drawable.tag_marker
                     isCustomImageAutoscale = true
                     selectedMarkerType = MapPOIItem.MarkerType.RedPin
-                    userObject = arrayListOf(list.description, list.holiday, list.weekday, list.saturday)
+                    userObject =
+                        arrayListOf(list.description, list.holiday, list.weekday, list.saturday)
                 }
                 binding.mapView.addPOIItem(points)
-
             }
         }
     }
@@ -416,22 +424,19 @@ class MainActivity : AppCompatActivity() {
         val name: TextView = mCalloutBalloon.findViewById(R.id.ball_tv_name)
         val address: TextView = mCalloutBalloon.findViewById(R.id.ball_tv_address)
 
-
         override fun getCalloutBalloon(poiItem: MapPOIItem?): View {
             // 마커 클릭 시 나오는 말풍선
-            name.text = poiItem?.itemName   // 해당 마커의 정보 이용 가능
-            val result = poiItem?.userObject.toString().split("[",",","]")
+            name.text = poiItem?.itemName // 해당 마커의 정보 이용 가능
+            val result = poiItem?.userObject.toString().split("[", ",", "]")
             address.text = result[1]
             return mCalloutBalloon
-
         }
 
         override fun getPressedCalloutBalloon(poiItem: MapPOIItem?): View {
-            val result = poiItem?.userObject.toString().split("[",",","]")
+            val result = poiItem?.userObject.toString().split("[", ",", "]")
             // 말풍선 클릭 시
-            address.text = result[2]+"\n"+result[3]+"\n"+result[4]
+            address.text = result[2] + "\n" + result[3] + "\n" + result[4]
             return mCalloutBalloon
         }
     }
 }
-

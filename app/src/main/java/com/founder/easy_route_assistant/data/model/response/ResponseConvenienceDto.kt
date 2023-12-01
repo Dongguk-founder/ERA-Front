@@ -1,6 +1,5 @@
 package com.founder.easy_route_assistant.data.model.response
 
-import com.founder.easy_route_assistant.presentation.convenience.Convenience
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -17,12 +16,14 @@ data class ResponseConvenienceDto(
         val userId: String,
         @SerialName("convenientType")
         val convenienceType: String,
-        @SerialName("roadAdd")
+        @SerialName("roadAddr")
         val convenienceAddress: String,
         @SerialName("point")
         val point: Point,
         @SerialName("content")
         val convenienceContent: String,
+        @SerialName("accepted")
+        val accepted: Boolean,
     ) {
         @Serializable
         data class Point(

@@ -72,7 +72,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_bs_address_result" />
 
     <Spinner
-        android:id="@+id/tv_bs_convenience_type_result"
+        android:id="@+id/spinner_bs_convenience_type_result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -96,7 +96,7 @@
         android:textSize="22dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_bs_convenience_type_result" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner_bs_convenience_type_result" />
 
     <EditText
         android:id="@+id/et_bs_convenience_detail_result"

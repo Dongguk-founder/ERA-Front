@@ -23,10 +23,6 @@
             android:name=".presentation.convenience.ConvenienceListActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.convenience.ExampleActivity"
-            android:exported="false"/>
-
-        <activity
             android:name=".presentation.admin.AdminActivity"
             android:exported="false" />
         <activity
@@ -34,7 +30,7 @@
             android:exported="false" />
         <activity
             android:name=".presentation.auth.LoginEmailActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".presentation.auth.LoginActivity"
             android:exported="false" />

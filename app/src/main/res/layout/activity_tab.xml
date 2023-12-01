@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.route.RouteTabActivity">
 
     <com.google.android.material.tabs.TabLayout
@@ -28,65 +28,63 @@
     </com.google.android.material.tabs.TabLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/layout_search"
         android:background="@color/soft_green"
-        app:layout_constraintTop_toBottomOf="@+id/tab_layout"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tab_layout">
 
         <EditText
             android:id="@+id/et_search_start"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
             android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
             android:layout_marginEnd="30dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
             android:background="@color/white"
-            android:textSize="15sp"
             android:hint="@string/search_hint"
             android:imeOptions="actionGo"
-            app:layout_constraintTop_toTopOf="@+id/layout_search"
-            app:layout_constraintStart_toStartOf="parent"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
-            />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/layout_search" />
 
         <EditText
             android:id="@+id/et_search_end"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
             android:layout_marginStart="30dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="30dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
+            android:layout_marginBottom="10dp"
             android:background="@color/white"
-            android:textSize="15sp"
-            android:text=""
             android:hint="@string/search_hint"
             android:imeOptions="actionGo"
-            app:layout_constraintTop_toBottomOf="@+id/et_search_start"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text=""
+            android:textSize="15sp"
             app:layout_constraintBottom_toTopOf="@+id/btn_search"
-            />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_search_start" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_search"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:layout_marginBottom="30dp"
             android:layout_marginTop="15dp"
+            android:layout_marginBottom="30dp"
             android:background="@color/white"
-            android:visibility="visible"
             android:text="@string/btn_search"
             android:textColor="@color/soft_deepgreen"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/et_search_end"
-            app:layout_constraintStart_toStartOf="@+id/et_search_end"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintStart_toStartOf="@+id/et_search_end" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -104,7 +102,7 @@
             android:layout_width="match_parent"
             android:layout_height="450dp"
             android:background="@color/white"
-            tools:ignore="MissingConstraints"/>
+            tools:ignore="MissingConstraints" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

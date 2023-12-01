@@ -3,7 +3,6 @@ package com.founder.easy_route_assistant.presentation.route
 import KakaoAPIKeyword
 import ListAdapter
 import ResultSearchKeyword
-import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
@@ -12,13 +11,9 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.founder.easy_route_assistant.R
-import com.founder.easy_route_assistant.databinding.ActivityMainBinding
 import com.founder.easy_route_assistant.databinding.ActivityTabBinding
 import com.founder.easy_route_assistant.presentation.ListLayout
 import com.founder.easy_route_assistant.presentation.MainActivity
-import net.daum.mf.map.api.MapPOIItem
-import net.daum.mf.map.api.MapPoint
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -50,21 +45,23 @@ class RouteTabActivity : AppCompatActivity() {
 
         binding.etSearchEnd.hint = "도착지임"
 
-        binding.etSearchStart.setOnKeyListener(View.OnKeyListener { v, keyCode, event -> //Enter key Action
-            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-                //키패드 내리기
-                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.hideSoftInputFromWindow(binding.etSearchStart.getWindowToken(), 0)
+        binding.etSearchStart.setOnKeyListener(
+            View.OnKeyListener { v, keyCode, event -> // Enter key Action
+                if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+                    // 키패드 내리기
+                    val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(binding.etSearchStart.getWindowToken(), 0)
 
-                //처리
-                keyword = binding.etSearchStart.text.toString()
-                pageNumber = 1
-                searchKeyword(keyword, pageNumber)
-                binding.layoutList.visibility = View.VISIBLE
-                return@OnKeyListener true
-            }
-            false
-        })
+                    // 처리
+                    keyword = binding.etSearchStart.text.toString()
+                    pageNumber = 1
+                    searchKeyword(keyword, pageNumber)
+                    binding.layoutList.visibility = View.VISIBLE
+                    return@OnKeyListener true
+                }
+                false
+            },
+        )
 
         listAdapter.setItemClickListener(object : ListAdapter.OnItemClickListener {
             override fun onClick(v: View, position: Int) {
@@ -72,7 +69,6 @@ class RouteTabActivity : AppCompatActivity() {
                 binding.etSearchStart.setText(listItems[position].name)
             }
         })
-
     }
 
     private fun searchKeyword(keyword: String, page: Int) {
@@ -81,7 +77,13 @@ class RouteTabActivity : AppCompatActivity() {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val api = retrofit.create(KakaoAPIKeyword::class.java) // 통신 인터페이스를 객체로 생성
-        val call = api.getSearchKeyword(MainActivity.API_KEY, keyword,"126.9932215" ,"37.561048", 20000) // 검색 조건 입력
+        val call = api.getSearchKeyword(
+            MainActivity.API_KEY,
+            keyword,
+            "126.9932215",
+            "37.561048",
+            20000,
+        ) // 검색 조건 입력
 
         // API 서버에 요청
         call.enqueue(object : Callback<ResultSearchKeyword> {
@@ -100,6 +102,7 @@ class RouteTabActivity : AppCompatActivity() {
             }
         })
     }
+
     private fun addItemsAndMarkers(searchResult: ResultSearchKeyword?) {
         if (!searchResult?.documents.isNullOrEmpty()) {
             // 검색 결과 있음
@@ -124,5 +127,4 @@ class RouteTabActivity : AppCompatActivity() {
             Toast.makeText(this, "검색 결과가 없습니다", Toast.LENGTH_SHORT).show()
         }
     }
-
 }
