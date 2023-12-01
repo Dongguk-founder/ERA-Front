@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout
     android:id="@+id/layout_constraint"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:clickable="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -147,6 +149,15 @@
         app:layout_constraintBottom_toBottomOf="@id/mapView"
         tools:ignore="MissingConstraints">
 
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/iv_detail_exit"
+            android:src="@drawable/img_exit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
         <TextView
             android:id="@+id/tv_detail_name"
             android:layout_width="wrap_content"
@@ -279,39 +290,16 @@
             android:layout_marginEnd="20dp"
             app:layout_constraintTop_toBottomOf="@id/tv_username"/>
 
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="20dp"
-            android:id="@+id/iv_my_page"
-            android:src="@drawable/baseline_account_circle_24"
-            app:layout_constraintTop_toBottomOf="@+id/view_bs_horizontal"
-            app:layout_constraintStart_toStartOf="parent"/>
-
-        <TextView
-            android:id="@+id/tv_my_page"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingRight="70dp"
-            android:layout_marginStart="10dp"
-            android:gravity="center"
-            android:text="마이페이지"
-            android:textColor="@color/black"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toTopOf="@+id/iv_my_page"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_my_page"
-            app:layout_constraintStart_toEndOf="@+id/iv_my_page"/>
 
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
             android:id="@+id/iv_request_list"
             android:src="@drawable/baseline_assignment_24"
-            app:layout_constraintTop_toBottomOf="@+id/iv_my_page"
-            app:layout_constraintStart_toStartOf="@+id/iv_my_page"/>
+            app:layout_constraintTop_toBottomOf="@+id/view_bs_horizontal"
+            app:layout_constraintStart_toStartOf="parent"/>
 
         <TextView
             android:id="@+id/tv_request_list"
@@ -329,8 +317,8 @@
             app:layout_constraintStart_toEndOf="@+id/iv_request_list"/>
 
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginTop="20dp"
             android:id="@+id/iv_favorite_list"
             android:src="@drawable/baseline_star_24"

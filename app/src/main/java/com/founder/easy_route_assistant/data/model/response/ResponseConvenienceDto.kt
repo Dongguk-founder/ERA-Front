@@ -20,7 +20,7 @@ data class ResponseConvenienceDto(
         @SerialName("roadAdd")
         val convenienceAddress: String,
         @SerialName("point")
-        val point: List<Point>,
+        val point: Point,
         @SerialName("content")
         val convenienceContent: String,
     ) {

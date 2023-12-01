@@ -1,4 +1,5 @@
 // REST API 통신 인터페이스
+import kotlinx.serialization.descriptors.PrimitiveKind
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -9,6 +10,9 @@ interface KakaoAPIKeyword {
     fun getSearchKeyword(
         @Header("Authorization") key: String,     // 카카오 API 인증키 [필수]
         @Query("query") query: String,            // 검색을 원하는 질의어 [필수]
+        @Query("x") x: String,
+        @Query("y") y: String,
+        @Query("radius") radius: Int,
     ): Call<ResultSearchKeyword>    // 받아온 정보가 ResultSearchKeyword 클래스의 구조로 담김
 }
 
@@ -17,5 +21,6 @@ interface KakaoAPICoord {
     fun getSearchKeyword(
         @Header("Authorization") key: String,     // 카카오 API 인증키 [필수]
         @Query("query") query: String,            // 검색을 원하는 질의어 [필수]
+
     ): Call<ResultSearchKeyword>    // 받아온 정보가 ResultSearchKeyword 클래스의 구조로 담김
 }
