@@ -9,8 +9,8 @@ class ConvenientViewHolder(private val binding: ItemConvenientBinding) :
         binding.tvConvenientType.text = convenientData.convenientType
         binding.tvFavoriteItemDetail.text = convenientData.convenientDetail
         binding.tvConvenientAddress.text = convenientData.convenientAddress
-        binding.tvConvenientWeekdays.text = convenientData.convenientWeekdays
-        binding.tvConvenientSaturday.text = convenientData.convenientSaturday
-        binding.tvConvenientHoliday.text = convenientData.convenientHoliday
+        binding.tvConvenientWeekdays.hint = convenientData.convenientWeekdays
+        binding.etConvenientSaturday.hint = convenientData.convenientSaturday
+        binding.etConvenientHoliday.hint = convenientData.convenientHoliday
     }
 }
