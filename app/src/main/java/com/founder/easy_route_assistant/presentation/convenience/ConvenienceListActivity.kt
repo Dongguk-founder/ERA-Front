@@ -8,6 +8,7 @@ import com.founder.easy_route_assistant.data.model.response.ResponseConvenienceD
 import com.founder.easy_route_assistant.data.service.ServicePool
 import com.founder.easy_route_assistant.databinding.ActivityConvenienceListBinding
 import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Response
 
 class ConvenienceListActivity : AppCompatActivity() {
@@ -23,7 +24,7 @@ class ConvenienceListActivity : AppCompatActivity() {
     private fun setConvenienceList() {
         val header = MyApplication.prefs.getString("jwt", "")
         ServicePool.ConvenienceService.getConvenienceList(header)
-            .enqueue(object : retrofit2.Callback<ResponseConvenienceDto> {
+            .enqueue(object : Callback<ResponseConvenienceDto> {
                 override fun onResponse(
                     call: Call<ResponseConvenienceDto>,
                     response: Response<ResponseConvenienceDto>,
