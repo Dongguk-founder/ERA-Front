@@ -29,7 +29,6 @@ import com.founder.easy_route_assistant.data.service.ServicePool.favorite
 import com.founder.easy_route_assistant.databinding.ActivityMainBinding
 import com.founder.easy_route_assistant.presentation.convenience.ConvenienceApplyFragment
 import com.founder.easy_route_assistant.presentation.convenience.ConvenienceListActivity
-import com.founder.easy_route_assistant.presentation.convenience.ConvenienceListActivity
 import com.founder.easy_route_assistant.presentation.favorite.FavoriteItemFragment
 import net.daum.mf.map.api.CalloutBalloonAdapter
 import net.daum.mf.map.api.MapPOIItem
