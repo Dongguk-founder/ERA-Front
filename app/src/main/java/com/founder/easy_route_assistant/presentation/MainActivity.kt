@@ -8,7 +8,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.VISIBLE
@@ -60,7 +59,7 @@ class MainActivity : AppCompatActivity() {
         binding.rvList.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.rvList.adapter = listAdapter
-        binding.mapView.setCalloutBalloonAdapter(CustomBalloonAdapter(layoutInflater))  // 커스텀 말풍선 등록
+        binding.mapView.setCalloutBalloonAdapter(CustomBalloonAdapter(layoutInflater)) // 커스텀 말풍선 등록
 
         // activity_main의 구성
         // 메뉴바, 검색창, 검색 버튼, 검색 결과 리스트, 상세정보 리스트
@@ -72,7 +71,6 @@ class MainActivity : AppCompatActivity() {
             val nextIntent = intent.extras
             binding.layoutMenu.visibility = VISIBLE
             binding.tvUsername.text = nextIntent?.getString("id") + "님"
-
         }
         // 메뉴바에서 나가기 버튼 클릭시
         binding.ivExit.setOnClickListener {
@@ -84,7 +82,7 @@ class MainActivity : AppCompatActivity() {
             binding.layoutDetailList.visibility = View.GONE
         }
 
-        //검색 버튼 클릭시->검색 결과 리스트
+        // 검색 버튼 클릭시->검색 결과 리스트
         binding.btnSearch1.setOnClickListener {
             keyword = binding.etSearchField.text.toString()
             pageNumber = 1
@@ -164,21 +162,21 @@ class MainActivity : AppCompatActivity() {
             binding.btnFavoriteMarker.setBackgroundColor(Color.parseColor("#AECD8C"))
         }
 
-        //엘리베이터 태그 클릭시
+        // 엘리베이터 태그 클릭시
         binding.btnElevator.setOnClickListener {
             changeColor()
             binding.btnElevator.setBackgroundColor(Color.parseColor("#AECD8C"))
             showConvenientList("elevator")
         }
 
-        //엘리베이터 태그 클릭시
+        // 엘리베이터 태그 클릭시
         binding.btnCharger.setOnClickListener {
             changeColor()
             binding.btnElevator.setBackgroundColor(Color.parseColor("#AECD8C"))
             showConvenientList("charger")
         }
 
-        //엘리베이터 태그 클릭시
+        // 엘리베이터 태그 클릭시
         binding.btnBathroom.setOnClickListener {
             changeColor()
             binding.btnElevator.setBackgroundColor(Color.parseColor("#AECD8C"))
@@ -186,9 +184,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.etSearchField.setOnClickListener { binding.layoutList.visibility = View.GONE }
-
     }
-
 
     // 즐겨찾기 신청 버튼 클릭시 서버통신 함수
     private fun addfavorite(position: Int) {
@@ -300,7 +296,8 @@ class MainActivity : AppCompatActivity() {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val api = retrofit.create(KakaoAPIKeyword::class.java) // 통신 인터페이스를 객체로 생성
-        val call = api.getSearchKeyword(API_KEY, keyword,"126.9932215" ,"37.561048", 20000) // 검색 조건 입력
+        val call =
+            api.getSearchKeyword(API_KEY, keyword, "126.9932215", "37.561048", 20000) // 검색 조건 입력
 
         // API 서버에 요청
         call.enqueue(object : Callback<ResultSearchKeyword> {
@@ -331,14 +328,13 @@ class MainActivity : AppCompatActivity() {
                     itemName = list.placeName
                     mapPoint = MapPoint.mapPointWithGeoCoord(
                         list.point.y,
-                        list.point.x
+                        list.point.x,
                     )
                     markerType = MapPOIItem.MarkerType.CustomImage
                     customImageResourceId = R.drawable.tag_marker
                     isCustomImageAutoscale = true
                     selectedMarkerType = MapPOIItem.MarkerType.RedPin
                     userObject = arrayListOf(list.roadNameAddress, "", "", "")
-
                 }
                 binding.mapView.addPOIItem(points)
                 binding.mapView.setMapCenterPointAndZoomLevel(points.mapPoint, 1, true)
@@ -357,13 +353,14 @@ class MainActivity : AppCompatActivity() {
                     itemName = list.convenientType
                     mapPoint = MapPoint.mapPointWithGeoCoord(
                         list.point.y,
-                        list.point.x
+                        list.point.x,
                     )
                     markerType = MapPOIItem.MarkerType.CustomImage
                     customImageResourceId = R.drawable.tag_marker
                     isCustomImageAutoscale = true
                     selectedMarkerType = MapPOIItem.MarkerType.RedPin
-                    userObject = arrayListOf(list.description, list.holiday, list.weekday, list.saturday)
+                    userObject =
+                        arrayListOf(list.description, list.holiday, list.weekday, list.saturday)
                 }
                 binding.mapView.addPOIItem(points)
             }
@@ -427,20 +424,18 @@ class MainActivity : AppCompatActivity() {
         val name: TextView = mCalloutBalloon.findViewById(R.id.ball_tv_name)
         val address: TextView = mCalloutBalloon.findViewById(R.id.ball_tv_address)
 
-
         override fun getCalloutBalloon(poiItem: MapPOIItem?): View {
             // 마커 클릭 시 나오는 말풍선
-            name.text = poiItem?.itemName   // 해당 마커의 정보 이용 가능
-            val result = poiItem?.userObject.toString().split("[",",","]")
+            name.text = poiItem?.itemName // 해당 마커의 정보 이용 가능
+            val result = poiItem?.userObject.toString().split("[", ",", "]")
             address.text = result[1]
             return mCalloutBalloon
-
         }
 
         override fun getPressedCalloutBalloon(poiItem: MapPOIItem?): View {
-            val result = poiItem?.userObject.toString().split("[",",","]")
+            val result = poiItem?.userObject.toString().split("[", ",", "]")
             // 말풍선 클릭 시
-            address.text = result[2]+"\n"+result[3]+"\n"+result[4]
+            address.text = result[2] + "\n" + result[3] + "\n" + result[4]
             return mCalloutBalloon
         }
     }

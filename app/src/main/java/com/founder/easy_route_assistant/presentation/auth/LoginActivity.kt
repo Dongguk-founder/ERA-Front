@@ -13,15 +13,15 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
     }
 
-    private fun clickSignIn(){
+    private fun clickSignIn() {
         val signin = binding.tvLoginEmail
-        signin.setOnClickListener{
+        signin.setOnClickListener {
             val nextIntent = Intent(this, LoginEmailActivity::class.java)
             startActivity(nextIntent)
         }
     }
 
-    private fun clickSignUp(){
+    private fun clickSignUp() {
         val signup = binding.tvLoginSignup
         signup.setOnClickListener {
             val nextIntent = Intent(this, SignUpActivity::class.java)

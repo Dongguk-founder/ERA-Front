@@ -1,6 +1,5 @@
 package com.founder.easy_route_assistant.data.model.response
 
-import com.founder.easy_route_assistant.presentation.convenience.Convenience
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

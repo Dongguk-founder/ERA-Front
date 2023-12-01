@@ -125,8 +125,15 @@ class SignUpActivity : AppCompatActivity() {
 
         // 회원가입 버튼 클릭 시
         binding.btnSignUp.setOnClickListener {
-            authService.signUp(RequestSignUpDto(id.toString(),pw.toString(),name.toString(),email.toString()))
-                .enqueue(object: Callback<Void>{
+            authService.signUp(
+                RequestSignUpDto(
+                    id.toString(),
+                    pw.toString(),
+                    name.toString(),
+                    email.toString(),
+                ),
+            )
+                .enqueue(object : Callback<Void> {
                     override fun onResponse(call: Call<Void>, response: Response<Void>) {
                         Log.d("Test", "Body: ${response.code()}")
                         when (response.code()) {

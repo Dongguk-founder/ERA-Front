@@ -13,7 +13,6 @@ import com.founder.easy_route_assistant.data.service.ServicePool
 import com.founder.easy_route_assistant.databinding.BottomSheetConvenienceApplyBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.Response
 
 class ConvenienceApplyFragment : BottomSheetDialogFragment() {
