@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/layout_constraint"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".presentation.MainActivity">
+    android:layout_height="match_parent">
 
     <net.daum.mf.map.api.MapView
         android:id="@+id/mapView"
@@ -40,20 +40,21 @@
         android:hint="@string/search_hint"
         android:inputType="textPersonName"
         android:textSize="13sp"
-        app:layout_constraintEnd_toStartOf="@+id/btn_search"
+        app:layout_constraintEnd_toStartOf="@+id/btn_search1"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btn_search"
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_search1"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:layout_marginTop="30dp"
         android:layout_marginEnd="10dp"
         android:background="@color/soft_green"
+        android:visibility="visible"
         android:text="@string/btn_search"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/et_search_field"
+        app:layout_constraintBottom_toBottomOf="@+id/et_search_field"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_marker"
@@ -68,8 +69,10 @@
         <Button
             android:id="@+id/btn_charger"
             android:layout_width="wrap_content"
-            android:layout_height="20dp"
+            android:layout_height="wrap_content"
             android:background="@color/light_gray"
+            android:minHeight="0dp"
+            android:paddingVertical="4dp"
             android:text="휠체어충전소"
             android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="parent"
@@ -78,10 +81,12 @@
         <Button
             android:id="@+id/btn_elevator"
             android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:layout_marginStart="5dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="7dp"
+            android:minHeight="0dp"
+            android:paddingVertical="4dp"
             android:background="@color/light_gray"
-            android:text="엘리베이터/리프트"
+            android:text="엘리베이터"
             android:textColor="@color/white"
             app:layout_constraintStart_toEndOf="@+id/btn_charger"
             app:layout_constraintTop_toTopOf="@id/btn_charger" />
@@ -89,8 +94,10 @@
         <Button
             android:id="@+id/btn_favorite_marker"
             android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:layout_marginStart="5dp"
+            android:layout_height="wrap_content"
+            android:minHeight="0dp"
+            android:paddingVertical="4dp"
+            android:layout_marginStart="7dp"
             android:background="@color/light_gray"
             android:text="즐겨찾기"
             android:textColor="@color/white"
@@ -100,8 +107,10 @@
         <Button
             android:id="@+id/btn_bathroom"
             android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:layout_marginStart="5dp"
+            android:layout_height="wrap_content"
+            android:minHeight="0dp"
+            android:paddingVertical="4dp"
+            android:layout_marginStart="7dp"
             android:background="@color/light_gray"
             android:text="장애인화장실"
             android:textColor="@color/white"

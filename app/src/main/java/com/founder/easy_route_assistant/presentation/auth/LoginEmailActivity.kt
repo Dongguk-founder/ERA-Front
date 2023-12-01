@@ -47,6 +47,7 @@ class LoginEmailActivity : AppCompatActivity() {
                                 // 로그인 후 메인 액티비티로 전환
                                 val nextIntent =
                                     Intent(this@LoginEmailActivity, MainActivity::class.java)
+                                nextIntent.putExtra("id", inputID)
                                 startActivity(nextIntent)
                             }
 
