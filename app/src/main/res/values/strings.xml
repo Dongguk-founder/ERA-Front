@@ -41,4 +41,5 @@
     <string name="btn_convenient_delete">요청 삭제</string>
     <string name="tv_bs_cancel_btn"><u>취소</u></string>
     <string name="tv_bs_save_btn"><u>저장</u></string>
+    <string name="tv_user_convenient_list">편의시설 신청 목록</string>
 </resources>
