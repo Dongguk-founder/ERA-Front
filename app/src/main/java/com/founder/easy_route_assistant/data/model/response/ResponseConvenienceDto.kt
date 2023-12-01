@@ -17,12 +17,14 @@ data class ResponseConvenienceDto(
         val userId: String,
         @SerialName("convenientType")
         val convenienceType: String,
-        @SerialName("roadAdd")
+        @SerialName("roadAddr")
         val convenienceAddress: String,
         @SerialName("point")
-        val point: List<Point>,
+        val point: Point,
         @SerialName("content")
         val convenienceContent: String,
+        @SerialName("accepted")
+        val accepted: Boolean,
     ) {
         @Serializable
         data class Point(

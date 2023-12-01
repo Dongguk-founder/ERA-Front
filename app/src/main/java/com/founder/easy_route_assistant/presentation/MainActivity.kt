@@ -12,8 +12,6 @@ import android.view.View.VISIBLE
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.founder.easy_route_assistant.R
 import com.founder.easy_route_assistant.Utils.MyApplication
@@ -25,6 +23,7 @@ import com.founder.easy_route_assistant.data.model.response.ResponseFavoriteList
 import com.founder.easy_route_assistant.data.service.ServicePool.convenient
 import com.founder.easy_route_assistant.data.service.ServicePool.favorite
 import com.founder.easy_route_assistant.databinding.ActivityMainBinding
+import com.founder.easy_route_assistant.presentation.convenience.ConvenienceApplyFragment
 import com.founder.easy_route_assistant.presentation.favorite.FavoriteItemFragment
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
@@ -56,25 +55,23 @@ class MainActivity : AppCompatActivity() {
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.rvList.adapter = listAdapter
 
-
-        //activity_main의 구성
-        //메뉴바, 검색창, 검색 버튼, 검색 결과 리스트, 상세정보 리스트
+        // activity_main의 구성
+        // 메뉴바, 검색창, 검색 버튼, 검색 결과 리스트, 상세정보 리스트
         // 메뉴바-즐겨찾기 리스트, 메뉴바-편의시설 리스트
-        //태그 버튼, 즐겨찾기 버튼, 편의시설 버튼
+        // 태그 버튼, 즐겨찾기 버튼, 편의시설 버튼
 
-        //메뉴바 클릭시
+        // 메뉴바 클릭시
         binding.ivMenu.setOnClickListener {
             val nextIntent = intent.extras
             binding.layoutMenu.visibility = VISIBLE
             binding.tvUsername.text = nextIntent.toString()
-
         }
         // 메뉴바에서 나가기 버튼 클릭시
         binding.ivExit.setOnClickListener {
             binding.layoutMenu.visibility = View.GONE
         }
 
-        //검색 버튼 클릭시->검색 결과 리스트
+        // 검색 버튼 클릭시->검색 결과 리스트
         binding.btnSearch1.setOnClickListener {
             keyword = binding.etSearchField.text.toString()
             pageNumber = 1
@@ -92,7 +89,7 @@ class MainActivity : AppCompatActivity() {
             )
         }
 
-        //리스트 아이템 클릭시->상세 정보 리스트
+        // 리스트 아이템 클릭시->상세 정보 리스트
         listAdapter.setItemClickListener(object : ListAdapter.OnItemClickListener {
             override fun onClick(v: View, position: Int) {
                 // 검색 목록 리스트 숨기기
@@ -112,11 +109,27 @@ class MainActivity : AppCompatActivity() {
                 binding.btnFavorite.setOnClickListener {
                     addfavorite(position)
                 }
+                // 편의시설 추가 버튼
+                binding.btnConvenient.setOnClickListener {
+                    val bundle = Bundle()
+                    bundle.putDouble("pointX", listItems[position].x)
+                    bundle.putDouble("pointY", listItems[position].y)
+                    bundle.putString("name", listItems[position].name)
+                    bundle.putString("address", listItems[position].road)
+
+                    val convenienceApplyFragment = ConvenienceApplyFragment()
+                    convenienceApplyFragment.arguments = bundle
+
+                    convenienceApplyFragment.show(
+                        supportFragmentManager,
+                        ConvenienceApplyFragment.TAG,
+                    )
+                }
             }
         })
 
-        //메뉴바 - 즐겨찾기 리스트 텍스트뷰 클릭시
-        binding.tvFavoriteList.setOnClickListener{
+        // 메뉴바 - 즐겨찾기 리스트 텍스트뷰 클릭시
+        binding.tvFavoriteList.setOnClickListener {
             binding.btnSearch1.visibility = View.GONE
             val fragmentManager = supportFragmentManager
             val fragmentTransaction = fragmentManager.beginTransaction()
@@ -125,16 +138,15 @@ class MainActivity : AppCompatActivity() {
             fragmentTransaction.commit()
         }
 
-        //즐겨찾기 태그 클릭시
-        binding.btnFavoriteMarker.setOnClickListener{
+        // 즐겨찾기 태그 클릭시
+        binding.btnFavoriteMarker.setOnClickListener {
             showFavoriteList()
             changeColor()
             binding.btnFavoriteMarker.setBackgroundColor(Color.parseColor("#AECD8C"))
-
         }
 
-        //엘리베이터 태그 클릭시
-        binding.btnElevator.setOnClickListener{
+        // 엘리베이터 태그 클릭시
+        binding.btnElevator.setOnClickListener {
             changeColor()
             binding.btnElevator.setBackgroundColor(Color.parseColor("#AECD8C"))
             showConvenientList("elevator")
@@ -143,11 +155,7 @@ class MainActivity : AppCompatActivity() {
         binding.layoutConstraint.setOnClickListener {
             binding.layoutDetailList.visibility = View.GONE
         }
-
     }
-
-
-
 
     // 즐겨찾기 신청 버튼 클릭시 서버통신 함수
     private fun addfavorite(position: Int) {
@@ -200,6 +208,7 @@ class MainActivity : AppCompatActivity() {
                         // 통신 성공
                         Log.d("Test", "Body: ${response.body()}")
                     }
+
                     else -> {
                         showToast("서버 에러 발생")
 
@@ -216,37 +225,39 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    //편의시설 태그 클릭시 서버 통신 함수
+    // 편의시설 태그 클릭시 서버 통신 함수
     private fun showConvenientList(keyword: String) {
         val header = MyApplication.prefs.getString("jwt", "")
-        convenient.getConvenientList(header, keyword).enqueue(object : Callback<ResponseConvenientList> {
-            override fun onResponse(
-                call: Call<ResponseConvenientList>,
-                response: Response<ResponseConvenientList>,
-            ) {
-                when (response.code()) {
-                    200 -> {
-                        // 즐겨찾기 리스트 get 성공
-                        showToast("즐겨찾기 get 성공!")
-                        addconvenientmarker(response.body())
+        convenient.getConvenientList(header, keyword)
+            .enqueue(object : Callback<ResponseConvenientList> {
+                override fun onResponse(
+                    call: Call<ResponseConvenientList>,
+                    response: Response<ResponseConvenientList>,
+                ) {
+                    when (response.code()) {
+                        200 -> {
+                            // 즐겨찾기 리스트 get 성공
+                            showToast("즐겨찾기 get 성공!")
+                            addconvenientmarker(response.body())
 
-                        // 통신 성공
-                        Log.d("Test", "Body: ${response.body()}")
-                    }
-                    else -> {
-                        showToast("서버 에러 발생")
+                            // 통신 성공
+                            Log.d("Test", "Body: ${response.body()}")
+                        }
 
-                        Log.d("Test", "Body: ${response.body()}")
-                        addconvenientmarker(response.body())
+                        else -> {
+                            showToast("서버 에러 발생")
+
+                            Log.d("Test", "Body: ${response.body()}")
+                            addconvenientmarker(response.body())
+                        }
                     }
                 }
-            }
 
-            override fun onFailure(call: Call<ResponseConvenientList>, t: Throwable) {
-                // 통신 실패
-                Log.w("LocalSearch", "통신 실패: ${t.message}")
-            }
-        })
+                override fun onFailure(call: Call<ResponseConvenientList>, t: Throwable) {
+                    // 통신 실패
+                    Log.w("LocalSearch", "통신 실패: ${t.message}")
+                }
+            })
     }
 
     // 검색 버튼 클릭시 서버 통신 함수
@@ -276,8 +287,7 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-
-    //즐겨찾기 목록 마커 출력
+    // 즐겨찾기 목록 마커 출력
     private fun addfavoritemarker(favoriteList: ResponseFavoriteList?) {
         if (!favoriteList?.favoriteLists.isNullOrEmpty()) {
             binding.mapView.removeAllPOIItems() // 지도의 마커 모두 제거
@@ -288,13 +298,12 @@ class MainActivity : AppCompatActivity() {
                     itemName = list.placeName
                     mapPoint = MapPoint.mapPointWithGeoCoord(
                         list.point.y,
-                        list.point.x
+                        list.point.x,
                     )
                     markerType = MapPOIItem.MarkerType.CustomImage
                     customImageResourceId = R.drawable.tag_marker
                     isCustomImageAutoscale = true
                     selectedMarkerType = MapPOIItem.MarkerType.RedPin
-
                 }
                 binding.mapView.addPOIItem(points)
                 binding.mapView.setMapCenterPointAndZoomLevel(points.mapPoint, 1, true)
@@ -302,7 +311,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    //편의시설 마커 출력
+    // 편의시설 마커 출력
     private fun addconvenientmarker(convenientList: ResponseConvenientList?) {
         if (!convenientList?.convenientLists.isNullOrEmpty()) {
             binding.mapView.removeAllPOIItems() // 지도의 마커 모두 제거
@@ -313,7 +322,7 @@ class MainActivity : AppCompatActivity() {
                     itemName = list.convenientType
                     mapPoint = MapPoint.mapPointWithGeoCoord(
                         list.point.y,
-                        list.point.x
+                        list.point.x,
                     )
                     markerType = MapPOIItem.MarkerType.CustomImage
                     customImageResourceId = R.drawable.tag_marker
@@ -321,7 +330,6 @@ class MainActivity : AppCompatActivity() {
                     selectedMarkerType = MapPOIItem.MarkerType.RedPin
                 }
                 binding.mapView.addPOIItem(points)
-
             }
         }
     }
@@ -367,7 +375,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun changeColor(){
+    private fun changeColor() {
         binding.btnFavoriteMarker.setBackgroundColor(Color.parseColor("#d4d2d2"))
         binding.btnElevator.setBackgroundColor(Color.parseColor("#d4d2d2"))
         binding.btnBathroom.setBackgroundColor(Color.parseColor("#d4d2d2"))

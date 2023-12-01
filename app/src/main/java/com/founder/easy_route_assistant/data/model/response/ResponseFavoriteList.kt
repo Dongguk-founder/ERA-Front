@@ -9,4 +9,3 @@ data class ResponseFavoriteList(
     @SerialName("favoriteList")
     var favoriteLists: List<Place>,
 )
-
