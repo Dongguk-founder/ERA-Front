@@ -4,6 +4,7 @@ import KakaoAPIKeyword
 import ListAdapter
 import ResultSearchKeyword
 import android.content.ContentValues.TAG
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -24,6 +25,7 @@ import com.founder.easy_route_assistant.data.service.ServicePool.convenient
 import com.founder.easy_route_assistant.data.service.ServicePool.favorite
 import com.founder.easy_route_assistant.databinding.ActivityMainBinding
 import com.founder.easy_route_assistant.presentation.convenience.ConvenienceApplyFragment
+import com.founder.easy_route_assistant.presentation.convenience.ConvenienceListActivity
 import com.founder.easy_route_assistant.presentation.favorite.FavoriteItemFragment
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
@@ -136,6 +138,12 @@ class MainActivity : AppCompatActivity() {
             val fragment = FavoriteItemFragment()
             fragmentTransaction.replace(R.id.layout_constraint, fragment)
             fragmentTransaction.commit()
+        }
+
+        // 메뉴바 - 편의시설 리스트 클릭 시
+        binding.tvRequestList.setOnClickListener {
+            val intent = Intent(this, ConvenienceListActivity::class.java)
+            startActivity(intent)
         }
 
         // 즐겨찾기 태그 클릭시

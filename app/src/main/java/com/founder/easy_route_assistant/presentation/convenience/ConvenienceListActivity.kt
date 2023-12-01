@@ -50,32 +50,4 @@ class ConvenienceListActivity : AppCompatActivity() {
         convenienceAdapter.setConvenientList(convenienceList)
         binding.rvUserConvenientList.adapter = convenienceAdapter
     }
-
-    /*private fun setReservationList() {
-        ServicePool.reservationListService.getReservationList()
-            .enqueue(object : retrofit2.Callback<ResponseReservationDto> {
-                override fun onResponse(
-                    call: Call<ResponseReservationDto>,
-                    response: Response<ResponseReservationDto>,
-                ) {
-                    if (response.isSuccessful) {
-                        val data: ResponseReservationDto = response.body()!!
-                        setReservationAdapter(data.reservationList)
-                        if (response.code() == 500) {
-                            context!!.showToast("서버 에러 발생")
-                        }
-                    }
-                }
-
-                override fun onFailure(call: Call<ResponseReservationDto>, t: Throwable) {
-                    context!!.showToast("네트워크 에러 발생")
-                }
-            })
-    }
-
-    private fun setReservationAdapter(reserveList: List<ResponseReservationDto.Reservation>) {
-        val reservationAdapter = ReservationAdapter(requireContext(), ::patchApplyCode)
-        reservationAdapter.setReservationList(reserveList)
-        binding.rvReservationItems.adapter = reservationAdapter
-    }*/
 }
