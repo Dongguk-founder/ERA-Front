@@ -1,7 +1,6 @@
 package com.founder.easy_route_assistant.data.service
 
 import android.util.Log
-import com.founder.easy_route_assistant.BuildConfig
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
@@ -23,9 +22,11 @@ object ApiFactory {
 
     private val okHttpClient = OkHttpClient.Builder()
         .addInterceptor(getLogOkHttpClient())
-        .addInterceptor(HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BODY
-        })
+        .addInterceptor(
+            HttpLoggingInterceptor().apply {
+                level = HttpLoggingInterceptor.Level.BODY
+            },
+        )
         .build()
 
     val retrofit: Retrofit by lazy {
@@ -42,4 +43,5 @@ object ApiFactory {
 object ServicePool {
     val authService = ApiFactory.create<AuthService>()
     val favorite = ApiFactory.create<Favorite>()
+    val ConvenienceService = ApiFactory.create<ConvenienceService>()
 }
