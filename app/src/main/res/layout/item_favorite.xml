@@ -41,11 +41,13 @@
         app:layout_constraintTop_toBottomOf="@id/tv_favorite_item_name"></TextView>
 
     <ImageView
+        android:id="@+id/imv_delete_favorite_item"
         android:layout_width="35dp"
         android:layout_height="0dp"
         android:layout_marginTop="22dp"
         android:layout_marginEnd="20dp"
-        android:src="@drawable/baseline_delete_forever_24"
+        android:src="@drawable/img_exit"
+        app:tint="@color/gray"
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

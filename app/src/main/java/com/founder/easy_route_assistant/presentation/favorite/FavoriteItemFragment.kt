@@ -1,5 +1,6 @@
 package com.founder.easy_route_assistant.presentation.favorite
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,8 @@ import com.founder.easy_route_assistant.Utils.showToast
 import com.founder.easy_route_assistant.data.model.response.ResponseFavoriteListDto
 import com.founder.easy_route_assistant.data.service.ServicePool
 import com.founder.easy_route_assistant.databinding.FragmentFavoriteItemBinding
+import com.founder.easy_route_assistant.presentation.MainActivity
+import com.founder.easy_route_assistant.presentation.auth.LoginActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -32,6 +35,7 @@ class FavoriteItemFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setFavoriteItemList()
+        onClickBack()
     }
 
     override fun onDestroyView() {
@@ -69,5 +73,14 @@ class FavoriteItemFragment : Fragment() {
         val favoriteItemAdapter = FavoriteAdapter(requireContext())
         favoriteItemAdapter.setFavoriteList(favoriteItemList)
         binding.rvFavorites.adapter = favoriteItemAdapter
+    }
+
+    private fun onClickBack(){
+        binding.btnFavoriteBack.setOnClickListener {
+            activity?.let{
+                val intent = Intent(context, MainActivity::class.java)
+                startActivity(intent)
+            }
+        }
     }
 }
