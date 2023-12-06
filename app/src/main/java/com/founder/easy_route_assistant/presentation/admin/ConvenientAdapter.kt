@@ -7,14 +7,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.founder.easy_route_assistant.data.model.response.ResponseConvenienceDto
 import com.founder.easy_route_assistant.databinding.ItemConvenientBinding
 
-class ConvenientAdapter(context: Context) : RecyclerView.Adapter<ConvenientViewHolder>() {
+class ConvenientAdapter(
+    context: Context,
+    private val patchOnClick: (String, String, DoubleArray, String, String, String, Int, Boolean) -> Unit,
+) :
+    RecyclerView.Adapter<ConvenientViewHolder>() {
     private val inflater by lazy { LayoutInflater.from(context) }
 
     private var convenientList: List<ResponseConvenienceDto.Convenience> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ConvenientViewHolder {
         val binding = ItemConvenientBinding.inflate(inflater, parent, false)
-        return ConvenientViewHolder(binding)
+        return ConvenientViewHolder(binding, patchOnClick)
     }
 
     override fun onBindViewHolder(holder: ConvenientViewHolder, position: Int) {
