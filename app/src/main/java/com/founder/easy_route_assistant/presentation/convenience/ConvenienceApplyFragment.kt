@@ -25,6 +25,11 @@ class ConvenienceApplyFragment : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?,
     ): View? {
         _binding = BottomSheetConvenienceApplyBinding.inflate(inflater, container, false)
+        val placeName = arguments?.getString("name")
+        binding.tvBsLocation.text = placeName
+
+        val placeAddress = arguments?.getString("address")!!
+        binding.tvBsAddressResult.text = placeAddress
         return binding.root
     }
 
