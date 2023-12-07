@@ -18,7 +18,7 @@ class RouteDetailViewHolder(
     RecyclerView.ViewHolder(binding.root) {
     fun onBind(item: ResponseRouteDetailDto.RouteDetail, position: Int, itemCount: Int) {
         binding.tvItemTitle.text = item.departure
-        binding.tvItemRouteDetail.text = "${item.timeSecond / 60}분, ${item.distanceMeter}m 이동"
+        binding.tvItemRouteDetail.text = "${item.timeSecond}, ${item.distanceMeter}m 이동"
         binding.tvItemLineNumber.text = item.subwayNum
 
         if (item.moveMode == "elevator") {
@@ -48,7 +48,7 @@ class RouteDetailViewHolder(
             }
             "SUBWAY" -> {
                 val subwayColorCode = item.routeColor
-                val subwayColor = Color.parseColor("#$subwayColorCode")
+                val subwayColor = Color.parseColor("$subwayColorCode")
                 ImageViewCompat.setImageTintList(binding.itemInfoCircle, ColorStateList.valueOf(subwayColor))
                 binding.tvItemLineNumber.text = item.subwayNum
             }
