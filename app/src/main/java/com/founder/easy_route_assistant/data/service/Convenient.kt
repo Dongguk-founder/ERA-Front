@@ -7,9 +7,9 @@ import retrofit2.http.Header
 import retrofit2.http.Path
 
 interface Convenient {
-    @GET("favorite/add/{convenientType}")
+    @GET("convenient/get-{convenientType}")
     fun getConvenientList(
         @Header("jwt") accessToken: String,
         @Path("convenientType") type: String,
-    ): Call<ResponseConvenientList>
+    ): Call<ResponseConvenientList?>
 }

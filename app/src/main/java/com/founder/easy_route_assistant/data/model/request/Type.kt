@@ -12,9 +12,9 @@ data class Type(
     @SerialName("point")
     var point: Point,
     @SerialName("weekday")
-    var weekday: Point,
+    var weekday: String?,
     @SerialName("saturday")
-    var saturday: Point,
+    var saturday: String?,
     @SerialName("holiday")
-    var holiday: Point,
+    var holiday: String?,
 )

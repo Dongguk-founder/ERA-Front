@@ -30,7 +30,13 @@
             android:exported="false" />
         <activity
             android:name=".presentation.auth.LoginEmailActivity"
-            android:exported="false" />
+            android:exported="true">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
         <activity
             android:name=".presentation.auth.LoginActivity"
             android:exported="false" />
@@ -39,14 +45,9 @@
             android:exported="false" />
         <activity
             android:name=".presentation.route.RouteTabActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:exported="false"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <!-- 네이티브 앱 키 추가 -->
+    <!-- 네이티브 앱 키 추가 -->
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="a819ea5084d0a632211a9214d0da9f76" />

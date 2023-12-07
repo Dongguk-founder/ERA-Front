@@ -3,6 +3,7 @@ package com.founder.easy_route_assistant.presentation.route
 import KakaoAPIKeyword
 import ListAdapter
 import ResultSearchKeyword
+import android.content.ContentValues
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
@@ -11,14 +12,26 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.founder.easy_route_assistant.Utils.MyApplication
+import com.founder.easy_route_assistant.Utils.showToast
+import com.founder.easy_route_assistant.data.model.request.Point
+import com.founder.easy_route_assistant.data.model.request.RequestRouteSearchDto
+import com.founder.easy_route_assistant.data.model.response.ResponseRouteListDto
+import com.founder.easy_route_assistant.data.model.response.RouteDTO
+import com.founder.easy_route_assistant.data.service.ServicePool
 import com.founder.easy_route_assistant.databinding.ActivityTabBinding
+import com.founder.easy_route_assistant.presentation.ElementListLayout
 import com.founder.easy_route_assistant.presentation.ListLayout
 import com.founder.easy_route_assistant.presentation.MainActivity
+import com.founder.easy_route_assistant.presentation.RouteListLayout
+import com.founder.testrecyclerview.RouteDTOAdapter
+import com.founder.testrecyclerview.routeElementsAdapter
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+
 
 class RouteTabActivity : AppCompatActivity() {
     companion object {
@@ -29,8 +42,16 @@ class RouteTabActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTabBinding
     private val listItems = arrayListOf<ListLayout>() // 리사이클러 뷰 아이템
     private val listAdapter = ListAdapter(listItems) // 리사이클러 뷰 어댑터
+    private var RouteItems = arrayListOf<RouteListLayout>() // 리사이클러 뷰 아이템
+    private var ElementItems = arrayListOf<ElementListLayout>() // 리사이클러 뷰 아이템
+    private val routeAdapter = RouteDTOAdapter(RouteItems) // 리사이클러 뷰 어댑터
     private var pageNumber = 1 // 검색 페이지 번호
     private var keyword = "" // 검색 키워드
+    private var startx = 0.0
+    private var starty = 0.0
+    private var endx = 0.0
+    private var endy = 0.0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,8 +63,27 @@ class RouteTabActivity : AppCompatActivity() {
         binding.rvList.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.rvList.adapter = listAdapter
+        binding.etSearchEnd.hint = intent.getStringExtra("name")
+        endx = intent.getDoubleExtra("pointX", 0.0)
+        endy = intent.getDoubleExtra("pointY", 0.0)
 
-        binding.etSearchEnd.hint = "도착지임"
+
+        binding.rvPalette.apply{
+            layoutManager =
+                LinearLayoutManager(this@RouteTabActivity, LinearLayoutManager.VERTICAL, false)
+            adapter=routeAdapter
+        }
+
+
+        routeAdapter.setItemClickListener(object : RouteDTOAdapter.OnItemClickListener {
+            override fun onClick(view: View, position: Int) {
+                Log.e(
+                    "ITEM CLICK",
+                    "CLICKED ITEM POSITION: $position"
+                )
+            }
+        })
+
 
         binding.etSearchStart.setOnKeyListener(
             View.OnKeyListener { v, keyCode, event -> // Enter key Action
@@ -51,24 +91,94 @@ class RouteTabActivity : AppCompatActivity() {
                     // 키패드 내리기
                     val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                     imm.hideSoftInputFromWindow(binding.etSearchStart.getWindowToken(), 0)
+                    binding.layoutList.visibility = View.VISIBLE
+                    binding.layoutList2.visibility = View.GONE
 
                     // 처리
                     keyword = binding.etSearchStart.text.toString()
                     pageNumber = 1
                     searchKeyword(keyword, pageNumber)
-                    binding.layoutList.visibility = View.VISIBLE
+                    listAdapter.setItemClickListener(object : ListAdapter.OnItemClickListener {
+                        override fun onClick(v: View, position: Int) {
+                            startx = listItems[position].x
+                            starty = listItems[position].y
+                            binding.layoutList.visibility = View.GONE
+                            binding.etSearchStart.setText(listItems[position].name)
+                        }
+                    })
                     return@OnKeyListener true
                 }
                 false
             },
         )
 
-        listAdapter.setItemClickListener(object : ListAdapter.OnItemClickListener {
-            override fun onClick(v: View, position: Int) {
-                binding.layoutList.visibility = View.GONE
-                binding.etSearchStart.setText(listItems[position].name)
-            }
-        })
+        binding.etSearchEnd.setOnKeyListener(
+            View.OnKeyListener { v, keyCode, event -> // Enter key Action
+                if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+                    // 키패드 내리기
+                    val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(binding.etSearchEnd.getWindowToken(), 0)
+                    binding.layoutList.visibility = View.VISIBLE
+                    binding.layoutList2.visibility = View.GONE
+
+
+                    // 처리
+                    keyword = binding.etSearchEnd.text.toString()
+                    pageNumber = 1
+                    searchKeyword(keyword, pageNumber)
+                    listAdapter.setItemClickListener(object : ListAdapter.OnItemClickListener {
+                        override fun onClick(v: View, position: Int) {
+                            endx = listItems[position].x
+                            endy = listItems[position].y
+                            binding.layoutList.visibility = View.GONE
+                            binding.etSearchEnd.setText(listItems[position].name)
+                        }
+                    })
+                    return@OnKeyListener true
+                }
+                false
+            },
+        )
+
+        binding.btnSearch.setOnClickListener {
+            searchroute()
+            binding.layoutList2.visibility = View.VISIBLE
+        }
+
+    }
+
+    private fun searchroute() {
+        val startpoint = Point(startx, starty)
+        var endpoint = Point(endx, endy)
+        val header = MyApplication.prefs.getString("jwt", "")
+        ServicePool.route.add(
+            header,
+            RequestRouteSearchDto(startpoint, endpoint)
+        )
+            .enqueue(object : Callback<ResponseRouteListDto> {
+                override fun onResponse(
+                    call: Call<ResponseRouteListDto>,
+                    response: Response<ResponseRouteListDto>
+                ) {
+                    when (response.code()) {
+                        200 -> {
+                            // 즐겨찾기 추가 성공
+                            addItems(response.body())
+                            Log.d("Test", "Body: ${response.body()}")
+                            showToast("길찾기 리스트 받아오기 성공!")
+                        }
+
+                        else -> {
+                            showToast("서버 에러 발생")
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseRouteListDto>, t: Throwable) {
+                    Log.e(ContentValues.TAG, t.toString())
+                    showToast("실패")
+                }
+            })
     }
 
     private fun searchKeyword(keyword: String, page: Int) {
@@ -127,4 +237,37 @@ class RouteTabActivity : AppCompatActivity() {
             Toast.makeText(this, "검색 결과가 없습니다", Toast.LENGTH_SHORT).show()
         }
     }
+
+    private fun addItems(searchResult: ResponseRouteListDto?) {
+            RouteItems.clear() // 리스트 초기화
+            for (document in searchResult!!.routeDTOS) {
+                // 결과를 리사이클러 뷰에 추가
+                val item = RouteListLayout(
+                    document.id,
+                    document.totalTime,
+                    addItems(document)
+                )
+                RouteItems.add(item)
+
+            }
+        routeAdapter.notifyDataSetChanged()
+    }
+
+    private fun addItems(searchResult: RouteDTO?): ArrayList<ElementListLayout> {
+        for (document in searchResult!!.routeElements) {
+            // 결과를 리사이클러 뷰에 추가
+            val item = ElementListLayout(
+                document.start,
+                document.mode,
+                document.routeColor,
+                document.name,
+                document.line
+            )
+            ElementItems.add(item)
+        }
+        return ElementItems
+
+    }
+
+
 }
