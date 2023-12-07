@@ -20,6 +20,15 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.detail_route.RouteDetailActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".presentation.convenience.ConvenienceListActivity"
             android:exported="false" />
         <activity
@@ -30,13 +39,7 @@
             android:exported="false" />
         <activity
             android:name=".presentation.auth.LoginEmailActivity"
-            android:exported="true">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-    </activity>
+            android:exported="false" />
         <activity
             android:name=".presentation.auth.LoginActivity"
             android:exported="false" />
@@ -45,9 +48,8 @@
             android:exported="false" />
         <activity
             android:name=".presentation.route.RouteTabActivity"
-            android:exported="false"/>
-
-    <!-- 네이티브 앱 키 추가 -->
+            android:exported="false" />
+        <!-- 네이티브 앱 키 추가 -->
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="a819ea5084d0a632211a9214d0da9f76" />

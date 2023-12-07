@@ -1,17 +1,14 @@
 package com.founder.easy_route_assistant.presentation.detail_route
 
-import android.content.ClipDescription
-import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
-import com.davemorrissey.labs.subscaleview.ImageSource
 import com.davemorrissey.labs.subscaleview.ImageSource.bitmap
 import com.davemorrissey.labs.subscaleview.ImageSource.uri
 import com.founder.easy_route_assistant.Utils.MyApplication
@@ -19,21 +16,19 @@ import com.founder.easy_route_assistant.Utils.showToast
 import com.founder.easy_route_assistant.data.model.response.ResponseRouteDetailDto
 import com.founder.easy_route_assistant.data.service.ServicePool
 import com.founder.easy_route_assistant.databinding.ActivityRouteDetailBinding
-import com.founder.easy_route_assistant.presentation.route.RouteTabActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class RouteDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRouteDetailBinding
-    val id = 3
+    val id = 6
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRouteDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         // Intent로 클릭한 아이템의 id 받아오기
-
         setRouteDetailItemList()
         addOnBackPressedCallback()
         clickBackBtn()
@@ -51,8 +46,11 @@ class RouteDetailActivity : AppCompatActivity() {
                         202 -> {
                             showToast("상세 경로 안내입니다.")
                             val data: ResponseRouteDetailDto = response.body()!!
+                            Log.d("Test", "Body: ${response.body()}")
                             setRouteDetailItemAdapter(data.routeDetails)
+                            binding.tvTotalTime.text = data.totalTime
                         }
+
                         else -> showToast("서버 에러 발생")
                     }
                 }
@@ -63,17 +61,17 @@ class RouteDetailActivity : AppCompatActivity() {
             })
     }
 
-    private fun setRouteDetailItemAdapter(routeDetailItemList: List<ResponseRouteDetailDto.RouteDetail>){
+    private fun setRouteDetailItemAdapter(routeDetailItemList: List<ResponseRouteDetailDto.RouteDetail>) {
         val routeDetailItemAdapter = RouteDetailAdapter(this, ::clickDetail)
         routeDetailItemAdapter.setRouteDetailList(routeDetailItemList)
         binding.rvRouteDetail.adapter = routeDetailItemAdapter
     }
 
-    private fun clickDetail(imgPath: String, description: List<String>){
+    private fun clickDetail(imgPath: String, description: List<String>) {
         Glide.with(this)
             .asBitmap()
             .load(uri(imgPath))
-            .into(object: CustomTarget<Bitmap>(){
+            .into(object : CustomTarget<Bitmap>() {
                 override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
                     binding.imvItemDetailViewImg.setImage(bitmap(resource))
                 }
@@ -101,7 +99,7 @@ class RouteDetailActivity : AppCompatActivity() {
         this.onBackPressedDispatcher.addCallback(this, callback)
     }
 
-    private fun clickBackBtn(){
+    private fun clickBackBtn() {
         binding.btnItemDetailViewExit.setOnClickListener { finish() }
     }
 }
