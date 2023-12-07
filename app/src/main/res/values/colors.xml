@@ -12,4 +12,7 @@
     <color name="light_pink">#fceded</color>
     <color name="blue">#0000FF</color>
 
+    <color name="wheelchair_gray">#CCD1CD</color>
+    <color name="elevator_yellow">#F5D86F</color>
+    <color name="bus_green">#AECD8C</color>
 </resources>
