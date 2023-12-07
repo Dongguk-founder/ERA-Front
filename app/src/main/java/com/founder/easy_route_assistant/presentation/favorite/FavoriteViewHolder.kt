@@ -9,11 +9,9 @@ class FavoriteViewHolder(private val binding: ItemFavoriteBinding) :
     fun onBind(favoriteData: ResponseFavoriteListDto.FavoriteList) {
         binding.tvFavoriteItemName.text = favoriteData.placeName
         binding.tvFavoriteItemAddress.text = favoriteData.placeAddress
-
-        onclickBack()
     }
 
-    private fun onclickBack() {
+    private fun onclickdelete() {
         binding.imvDeleteFavoriteItem.setOnClickListener {
 
         }
