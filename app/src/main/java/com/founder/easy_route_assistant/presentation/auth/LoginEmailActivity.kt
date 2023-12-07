@@ -11,6 +11,7 @@ import com.founder.easy_route_assistant.data.model.response.ResponseLoginEmailDt
 import com.founder.easy_route_assistant.data.service.ServicePool.authService
 import com.founder.easy_route_assistant.databinding.ActivityLoginEmailBinding
 import com.founder.easy_route_assistant.presentation.MainActivity
+import com.founder.easy_route_assistant.presentation.admin.AdminActivity
 import retrofit2.Call
 import retrofit2.Response
 
@@ -45,10 +46,17 @@ class LoginEmailActivity : AppCompatActivity() {
                                 MyApplication.prefs.setString("jwt", data.token)
                                 showToast("로그인이 성공했습니다.")
                                 // 로그인 후 메인 액티비티로 전환
-                                val nextIntent =
-                                    Intent(this@LoginEmailActivity, MainActivity::class.java)
-                                nextIntent.putExtra("id", inputID)
-                                startActivity(nextIntent)
+                                if (data.role == "ADMIN") {
+                                    val nextIntent =
+                                        Intent(this@LoginEmailActivity, AdminActivity::class.java)
+                                    nextIntent.putExtra("id", inputID)
+                                    startActivity(nextIntent)
+                                } else {
+                                    val nextIntent =
+                                        Intent(this@LoginEmailActivity, MainActivity::class.java)
+                                    nextIntent.putExtra("id", inputID)
+                                    startActivity(nextIntent)
+                                }
                             }
 
                             400 -> {
