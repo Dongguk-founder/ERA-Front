@@ -19,6 +19,7 @@ class ConvenienceListActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setConvenienceList()
+        onClickBackBtn()
     }
 
     private fun setConvenienceList() {
@@ -50,5 +51,11 @@ class ConvenienceListActivity : AppCompatActivity() {
         val convenienceAdapter = ConvenienceAdapter(this)
         convenienceAdapter.setConvenientList(convenienceList)
         binding.rvUserConvenientList.adapter = convenienceAdapter
+    }
+
+    private fun onClickBackBtn(){
+        binding.btnConvenientBack.setOnClickListener {
+            finish()
+        }
     }
 }
