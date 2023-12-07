@@ -63,8 +63,11 @@ class ConvenienceApplyFragment : BottomSheetDialogFragment() {
     }
 
     private fun saveConvenienceApply() {
-        val placeName = arguments?.getString("address")
+        val placeName = arguments?.getString("name")
         binding.tvBsLocation.text = placeName
+
+        val placeAddress = arguments?.getString("address")!!
+        binding.tvBsAddressResult.text = placeAddress
 
         val header = MyApplication.prefs.getString("jwt", "")
         val convenientType = binding.spinnerBsConvenienceTypeResult.getItemAtPosition(0).toString()
@@ -72,9 +75,6 @@ class ConvenienceApplyFragment : BottomSheetDialogFragment() {
         val pointX = arguments?.getDouble("pointX")!!
         val pointY = arguments?.getDouble("pointY")!!
         val point = RequestConvenienceApplyDto.Point(pointX, pointY)
-
-        val placeAddress = arguments?.getString("name")!!
-        binding.tvBsAddressResult.text = placeAddress
 
         val content = binding.etBsConvenienceDetailResult.text.toString()
 
