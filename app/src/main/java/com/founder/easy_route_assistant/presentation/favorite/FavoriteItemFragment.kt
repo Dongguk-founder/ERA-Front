@@ -77,10 +77,10 @@ class FavoriteItemFragment : Fragment() {
 
     private fun onClickBack(){
         binding.btnFavoriteBack.setOnClickListener {
-            activity?.let{
-                val intent = Intent(context, MainActivity::class.java)
-                startActivity(intent)
-            }
+            activity?.supportFragmentManager
+                ?.beginTransaction()
+                ?.remove(this)
+                ?.commit()
         }
     }
 }

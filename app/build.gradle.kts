@@ -92,4 +92,11 @@ dependencies {
 
     // CircleImageView
     implementation ("de.hdodenhof:circleimageview:3.1.0")
+
+    // SubScaleView
+    implementation ("com.davemorrissey.labs:subsampling-scale-image-view-androidx:3.10.0")
+
+    // Glide
+    implementation ("com.github.bumptech.glide:glide:4.11.0")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.11.0")
 }
