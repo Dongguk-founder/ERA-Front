@@ -1,4 +1,5 @@
 // 리사이클러 뷰 어댑터 클래스
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import com.founder.easy_route_assistant.presentation.ListLayout
 
 class ListAdapter(val itemList: ArrayList<ListLayout>) :
     RecyclerView.Adapter<ListAdapter.ViewHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListAdapter.ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_list, parent, false)
         return ViewHolder(view)
@@ -21,6 +23,10 @@ class ListAdapter(val itemList: ArrayList<ListLayout>) :
     override fun onBindViewHolder(holder: ListAdapter.ViewHolder, position: Int) {
         holder.name.text = itemList[position].name
         holder.road.text = itemList[position].road
+        Log.e(
+            "ITEM CLICK",
+            "CLICKED ITEM POSITION: ${itemList[position].name}"
+        )
         // 아이템 클릭 이벤트
         holder.itemView.setOnClickListener {
             itemClickListener.onClick(it, position)
