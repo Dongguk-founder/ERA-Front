@@ -18,6 +18,7 @@ import com.founder.easy_route_assistant.data.model.request.Point
 import com.founder.easy_route_assistant.data.model.request.RequestRouteSearchDto
 import com.founder.easy_route_assistant.data.model.response.ResponseRouteListDto
 import com.founder.easy_route_assistant.data.model.response.RouteDTO
+import com.founder.easy_route_assistant.data.model.response.RouteElements
 import com.founder.easy_route_assistant.data.service.ServicePool
 import com.founder.easy_route_assistant.databinding.ActivityTabBinding
 import com.founder.easy_route_assistant.presentation.ElementListLayout
@@ -44,6 +45,7 @@ class RouteTabActivity : AppCompatActivity() {
     private val listAdapter = ListAdapter(listItems) // 리사이클러 뷰 어댑터
     private var RouteItems = arrayListOf<RouteListLayout>() // 리사이클러 뷰 아이템
     private var ElementItems = arrayListOf<ElementListLayout>() // 리사이클러 뷰 아이템
+    private val ElementAdapter = routeElementsAdapter(ElementItems) // 리사이클러 뷰 어댑터
     private val routeAdapter = RouteDTOAdapter(RouteItems) // 리사이클러 뷰 어댑터
     private var pageNumber = 1 // 검색 페이지 번호
     private var keyword = "" // 검색 키워드
@@ -68,12 +70,11 @@ class RouteTabActivity : AppCompatActivity() {
         endy = intent.getDoubleExtra("pointY", 0.0)
 
 
-        binding.rvPalette.apply{
+        binding.rvPalette.apply {
             layoutManager =
                 LinearLayoutManager(this@RouteTabActivity, LinearLayoutManager.VERTICAL, false)
-            adapter=routeAdapter
+            adapter = routeAdapter
         }
-
 
         routeAdapter.setItemClickListener(object : RouteDTOAdapter.OnItemClickListener {
             override fun onClick(view: View, position: Int) {
@@ -245,16 +246,17 @@ class RouteTabActivity : AppCompatActivity() {
                 val item = RouteListLayout(
                     document.id,
                     document.totalTime,
-                    addItems(document)
+                    addItems(document.routeElements)
                 )
                 RouteItems.add(item)
-
+                routeAdapter.notifyDataSetChanged()
             }
-        routeAdapter.notifyDataSetChanged()
     }
 
-    private fun addItems(searchResult: RouteDTO?): ArrayList<ElementListLayout> {
-        for (document in searchResult!!.routeElements) {
+    private fun addItems(searchResult: List<RouteElements>?): ArrayList<ElementListLayout> {
+        Log.e("COUNT", "카운트횟수")
+        ElementItems.clear()
+        for (document in searchResult!!) {
             // 결과를 리사이클러 뷰에 추가
             val item = ElementListLayout(
                 document.start,

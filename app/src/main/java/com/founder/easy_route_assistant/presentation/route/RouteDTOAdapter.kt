@@ -28,12 +28,14 @@ class RouteDTOAdapter(private val items: ArrayList<RouteListLayout>) : RecyclerV
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.totaltime.text = items[position].totalTime
+        val item = items[position].routeElements[1]
         holder.element.apply {
             adapter = routeElementsAdapter(items[position].routeElements)
             layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
         routeElementsAdapter(items[position].routeElements).notifyDataSetChanged()
+
         // 아이템 클릭 이벤트
         holder.itemView.setOnClickListener {
             itemClickListener?.onClick(it, position)

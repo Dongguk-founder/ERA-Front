@@ -61,4 +61,5 @@ object ServicePool {
     val favoriteListService = ApiFactory.create<FavoriteListService>()
     val adminService = ApiFactory.create<AdminService>()
     val route = ApiFactory.create<Route>()
+    val routeDetailService = ApiFactory.create<RouteDetailService>()
 }

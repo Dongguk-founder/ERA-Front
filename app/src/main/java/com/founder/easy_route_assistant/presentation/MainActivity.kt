@@ -82,6 +82,7 @@ class MainActivity : AppCompatActivity() {
         // 메뉴바에서 나가기 버튼 클릭시
         binding.ivDetailExit.setOnClickListener {
             binding.layoutDetailList.visibility = View.GONE
+            binding.btnSearch1.visibility=VISIBLE
         }
 
         // 검색 버튼 클릭시->검색 결과 리스트
