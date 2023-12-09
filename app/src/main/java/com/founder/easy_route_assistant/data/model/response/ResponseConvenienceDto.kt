@@ -23,7 +23,7 @@ data class ResponseConvenienceDto(
         @SerialName("accepted")
         val accepted: Boolean,
         @SerialName("userID")
-        val userId: String,
+        val userId: String?,
     ) {
         @Serializable
         data class Point(
