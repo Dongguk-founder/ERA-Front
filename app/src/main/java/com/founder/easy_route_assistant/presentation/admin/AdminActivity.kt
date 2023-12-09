@@ -71,12 +71,18 @@ class AdminActivity : AppCompatActivity() {
             id,
             accepted,
         )
-            .enqueue(object : retrofit2.Callback<Void> {
+            .enqueue(object : Callback<Void> {
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
                     if (response.isSuccessful) {
                         if (response.code() == 202) {
+                            if (accepted) {
                             showToast("편의시설 등록이 완료되었습니다.")
-                            setConvenientItemList()
+                                setConvenientItemList()
+                            }
+                            else{
+                                showToast("편의시설 등록이 반려되었습니다.")
+                                setConvenientItemList()
+                            }
                         } else {
                             showToast("서버 에러 발생")
                         }
