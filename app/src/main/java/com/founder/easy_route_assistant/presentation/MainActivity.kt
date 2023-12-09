@@ -77,12 +77,12 @@ class MainActivity : AppCompatActivity() {
         // 메뉴바에서 나가기 버튼 클릭시
         binding.ivExit.setOnClickListener {
             binding.layoutMenu.visibility = View.GONE
+            binding.btnSearch1.visibility=VISIBLE
         }
 
         // 메뉴바에서 나가기 버튼 클릭시
         binding.ivDetailExit.setOnClickListener {
             binding.layoutDetailList.visibility = View.GONE
-            binding.btnSearch1.visibility=VISIBLE
         }
 
         // 검색 버튼 클릭시->검색 결과 리스트
@@ -275,24 +275,17 @@ class MainActivity : AppCompatActivity() {
                     call: Call<ResponseConvenientList?>,
                     response: Response<ResponseConvenientList?>,
                 ) {
-                    Log.e(
-                        "ITEM CLICK",
-                        "CLICKED ITEM POSITION: ${response.body()}"
-                    )
                     when (response.code()) {
                         202 -> {
                             // 즐겨찾기 리스트 get 성공
-                            showToast("즐겨찾기 get 성공!")
+                            showToast("편의시설 get 성공!")
                             addconvenientmarker(response.body())
 
-                            // 통신 성공
-                            Log.d("Test", "Body: ${response.body()}")
                         }
 
                         else -> {
                             showToast("서버 에러 발생")
 
-                            Log.d("Test", "Body: ${response.body()}")
                             addconvenientmarker(response.body())
                         }
                     }
@@ -376,7 +369,7 @@ class MainActivity : AppCompatActivity() {
                     isCustomImageAutoscale = true
                     selectedMarkerType = MapPOIItem.MarkerType.RedPin
                     userObject =
-                        arrayListOf(list.description, list.holiday, list.weekday, list.saturday)
+                        arrayListOf(list.description, list.weekday, list.holiday, list.saturday)
                 }
                 binding.mapView.addPOIItem(points)
                 binding.mapView.setMapCenterPointAndZoomLevel(points.mapPoint, 1, true)
