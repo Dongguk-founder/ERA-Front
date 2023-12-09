@@ -2,52 +2,45 @@ package com.founder.testrecyclerview
 
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.founder.easy_route_assistant.R
 import com.founder.easy_route_assistant.data.model.response.RouteElements
-import com.founder.easy_route_assistant.presentation.ElementListLayout
+import com.founder.easy_route_assistant.databinding.ItemRouteElementBinding
 
-class routeElementsAdapter(private var items: List<ElementListLayout>) : RecyclerView.Adapter<routeElementsAdapter.ViewHolder>() {
+class routeElementsAdapter(val items: List<RouteElements>) : RecyclerView.Adapter<routeElementsAdapter.ViewHolder>() {
 
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val start: TextView = itemView.findViewById(R.id.tv_list_name)
-        val name: TextView = itemView.findViewById(R.id.tv_list_road)
-        val line: TextView = itemView.findViewById(R.id.tv_list_number)
-        val imageBig: ImageView = itemView.findViewById(R.id.item_big)
-        val imagesmall: ImageView = itemView.findViewById(R.id.item_small)
-        val imagebus: ImageView = itemView.findViewById(R.id.iv_bus)
+    class ViewHolder(private val binding: ItemRouteElementBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: RouteElements) {
+            binding.tvListName.text = item.start
+            binding.tvListRoad.text = item.name + "방면"
+            binding.tvListNumber.text = item.line
+            val bgShape = binding.itemBig.background as GradientDrawable
+            bgShape.setColor(Color.parseColor(item.routeColor))
+
+            if(item.mode == null){
+                binding.itemSmall.visibility= View.VISIBLE
+                binding.itemBig.visibility= View.GONE
+                val bgShape = binding.itemSmall.background as GradientDrawable
+                bgShape.setColor(Color.parseColor(item.routeColor))
+            }
+
+            if(item.line == null){
+                binding.ivBus.visibility= View.VISIBLE
+            }
+            else{
+                binding.ivBus.visibility= View.GONE
+            }
+        }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): routeElementsAdapter.ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_route_element, parent, false)
-        return ViewHolder(view)
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): routeElementsAdapter.ViewHolder =
+        ViewHolder(ItemRouteElementBinding.inflate(LayoutInflater.from(parent.context), parent, false))
 
     override fun onBindViewHolder(holder: routeElementsAdapter.ViewHolder, position: Int) {
-        holder.start.text = items[position].start
-        holder.name.text = items[position].name
-        holder.line.text = items[position].line
-        val bgShape = holder.imageBig.background as GradientDrawable
-        bgShape.setColor(Color.parseColor(items[position].routeColor))
-
-
-        if(items[position].mode == ""){
-            holder.imagesmall.visibility= View.VISIBLE
-            holder.imageBig.visibility= View.INVISIBLE
-            val bgShape = holder.imagesmall.background as GradientDrawable
-            bgShape.setColor(Color.parseColor(items[position].routeColor))
-        }
-
-        if(items[position].line == ""){
-            holder.imagebus.visibility= View.VISIBLE
-        }
+        holder.bind(items[position])
     }
 
     override fun getItemCount(): Int = items.size

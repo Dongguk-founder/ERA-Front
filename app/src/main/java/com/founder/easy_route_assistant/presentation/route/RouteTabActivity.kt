@@ -4,6 +4,7 @@ import KakaoAPIKeyword
 import ListAdapter
 import ResultSearchKeyword
 import android.content.ContentValues
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
@@ -18,12 +19,14 @@ import com.founder.easy_route_assistant.data.model.request.Point
 import com.founder.easy_route_assistant.data.model.request.RequestRouteSearchDto
 import com.founder.easy_route_assistant.data.model.response.ResponseRouteListDto
 import com.founder.easy_route_assistant.data.model.response.RouteDTO
+import com.founder.easy_route_assistant.data.model.response.RouteElements
 import com.founder.easy_route_assistant.data.service.ServicePool
 import com.founder.easy_route_assistant.databinding.ActivityTabBinding
 import com.founder.easy_route_assistant.presentation.ElementListLayout
 import com.founder.easy_route_assistant.presentation.ListLayout
 import com.founder.easy_route_assistant.presentation.MainActivity
 import com.founder.easy_route_assistant.presentation.RouteListLayout
+import com.founder.easy_route_assistant.presentation.detail_route.RouteDetailActivity
 import com.founder.testrecyclerview.RouteDTOAdapter
 import com.founder.testrecyclerview.routeElementsAdapter
 import retrofit2.Call
@@ -42,8 +45,8 @@ class RouteTabActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTabBinding
     private val listItems = arrayListOf<ListLayout>() // 리사이클러 뷰 아이템
     private val listAdapter = ListAdapter(listItems) // 리사이클러 뷰 어댑터
-    private var RouteItems = arrayListOf<RouteListLayout>() // 리사이클러 뷰 아이템
-    private var ElementItems = arrayListOf<ElementListLayout>() // 리사이클러 뷰 아이템
+    private var RouteItems = arrayListOf<RouteDTO>()// 리사이클러 뷰 아이템
+    private var ElementItems = arrayListOf<RouteElements>() // 리사이클러 뷰 아이템
     private val routeAdapter = RouteDTOAdapter(RouteItems) // 리사이클러 뷰 어댑터
     private var pageNumber = 1 // 검색 페이지 번호
     private var keyword = "" // 검색 키워드
@@ -68,19 +71,13 @@ class RouteTabActivity : AppCompatActivity() {
         endy = intent.getDoubleExtra("pointY", 0.0)
 
 
-        binding.rvPalette.apply{
-            layoutManager =
-                LinearLayoutManager(this@RouteTabActivity, LinearLayoutManager.VERTICAL, false)
-            adapter=routeAdapter
-        }
-
 
         routeAdapter.setItemClickListener(object : RouteDTOAdapter.OnItemClickListener {
             override fun onClick(view: View, position: Int) {
-                Log.e(
-                    "ITEM CLICK",
-                    "CLICKED ITEM POSITION: $position"
-                )
+                val nextIntent =
+                    Intent(this@RouteTabActivity, RouteDetailActivity::class.java)
+                nextIntent.putExtra("id", position)
+                startActivity(nextIntent)
             }
         })
 
@@ -239,35 +236,24 @@ class RouteTabActivity : AppCompatActivity() {
     }
 
     private fun addItems(searchResult: ResponseRouteListDto?) {
-            RouteItems.clear() // 리스트 초기화
+        RouteItems.clear()
             for (document in searchResult!!.routeDTOS) {
                 // 결과를 리사이클러 뷰에 추가
-                val item = RouteListLayout(
+                val item = RouteDTO(
                     document.id,
                     document.totalTime,
-                    addItems(document)
+                    document.routeElements
                 )
                 RouteItems.add(item)
-
             }
-        routeAdapter.notifyDataSetChanged()
-    }
 
-    private fun addItems(searchResult: RouteDTO?): ArrayList<ElementListLayout> {
-        for (document in searchResult!!.routeElements) {
-            // 결과를 리사이클러 뷰에 추가
-            val item = ElementListLayout(
-                document.start,
-                document.mode,
-                document.routeColor,
-                document.name,
-                document.line
-            )
-            ElementItems.add(item)
+        binding.rvPalette.apply {
+            layoutManager =
+                LinearLayoutManager(this@RouteTabActivity, LinearLayoutManager.VERTICAL, false)
+            adapter = routeAdapter
         }
-        return ElementItems
-
     }
+
 
 
 }
