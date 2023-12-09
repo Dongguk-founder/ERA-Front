@@ -1,46 +1,47 @@
 package com.founder.testrecyclerview
 
-import android.util.Log
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.founder.easy_route_assistant.R
-import com.founder.easy_route_assistant.presentation.RouteListLayout
+import com.founder.easy_route_assistant.data.model.response.RouteDTO
+import com.founder.easy_route_assistant.databinding.ItemRouteBinding
 
-class RouteDTOAdapter(private val items: ArrayList<RouteListLayout>) : RecyclerView.Adapter<RouteDTOAdapter.ViewHolder>() {
+class RouteDTOAdapter(val items: List<RouteDTO>) : RecyclerView.Adapter<RouteDTOAdapter.ViewHolder>() {
 
     private var itemClickListener: OnItemClickListener? = null
 
 
-
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val totaltime: TextView = itemView.findViewById(R.id.tv_palette)
-        val element: RecyclerView = itemView.findViewById(R.id.rv_color)
+    class ViewHolder(private val binding: ItemRouteBinding, val context: Context) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: RouteDTO) {
+            with(binding)
+            {
+                tvPalette.text = item.totalTime
+                rvColor.apply {
+                    adapter = routeElementsAdapter(item.routeElements)
+                    layoutManager =
+                        LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                }
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RouteDTOAdapter.ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_route, parent, false)
-        return ViewHolder(view)
+        return ViewHolder(ItemRouteBinding.inflate(LayoutInflater.from(parent.context), parent, false),
+            parent.context
+        )
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.totaltime.text = items[position].totalTime
-        val item = items[position].routeElements[1]
-        holder.element.apply {
-            adapter = routeElementsAdapter(items[position].routeElements)
-            layoutManager =
-                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        }
-        routeElementsAdapter(items[position].routeElements).notifyDataSetChanged()
+    override fun onBindViewHolder(holder: RouteDTOAdapter.ViewHolder, position: Int) {
+        holder.bind(items[position])
 
         // 아이템 클릭 이벤트
         holder.itemView.setOnClickListener {
             itemClickListener?.onClick(it, position)
         }
-
     }
 
     override fun getItemCount(): Int = items.size
@@ -52,7 +53,6 @@ class RouteDTOAdapter(private val items: ArrayList<RouteListLayout>) : RecyclerV
     fun setItemClickListener(onItemClickListener: OnItemClickListener?) {
         this.itemClickListener = onItemClickListener
     }
-
 
 
 
