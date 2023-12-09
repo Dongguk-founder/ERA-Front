@@ -4,37 +4,37 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ResponseRouteDetailDto (
-    @SerialName("routeDetails")
+data class ResponseRouteDetailDto(
+    @SerialName("totalTime")
+    val totalTime: String?,
+    @SerialName("detailElements")
     val routeDetails: List<RouteDetail>
-){
+) {
     @Serializable
     data class RouteDetail(
         @SerialName("start")
-        val departure: String,
+        val departure: String?,
         @SerialName("end")
-        val arrival: String,
-        @SerialName("line")
-        val subwayNum: String,
+        val arrival: String?,
         @SerialName("mode") // WALK, BUS, SUBWAY, elevator
-        val moveMode: String,
-        @SerialName("name")
-        val detail: String,
+        val moveMode: String?,
         @SerialName("routeColor")
-        val routeColor: String,
-        @SerialName("sectionTime")
-        val timeSecond: Long,
+        val routeColor: String?,
+        @SerialName("name")
+        val detail: String?,
+        @SerialName("line")
+        val subwayNum: String?,
         @SerialName("distance")
-        val distanceMeter: Long,
-        @SerialName("details")
+        val distanceMeter: Long?,
+        @SerialName("sectionTime")
+        val timeSecond: String?,
+        @SerialName("description")
         val description: List<Descriptions>
     ) {
         @Serializable
         data class Descriptions(
-            @SerialName("id")
-            val descriptionNum: Long,
-            @SerialName("description")
-            val descriptions: List<String>,
+            @SerialName("descriptions")
+            val descriptions: ArrayList<String>,
             @SerialName("imgPath")
             val imgPath: String,
         )

@@ -18,11 +18,11 @@ class RouteDetailViewHolder(
     RecyclerView.ViewHolder(binding.root) {
     fun onBind(item: ResponseRouteDetailDto.RouteDetail, position: Int, itemCount: Int) {
         binding.tvItemTitle.text = item.departure
-        binding.tvItemRouteDetail.text = "${item.timeSecond / 60}분, ${item.distanceMeter}m 이동"
+        binding.tvItemRouteDetail.text = "${item.timeSecond}, ${item.distanceMeter}m 이동"
         binding.tvItemLineNumber.text = item.subwayNum
 
-        if (item.moveMode == "elevator") {
-            R.id.tv_item_route_img = View.VISIBLE
+        if (item.moveMode == "elevator" && item.description != null) {
+            binding.tvItemRouteImg.visibility = View.VISIBLE
         }
 
         setLineVisible(item, position, itemCount)
@@ -30,49 +30,75 @@ class RouteDetailViewHolder(
         clickDetailRoute(item)
     }
 
-    private fun coloringIcon(item: ResponseRouteDetailDto.RouteDetail){
-        when(item.moveMode){
+    private fun coloringIcon(item: ResponseRouteDetailDto.RouteDetail) {
+        when (item.moveMode) {
             "WALK" -> {
-                val walkIcon = ContextCompat.getDrawable(itemView.context, R.drawable.baseline_accessible_24)
+                val walkIcon =
+                    ContextCompat.getDrawable(itemView.context, R.drawable.baseline_accessible_24)
                 val wrappedWalkIcon = DrawableCompat.wrap(walkIcon!!)
-                DrawableCompat.setTint(wrappedWalkIcon, ContextCompat.getColor(itemView.context, R.color.wheelchair_gray))
+                DrawableCompat.setTint(
+                    wrappedWalkIcon,
+                    ContextCompat.getColor(itemView.context, R.color.wheelchair_gray)
+                )
 
                 binding.itemInfoCircle.setImageDrawable(wrappedWalkIcon)
             }
+
             "BUS" -> {
-                val busIcon = ContextCompat.getDrawable(itemView.context, R.drawable.baseline_directions_bus_24)
+                val busIcon = ContextCompat.getDrawable(
+                    itemView.context,
+                    R.drawable.baseline_directions_bus_24
+                )
                 val wrappedBusIcon = DrawableCompat.wrap(busIcon!!)
-                DrawableCompat.setTint(wrappedBusIcon, ContextCompat.getColor(itemView.context, R.color.bus_green))
+                DrawableCompat.setTint(
+                    wrappedBusIcon,
+                    ContextCompat.getColor(itemView.context, R.color.bus_green)
+                )
 
                 binding.itemInfoCircle.setImageDrawable(wrappedBusIcon)
             }
+
             "SUBWAY" -> {
                 val subwayColorCode = item.routeColor
-                val subwayColor = Color.parseColor("#$subwayColorCode")
-                ImageViewCompat.setImageTintList(binding.itemInfoCircle, ColorStateList.valueOf(subwayColor))
+                val subwayColor = Color.parseColor("$subwayColorCode")
+                ImageViewCompat.setImageTintList(
+                    binding.itemInfoCircle,
+                    ColorStateList.valueOf(subwayColor)
+                )
                 binding.tvItemLineNumber.text = item.subwayNum
             }
+
             "elevator" -> {
-                val elevatorIcon = ContextCompat.getDrawable(itemView.context, R.drawable.ic_elevator_28) // ic_walk는 PNG로 저장된 이미지
+                val elevatorIcon = ContextCompat.getDrawable(
+                    itemView.context,
+                    R.drawable.ic_elevator_28
+                )
                 val wrappedElevatorIcon = DrawableCompat.wrap(elevatorIcon!!)
-                DrawableCompat.setTint(wrappedElevatorIcon, ContextCompat.getColor(itemView.context, R.color.elevator_yellow))
+                DrawableCompat.setTint(
+                    wrappedElevatorIcon,
+                    ContextCompat.getColor(itemView.context, R.color.elevator_yellow)
+                )
 
                 binding.itemInfoCircle.setImageDrawable(wrappedElevatorIcon)
             }
         }
     }
 
-    private fun clickDetailRoute(item: ResponseRouteDetailDto.RouteDetail){
+    private fun clickDetailRoute(item: ResponseRouteDetailDto.RouteDetail) {
         binding.tvItemRouteImg.setOnClickListener {
             R.id.layout_item_detail_view = View.VISIBLE
             clickDetail(item.description[0].imgPath, item.description[0].descriptions)
         }
     }
 
-    private fun setLineVisible(item: ResponseRouteDetailDto.RouteDetail, position: Int, itemCount: Int){
-        when(position){
+    private fun setLineVisible(
+        item: ResponseRouteDetailDto.RouteDetail,
+        position: Int,
+        itemCount: Int
+    ) {
+        when (position) {
             0 -> R.id.line_vertical = View.INVISIBLE
-            itemCount-1 -> R.id.line_horizontal = View.INVISIBLE
+            itemCount - 1 -> R.id.line_horizontal = View.INVISIBLE
         }
     }
 }

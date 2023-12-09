@@ -19,6 +19,7 @@ class ConvenienceListActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setConvenienceList()
+        onClickBackBtn()
     }
 
     private fun setConvenienceList() {
@@ -29,19 +30,18 @@ class ConvenienceListActivity : AppCompatActivity() {
                     call: Call<ResponseConvenienceDto>,
                     response: Response<ResponseConvenienceDto>,
                 ) {
-                    if (response.isSuccessful) {
-                        if (response.code() == 202) {
+                    when (response.code()) {
+                        202 -> {
                             val data: ResponseConvenienceDto = response.body()!!
                             setConvenienceAdapter(data.convenienceList)
-                            showToast("성공!")
-                        } else {
-                            showToast("서버 에러 발생")
+                            showToast("신청한 편의시설 목록입니다.")
                         }
+                        else -> showToast("서버 에러 발생")
                     }
                 }
 
                 override fun onFailure(call: Call<ResponseConvenienceDto>, t: Throwable) {
-                    showToast("네트워크 에러 발생")
+                    showToast("네트워크 오류 발생")
                 }
             })
     }
@@ -50,5 +50,11 @@ class ConvenienceListActivity : AppCompatActivity() {
         val convenienceAdapter = ConvenienceAdapter(this)
         convenienceAdapter.setConvenientList(convenienceList)
         binding.rvUserConvenientList.adapter = convenienceAdapter
+    }
+
+    private fun onClickBackBtn() {
+        binding.btnConvenientBack.setOnClickListener {
+            finish()
+        }
     }
 }
