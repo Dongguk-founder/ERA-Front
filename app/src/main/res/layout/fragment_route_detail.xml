@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_item_detail_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,21 +15,38 @@
 
         <ImageView
             android:id="@+id/btn_item_detail_view_exit"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
-            android:src="@drawable/img_exit" />
+            android:src="@drawable/img_exit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
+        <TextView
+            android:id="@+id/tv_item_detail_view_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="이동 경로 안내‍"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
             android:id="@+id/imv_item_detail_view_img"
-            app:layout_constraintTop_toBottomOf="@id/btn_item_detail_view_exit"
             android:layout_width="match_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_height="269dp"
             android:layout_marginTop="20dp"
-            android:scaleType="fitCenter" />
+            android:scaleType="fitCenter"
+            app:layout_constraintTop_toBottomOf="@id/tv_item_detail_view_title" />
 
         <TextView
             android:id="@+id/tv_item_detail_view_description"
@@ -40,20 +56,24 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:gravity="center"
-            android:textColor="@color/black"
-            android:textSize="18dp"
+            android:textColor="@color/bold_gray"
+            android:textSize="14dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/imv_item_detail_view_img"
             tools:text="여기에 이제 description이 들어가는데요\n(1)안녕하세요 지하철 7번 출구로 들어가세요\n(2)엘리베이터는 남자화장실에서 오른쪽으로 180m 돌아가시면 있숩니다" />
 
-        <com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
+        <ImageView
             android:id="@+id/imv_item_detail_view_img2"
-            app:layout_constraintTop_toBottomOf="@id/tv_item_detail_view_description"
             android:layout_width="match_parent"
             android:layout_height="269dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_marginTop="20dp"
-            android:scaleType="fitCenter" />
+            android:scaleType="fitCenter"
+            app:layout_constraintTop_toBottomOf="@id/tv_item_detail_view_description" />
 
         <TextView
             android:id="@+id/tv_item_detail_view_description2"
@@ -63,20 +83,24 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:gravity="center"
-            android:textColor="@color/black"
-            android:textSize="18dp"
+            android:textColor="@color/bold_gray"
+            android:textSize="14dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/imv_item_detail_view_img2"
-            tools:text="여기에 이제 description이 들어가는데요\n(1)"/>
+            tools:text="여기에 이제 description이 들어가는데요\n(1)" />
 
-        <com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
+        <ImageView
             android:id="@+id/imv_item_detail_view_img3"
-            app:layout_constraintTop_toBottomOf="@id/tv_item_detail_view_description2"
             android:layout_width="match_parent"
             android:layout_height="269dp"
             android:layout_marginTop="20dp"
-            android:scaleType="fitCenter" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintTop_toBottomOf="@id/tv_item_detail_view_description2" />
 
         <TextView
             android:id="@+id/tv_item_detail_view_description3"
@@ -86,20 +110,24 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:gravity="center"
-            android:textColor="@color/black"
-            android:textSize="18dp"
+            android:textColor="@color/bold_gray"
+            android:textSize="14dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/imv_item_detail_view_img3"
-            tools:text="여기에 이제 description이 들어가는데요\n(1)"/>
+            tools:text="여기에 이제 description이 들어가는데요\n(1)" />
 
-        <com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
+        <ImageView
             android:id="@+id/imv_item_detail_view_img4"
-            app:layout_constraintTop_toBottomOf="@id/tv_item_detail_view_description3"
             android:layout_width="match_parent"
             android:layout_height="269dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_marginTop="20dp"
-            android:scaleType="fitCenter" />
+            android:scaleType="fitCenter"
+            app:layout_constraintTop_toBottomOf="@id/tv_item_detail_view_description3" />
 
         <TextView
             android:id="@+id/tv_item_detail_view_description4"
@@ -109,12 +137,12 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:gravity="center"
-            android:textColor="@color/black"
-            android:textSize="18dp"
+            android:textColor="@color/bold_gray"
+            android:textSize="14dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/imv_item_detail_view_img4"
-            tools:text="여기에 이제 description이 들어가는데요\n(1)"/>
+            tools:text="여기에 이제 description이 들어가는데요\n(1)" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

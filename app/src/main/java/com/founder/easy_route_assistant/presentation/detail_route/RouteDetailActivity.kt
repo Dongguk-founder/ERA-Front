@@ -1,18 +1,11 @@
 package com.founder.easy_route_assistant.presentation.detail_route
 
-import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.transition.Transition
-import com.davemorrissey.labs.subscaleview.ImageSource.bitmap
-import com.davemorrissey.labs.subscaleview.ImageSource.uri
 import com.founder.easy_route_assistant.R
 import com.founder.easy_route_assistant.Utils.MyApplication
 import com.founder.easy_route_assistant.Utils.showToast
@@ -42,15 +35,9 @@ class RouteDetailActivity : AppCompatActivity() {
         reloadClick()
     }
 
-    private fun setDrawer(){
+    private fun setDrawer() {
         val drawer = binding.layoutDrawer
         drawer.openDrawer(Gravity.LEFT)
-
-        if (drawer.isDrawerOpen(Gravity.LEFT)) {
-            drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN)
-        } else {
-            drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-        }
     }
 
     private fun setRouteDetailItemList() {
@@ -88,14 +75,39 @@ class RouteDetailActivity : AppCompatActivity() {
 
     private fun clickDetail(description: List<ResponseRouteDetailDto.RouteDetail.Descriptions>) {
         val bundle = Bundle()
-        bundle.putString("imgPath1", description[0].imgPath)
-        bundle.putString("description1", description[0].descriptions.toString())
-        bundle.putString("imgPath2", description[1].imgPath)
-        bundle.putString("description2", description[1].descriptions.toString())
-        bundle.putString("imgPath3", description[2].imgPath)
-        bundle.putString("description3", description[2].descriptions.toString())
-        bundle.putString("imgPath4", description[3].imgPath)
-        bundle.putString("description4", description[3].descriptions.toString())
+        when(description.size){
+            1 -> {
+                bundle.putString("imgPath1", description[0].imgPath)
+                bundle.putString("description1", description[0].descriptions.toString())
+            }
+            2->{
+                bundle.putString("imgPath1", description[0].imgPath)
+                bundle.putString("description1", description[0].descriptions.toString())
+                bundle.putString("imgPath2", description[1].imgPath)
+                bundle.putString("description2", description[1].descriptions.toString())
+            }
+            3->{
+                bundle.putString("imgPath1", description[0].imgPath)
+                bundle.putString("description1", description[0].descriptions.toString())
+                bundle.putString("imgPath2", description[1].imgPath)
+                bundle.putString("description2", description[1].descriptions.toString())
+                bundle.putString("imgPath3", description[2].imgPath)
+                bundle.putString("description3", description[2].descriptions.toString())
+            }
+            4 -> {
+                bundle.putString("imgPath1", description[0].imgPath)
+                bundle.putString("description1", description[0].descriptions.toString())
+                bundle.putString("imgPath2", description[1].imgPath)
+                bundle.putString("description2", description[1].descriptions.toString())
+                bundle.putString("imgPath3", description[2].imgPath)
+                bundle.putString("description3", description[2].descriptions.toString())
+                bundle.putString("imgPath4", description[3].imgPath)
+                bundle.putString("description4", description[3].descriptions.toString())
+            }
+        }
+
+        val drawer = binding.layoutDrawer
+        drawer.closeDrawer(Gravity.LEFT)
 
         val routeDetailFragment = RouteDetailFragment()
         routeDetailFragment.arguments = bundle
