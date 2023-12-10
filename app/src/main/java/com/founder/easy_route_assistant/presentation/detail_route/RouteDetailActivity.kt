@@ -18,7 +18,8 @@ import retrofit2.Response
 
 class RouteDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRouteDetailBinding
-    val id = 3
+    val id = intent.getIntExtra("id", 0)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRouteDetailBinding.inflate(layoutInflater)
