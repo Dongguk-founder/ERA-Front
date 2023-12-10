@@ -26,10 +26,10 @@
 
     <ImageView
         android:id="@+id/item_info_icon_overlay"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:layout_marginStart="19dp"
-        android:layout_marginTop="6dp"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/shape_circle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/line_vertical" />
@@ -38,10 +38,11 @@
         android:id="@+id/tv_item_line_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="29dp"
-        android:layout_marginTop="5dp"
-        android:textColor="@color/black"
-        android:textSize="28dp"
+        android:layout_marginStart="27dp"
+        android:layout_marginTop="3dp"
+        android:textColor="@color/white"
+        android:textSize="32dp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/line_vertical"
         tools:text="3" />

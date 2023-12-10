@@ -16,7 +16,12 @@ class RouteDetailViewHolder(
 ) :
     RecyclerView.ViewHolder(binding.root) {
     fun onBind(item: ResponseRouteDetailDto.RouteDetail, position: Int, itemCount: Int) {
-        binding.tvItemTitle.text = item.departure
+
+        if(item.moveMode == "SUBWAY"){
+            binding.tvItemTitle.text = item.departure + "역"
+        } else{
+            binding.tvItemTitle.text = item.departure
+        }
         binding.tvItemLineNumber.text = item.subwayNum
 
         setVisibleText(item)
@@ -61,7 +66,7 @@ class RouteDetailViewHolder(
                 // 아이콘 올리기
                 val walkImage = ContextCompat.getDrawable(
                     itemView.context,
-                    R.drawable.baseline_accessible_24
+                    R.drawable.ic_wheelchair_64
                 )
                 binding.itemInfoIconOverlay.setImageDrawable(walkImage)
             }
@@ -78,7 +83,7 @@ class RouteDetailViewHolder(
 
                 val busIcon = ContextCompat.getDrawable(
                     itemView.context,
-                    R.drawable.baseline_directions_bus_24
+                    R.drawable.ic_bus_64
                 )
                 binding.itemInfoIconOverlay.setImageDrawable(busIcon)
             }
@@ -107,7 +112,7 @@ class RouteDetailViewHolder(
 
                 val elevatorIcon = ContextCompat.getDrawable(
                     itemView.context,
-                    R.drawable.ic_elevator_28
+                    R.drawable.ic_elevator_64
                 )
                 binding.itemInfoIconOverlay.setImageDrawable(elevatorIcon)
             }
