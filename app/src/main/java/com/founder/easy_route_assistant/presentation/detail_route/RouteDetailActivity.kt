@@ -18,7 +18,6 @@ import retrofit2.Response
 
 class RouteDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRouteDetailBinding
-    val id = intent.getIntExtra("id", 0)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +41,7 @@ class RouteDetailActivity : AppCompatActivity() {
     }
 
     private fun setRouteDetailItemList() {
+        val id = intent.getIntExtra("id", 1)
         val header = MyApplication.prefs.getString("jwt", "")
         ServicePool.routeDetailService.getRouteDetail(header, id)
             .enqueue(object : Callback<ResponseRouteDetailDto> {
