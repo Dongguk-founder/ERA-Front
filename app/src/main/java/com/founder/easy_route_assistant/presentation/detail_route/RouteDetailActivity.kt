@@ -13,6 +13,7 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.davemorrissey.labs.subscaleview.ImageSource.bitmap
 import com.davemorrissey.labs.subscaleview.ImageSource.uri
+import com.founder.easy_route_assistant.R
 import com.founder.easy_route_assistant.Utils.MyApplication
 import com.founder.easy_route_assistant.Utils.showToast
 import com.founder.easy_route_assistant.data.model.response.ResponseRouteDetailDto
@@ -30,7 +31,7 @@ class RouteDetailActivity : AppCompatActivity() {
         binding = ActivityRouteDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.slideRouteIc.bringToFront()
+        binding.imvBackBtn.bringToFront()
         binding.imvReloadBtn.bringToFront()
 
         // 연결할 때 Intent로 클릭한 아이템의 id 받아오기
@@ -85,19 +86,23 @@ class RouteDetailActivity : AppCompatActivity() {
         binding.rvRouteDetail.adapter = routeDetailItemAdapter
     }
 
-    private fun clickDetail(imgPath: String, description: List<String>) {
-        Glide.with(this)
-            .asBitmap()
-            .load(uri(imgPath))
-            .into(object : CustomTarget<Bitmap>() {
-                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                    binding.imvItemDetailViewImg.setImage(bitmap(resource))
-                }
+    private fun clickDetail(description: List<ResponseRouteDetailDto.RouteDetail.Descriptions>) {
+        val bundle = Bundle()
+        bundle.putString("imgPath1", description[0].imgPath)
+        bundle.putString("description1", description[0].descriptions.toString())
+        bundle.putString("imgPath2", description[1].imgPath)
+        bundle.putString("description2", description[1].descriptions.toString())
+        bundle.putString("imgPath3", description[2].imgPath)
+        bundle.putString("description3", description[2].descriptions.toString())
+        bundle.putString("imgPath4", description[3].imgPath)
+        bundle.putString("description4", description[3].descriptions.toString())
 
-                override fun onLoadCleared(placeholder: Drawable?) {}
-            })
+        val routeDetailFragment = RouteDetailFragment()
+        routeDetailFragment.arguments = bundle
 
-        binding.tvItemDetailViewDescription.text = description.toString()
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.fragment_container, routeDetailFragment)
+        transaction.commit()
     }
 
     private fun addOnBackPressedCallback() {
@@ -119,7 +124,7 @@ class RouteDetailActivity : AppCompatActivity() {
 
     private fun clickBackBtn() {
         val drawer = binding.layoutDrawer
-        binding.slideRouteIc.setOnClickListener {
+        binding.imvBackBtn.setOnClickListener {
             drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
             drawer.closeDrawer(Gravity.LEFT)
         }

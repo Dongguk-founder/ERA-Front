@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_item_detail_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".presentation.detail_route.RouteDetailFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/btn_item_detail_view_exit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/img_exit" />
+
+        <com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
+            android:id="@+id/imv_item_detail_view_img"
+            app:layout_constraintTop_toBottomOf="@id/btn_item_detail_view_exit"
+            android:layout_width="match_parent"
+            android:layout_height="269dp"
+            android:layout_marginTop="20dp"
+            android:scaleType="fitCenter" />
+
+        <TextView
+            android:id="@+id/tv_item_detail_view_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imv_item_detail_view_img"
+            tools:text="여기에 이제 description이 들어가는데요\n(1)안녕하세요 지하철 7번 출구로 들어가세요\n(2)엘리베이터는 남자화장실에서 오른쪽으로 180m 돌아가시면 있숩니다" />
+
+        <com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
+            android:id="@+id/imv_item_detail_view_img2"
+            app:layout_constraintTop_toBottomOf="@id/tv_item_detail_view_description"
+            android:layout_width="match_parent"
+            android:layout_height="269dp"
+            android:layout_marginTop="20dp"
+            android:scaleType="fitCenter" />
+
+        <TextView
+            android:id="@+id/tv_item_detail_view_description2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imv_item_detail_view_img2"
+            tools:text="여기에 이제 description이 들어가는데요\n(1)"/>
+
+        <com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
+            android:id="@+id/imv_item_detail_view_img3"
+            app:layout_constraintTop_toBottomOf="@id/tv_item_detail_view_description2"
+            android:layout_width="match_parent"
+            android:layout_height="269dp"
+            android:layout_marginTop="20dp"
+            android:scaleType="fitCenter" />
+
+        <TextView
+            android:id="@+id/tv_item_detail_view_description3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imv_item_detail_view_img3"
+            tools:text="여기에 이제 description이 들어가는데요\n(1)"/>
+
+        <com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
+            android:id="@+id/imv_item_detail_view_img4"
+            app:layout_constraintTop_toBottomOf="@id/tv_item_detail_view_description3"
+            android:layout_width="match_parent"
+            android:layout_height="269dp"
+            android:layout_marginTop="20dp"
+            android:scaleType="fitCenter" />
+
+        <TextView
+            android:id="@+id/tv_item_detail_view_description4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imv_item_detail_view_img4"
+            tools:text="여기에 이제 description이 들어가는데요\n(1)"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
