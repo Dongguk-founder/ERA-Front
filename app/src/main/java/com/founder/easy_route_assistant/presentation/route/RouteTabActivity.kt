@@ -19,16 +19,12 @@ import com.founder.easy_route_assistant.data.model.request.Point
 import com.founder.easy_route_assistant.data.model.request.RequestRouteSearchDto
 import com.founder.easy_route_assistant.data.model.response.ResponseRouteListDto
 import com.founder.easy_route_assistant.data.model.response.RouteDTO
-import com.founder.easy_route_assistant.data.model.response.RouteElements
 import com.founder.easy_route_assistant.data.service.ServicePool
 import com.founder.easy_route_assistant.databinding.ActivityTabBinding
-import com.founder.easy_route_assistant.presentation.ElementListLayout
 import com.founder.easy_route_assistant.presentation.ListLayout
 import com.founder.easy_route_assistant.presentation.MainActivity
-import com.founder.easy_route_assistant.presentation.RouteListLayout
 import com.founder.easy_route_assistant.presentation.detail_route.RouteDetailActivity
 import com.founder.testrecyclerview.RouteDTOAdapter
-import com.founder.testrecyclerview.routeElementsAdapter
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -46,7 +42,6 @@ class RouteTabActivity : AppCompatActivity() {
     private val listItems = arrayListOf<ListLayout>() // 리사이클러 뷰 아이템
     private val listAdapter = ListAdapter(listItems) // 리사이클러 뷰 어댑터
     private var RouteItems = arrayListOf<RouteDTO>()// 리사이클러 뷰 아이템
-    private var ElementItems = arrayListOf<RouteElements>() // 리사이클러 뷰 아이템
     private val routeAdapter = RouteDTOAdapter(RouteItems) // 리사이클러 뷰 어댑터
     private var pageNumber = 1 // 검색 페이지 번호
     private var keyword = "" // 검색 키워드
@@ -101,6 +96,8 @@ class RouteTabActivity : AppCompatActivity() {
                             starty = listItems[position].y
                             binding.layoutList.visibility = View.GONE
                             binding.etSearchStart.setText(listItems[position].name)
+                            searchroute()
+                            binding.layoutList2.visibility = View.VISIBLE
                         }
                     })
                     return@OnKeyListener true
@@ -108,39 +105,6 @@ class RouteTabActivity : AppCompatActivity() {
                 false
             },
         )
-
-        binding.etSearchEnd.setOnKeyListener(
-            View.OnKeyListener { v, keyCode, event -> // Enter key Action
-                if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-                    // 키패드 내리기
-                    val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                    imm.hideSoftInputFromWindow(binding.etSearchEnd.getWindowToken(), 0)
-                    binding.layoutList.visibility = View.VISIBLE
-                    binding.layoutList2.visibility = View.GONE
-
-
-                    // 처리
-                    keyword = binding.etSearchEnd.text.toString()
-                    pageNumber = 1
-                    searchKeyword(keyword, pageNumber)
-                    listAdapter.setItemClickListener(object : ListAdapter.OnItemClickListener {
-                        override fun onClick(v: View, position: Int) {
-                            endx = listItems[position].x
-                            endy = listItems[position].y
-                            binding.layoutList.visibility = View.GONE
-                            binding.etSearchEnd.setText(listItems[position].name)
-                        }
-                    })
-                    return@OnKeyListener true
-                }
-                false
-            },
-        )
-
-        binding.btnSearch.setOnClickListener {
-            searchroute()
-            binding.layoutList2.visibility = View.VISIBLE
-        }
 
     }
 

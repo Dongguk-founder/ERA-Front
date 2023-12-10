@@ -14,24 +14,30 @@ class routeElementsAdapter(val items: List<RouteElements>) : RecyclerView.Adapte
 
     class ViewHolder(private val binding: ItemRouteElementBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: RouteElements) {
-            binding.tvListName.text = item.start
-            binding.tvListRoad.text = item.name + "방면"
             binding.tvListNumber.text = item.line
             val bgShape = binding.itemBig.background as GradientDrawable
             bgShape.setColor(Color.parseColor(item.routeColor))
 
-            if(item.mode == null){
-                binding.itemSmall.visibility= View.VISIBLE
-                binding.itemBig.visibility= View.GONE
-                val bgShape = binding.itemSmall.background as GradientDrawable
-                bgShape.setColor(Color.parseColor(item.routeColor))
-            }
-
             if(item.line == null){
+                binding.tvListName.text = item.start
                 binding.ivBus.visibility= View.VISIBLE
+                binding.tvListRoad.text = item.name
             }
             else{
+                binding.tvListName.text = item.start + "역"
                 binding.ivBus.visibility= View.GONE
+                binding.tvListRoad.text = item.name + "방면"
+            }
+
+            if(item.mode == null){
+                binding.itemSmall.visibility= View.VISIBLE
+                binding.itemWhite.visibility=View.VISIBLE
+                binding.itemBig.visibility= View.GONE
+                binding.viewBottom.visibility=View.VISIBLE
+                binding.ivBus.visibility= View.GONE
+                binding.tvListRoad.text = " "
+                val bgShape = binding.itemSmall.background as GradientDrawable
+                bgShape.setColor(Color.parseColor(item.routeColor))
             }
         }
     }

@@ -368,6 +368,15 @@ class MainActivity : AppCompatActivity() {
                     customImageResourceId = R.drawable.tag_marker
                     isCustomImageAutoscale = true
                     selectedMarkerType = MapPOIItem.MarkerType.RedPin
+                    if(list.weekday==null){
+                        list.weekday = ""
+                    }
+                    if(list.holiday==null){
+                        list.holiday = ""
+                    }
+                    if(list.saturday==null){
+                        list.saturday = ""
+                    }
                     userObject =
                         arrayListOf(list.description, list.weekday, list.holiday, list.saturday)
                 }
@@ -445,7 +454,7 @@ class MainActivity : AppCompatActivity() {
         override fun getPressedCalloutBalloon(poiItem: MapPOIItem?): View {
             val result = poiItem?.userObject.toString().split("[", ",", "]")
             // 말풍선 클릭 시
-            address.text = result[2] + "\n" + result[3] + "\n" + result[4]
+            address.text = "weekday: "+result[2] + "\n" + "holiday: "+result[3] + "\n" + "saturday: "+result[4]
             return mCalloutBalloon
         }
     }
