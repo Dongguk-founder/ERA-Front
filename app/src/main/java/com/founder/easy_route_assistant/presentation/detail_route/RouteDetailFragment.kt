@@ -2,7 +2,9 @@ package com.founder.easy_route_assistant.presentation.detail_route
 
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +13,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.davemorrissey.labs.subscaleview.ImageSource
+import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
+import com.founder.easy_route_assistant.R
 import com.founder.easy_route_assistant.databinding.FragmentRouteDetailBinding
 
 class RouteDetailFragment : Fragment() {
@@ -36,13 +40,12 @@ class RouteDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentRouteDetailBinding.inflate(inflater, container, false)
+        setDescriptions()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        setDescriptions()
         pressBackBtn()
     }
 
@@ -69,18 +72,10 @@ class RouteDetailFragment : Fragment() {
     private fun setFirstDescriptions() {
         if (imagePath1 != null && description1 != null) {
             Glide.with(this)
-                .asBitmap()
-                .load(ImageSource.uri(imagePath1!!))
-                .into(object : CustomTarget<Bitmap>() {
-                    override fun onResourceReady(
-                        resource: Bitmap,
-                        transition: Transition<in Bitmap>?
-                    ) {
-                        binding.imvItemDetailViewImg.setImage(ImageSource.bitmap(resource))
-                    }
-
-                    override fun onLoadCleared(placeholder: Drawable?) {}
-                })
+                .load(imagePath1)
+                .placeholder(R.drawable.ic_loading_128) // 이미지 로딩 시작하기 전 표시할 이미지
+                .error(R.drawable.ic_loading_128) // 로딩 에러 발생 시 표시할 이미지
+                .into(binding.imvItemDetailViewImg)
 
             val description = description1!!.trimMargin()
             val descriptionsList = description
@@ -95,18 +90,8 @@ class RouteDetailFragment : Fragment() {
     private fun setSecondDescriptions() {
         if (imagePath2 != null && description2 != null) {
             Glide.with(this)
-                .asBitmap()
-                .load(ImageSource.uri(imagePath2!!))
-                .into(object : CustomTarget<Bitmap>() {
-                    override fun onResourceReady(
-                        resource: Bitmap,
-                        transition: Transition<in Bitmap>?
-                    ) {
-                        binding.imvItemDetailViewImg2.setImage(ImageSource.bitmap(resource))
-                    }
-
-                    override fun onLoadCleared(placeholder: Drawable?) {}
-                })
+                .load(imagePath2)
+                .into(binding.imvItemDetailViewImg2)
 
             val description = description2!!.trimMargin()
             val descriptionsList = description
@@ -121,18 +106,8 @@ class RouteDetailFragment : Fragment() {
     private fun setThirdDescriptions() {
         if (imagePath3 != null && description3 != null) {
             Glide.with(this)
-                .asBitmap()
-                .load(ImageSource.uri(imagePath3!!))
-                .into(object : CustomTarget<Bitmap>() {
-                    override fun onResourceReady(
-                        resource: Bitmap,
-                        transition: Transition<in Bitmap>?
-                    ) {
-                        binding.imvItemDetailViewImg3.setImage(ImageSource.bitmap(resource))
-                    }
-
-                    override fun onLoadCleared(placeholder: Drawable?) {}
-                })
+                .load(imagePath3)
+                .into(binding.imvItemDetailViewImg3)
 
             val description = description3!!.trimMargin()
             val descriptionsList = description
@@ -147,18 +122,8 @@ class RouteDetailFragment : Fragment() {
     private fun setFourthDescriptions() {
         if (imagePath4 != null && description4 != null) {
             Glide.with(this)
-                .asBitmap()
-                .load(ImageSource.uri(imagePath4!!))
-                .into(object : CustomTarget<Bitmap>() {
-                    override fun onResourceReady(
-                        resource: Bitmap,
-                        transition: Transition<in Bitmap>?
-                    ) {
-                        binding.imvItemDetailViewImg2.setImage(ImageSource.bitmap(resource))
-                    }
-
-                    override fun onLoadCleared(placeholder: Drawable?) {}
-                })
+                .load(imagePath4)
+                .into(binding.imvItemDetailViewImg4)
 
             val description = description4!!.trimMargin()
             val descriptionsList = description
