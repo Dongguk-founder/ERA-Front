@@ -54,6 +54,7 @@
             android:layout_marginBottom="15dp"
             android:background="@drawable/border"
             android:hint="@string/search_hint"
+            android:focusableInTouchMode="false"
             android:imeOptions="actionGo"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"

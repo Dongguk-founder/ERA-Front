@@ -278,7 +278,7 @@ class MainActivity : AppCompatActivity() {
                     when (response.code()) {
                         202 -> {
                             // 즐겨찾기 리스트 get 성공
-                            showToast("편의시설 get 성공!")
+                            showToast("${keyword} get 성공!")
                             addconvenientmarker(response.body())
 
                         }
