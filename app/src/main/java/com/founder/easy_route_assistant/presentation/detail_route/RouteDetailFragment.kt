@@ -30,6 +30,7 @@ class RouteDetailFragment : Fragment() {
         super.onCreate(savedInstanceState)
         getBundle()
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -65,13 +66,16 @@ class RouteDetailFragment : Fragment() {
         setFourthDescriptions()
     }
 
-    private fun setFirstDescriptions(){
-        if(imagePath1 != null && description1 != null){
+    private fun setFirstDescriptions() {
+        if (imagePath1 != null && description1 != null) {
             Glide.with(this)
                 .asBitmap()
                 .load(ImageSource.uri(imagePath1!!))
                 .into(object : CustomTarget<Bitmap>() {
-                    override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                    override fun onResourceReady(
+                        resource: Bitmap,
+                        transition: Transition<in Bitmap>?
+                    ) {
                         binding.imvItemDetailViewImg.setImage(ImageSource.bitmap(resource))
                     }
 
@@ -88,13 +92,16 @@ class RouteDetailFragment : Fragment() {
         }
     }
 
-    private fun setSecondDescriptions(){
-        if(imagePath2 != null && description2 != null){
+    private fun setSecondDescriptions() {
+        if (imagePath2 != null && description2 != null) {
             Glide.with(this)
                 .asBitmap()
                 .load(ImageSource.uri(imagePath2!!))
                 .into(object : CustomTarget<Bitmap>() {
-                    override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                    override fun onResourceReady(
+                        resource: Bitmap,
+                        transition: Transition<in Bitmap>?
+                    ) {
                         binding.imvItemDetailViewImg2.setImage(ImageSource.bitmap(resource))
                     }
 
@@ -111,13 +118,16 @@ class RouteDetailFragment : Fragment() {
         }
     }
 
-    private fun setThirdDescriptions(){
-        if(imagePath3 != null && description3 != null){
+    private fun setThirdDescriptions() {
+        if (imagePath3 != null && description3 != null) {
             Glide.with(this)
                 .asBitmap()
                 .load(ImageSource.uri(imagePath3!!))
                 .into(object : CustomTarget<Bitmap>() {
-                    override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                    override fun onResourceReady(
+                        resource: Bitmap,
+                        transition: Transition<in Bitmap>?
+                    ) {
                         binding.imvItemDetailViewImg3.setImage(ImageSource.bitmap(resource))
                     }
 
@@ -134,13 +144,16 @@ class RouteDetailFragment : Fragment() {
         }
     }
 
-    private fun setFourthDescriptions(){
-        if(imagePath4 != null && description4 != null){
+    private fun setFourthDescriptions() {
+        if (imagePath4 != null && description4 != null) {
             Glide.with(this)
                 .asBitmap()
                 .load(ImageSource.uri(imagePath4!!))
                 .into(object : CustomTarget<Bitmap>() {
-                    override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                    override fun onResourceReady(
+                        resource: Bitmap,
+                        transition: Transition<in Bitmap>?
+                    ) {
                         binding.imvItemDetailViewImg2.setImage(ImageSource.bitmap(resource))
                     }
 

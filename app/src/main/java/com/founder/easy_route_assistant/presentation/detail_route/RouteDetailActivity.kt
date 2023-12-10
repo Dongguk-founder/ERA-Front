@@ -1,18 +1,11 @@
 package com.founder.easy_route_assistant.presentation.detail_route
 
-import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.transition.Transition
-import com.davemorrissey.labs.subscaleview.ImageSource.bitmap
-import com.davemorrissey.labs.subscaleview.ImageSource.uri
 import com.founder.easy_route_assistant.R
 import com.founder.easy_route_assistant.Utils.MyApplication
 import com.founder.easy_route_assistant.Utils.showToast
@@ -42,7 +35,7 @@ class RouteDetailActivity : AppCompatActivity() {
         reloadClick()
     }
 
-    private fun setDrawer(){
+    private fun setDrawer() {
         val drawer = binding.layoutDrawer
         drawer.openDrawer(Gravity.LEFT)
 
