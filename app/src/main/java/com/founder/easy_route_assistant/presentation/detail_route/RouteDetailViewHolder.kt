@@ -81,12 +81,6 @@ class RouteDetailViewHolder(
                     R.drawable.baseline_directions_bus_24
                 )
                 binding.itemInfoIconOverlay.setImageDrawable(busIcon)
-
-                /*val wrappedBusIcon = DrawableCompat.wrap(busIcon!!)
-                DrawableCompat.setTint(
-                    wrappedBusIcon,
-                    ContextCompat.getColor(itemView.context, R.color.bus_green)
-                )*/
             }
 
             "SUBWAY" -> {
@@ -95,8 +89,9 @@ class RouteDetailViewHolder(
                     ContextCompat.getColor(itemView.context, R.color.white)
                 )
 
-                var bgShape = binding.itemInfoCircle.background as GradientDrawable
-                bgShape.setColor(Color.parseColor(item.routeColor))
+                val subwayColor = Color.parseColor(item.routeColor)
+                binding.itemInfoCircle.backgroundTintList = ColorStateList.valueOf(subwayColor)
+
                 binding.tvItemLineNumber.text = item.subwayNum
             }
 
