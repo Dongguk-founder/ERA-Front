@@ -33,7 +33,16 @@ class ConvenientViewHolder(
             val saturday = binding.etConvenientSaturday.text.toString()
             val holidays = binding.etConvenientHoliday.text.toString()
             val id = convenientData.identifier
-            patchOnClick(convenientType, description, point, weekdays, saturday, holidays, id, false)
+            patchOnClick(
+                convenientType,
+                description,
+                point,
+                weekdays,
+                saturday,
+                holidays,
+                id,
+                false
+            )
         }
     }
 }

@@ -17,6 +17,11 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.136" />
 
+    <androidx.fragment.app.FragmentContainerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/fragment_container"/>
+
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -29,11 +34,12 @@
 
 
         <ImageView
-            android:id="@+id/slide_route_ic"
+            android:id="@+id/imv_back_btn"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginStart="15dp"
             android:layout_marginTop="20dp"
+            android:clickable="true"
             android:src="@drawable/ic_back_button"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -48,7 +54,7 @@
             android:textColor="@color/black"
             android:textSize="30dp"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@id/slide_route_ic"
+            app:layout_constraintStart_toEndOf="@id/imv_back_btn"
             app:layout_constraintTop_toTopOf="parent" />
 
         <View
@@ -61,7 +67,18 @@
             android:background="@color/gray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/slide_route_ic" />
+            app:layout_constraintTop_toBottomOf="@id/imv_back_btn" />
+
+        <ImageView
+            android:id="@+id/imv_reload_btn"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="22dp"
+            android:layout_marginEnd="21dp"
+            android:src="@drawable/reload_24"
+            android:clickable="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_route_detail"
@@ -70,8 +87,8 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="0dp"
             android:layout_marginEnd="20dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:layout_marginBottom="10dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -80,44 +97,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_item_detail_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:visibility="invisible">
-
-        <ImageView
-            android:id="@+id/btn_item_detail_view_exit"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:src="@drawable/img_exit"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
-            android:id="@+id/imv_item_detail_view_img"
-            android:layout_width="match_parent"
-            android:layout_height="269dp"
-            android:layout_marginTop="20dp"
-            android:scaleType="fitCenter"
-            app:layout_constraintTop_toBottomOf="@id/btn_item_detail_view_exit" />
-
-        <TextView
-            android:id="@+id/tv_item_detail_view_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:gravity="center"
-            android:textColor="@color/black"
-            android:textSize="18dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imv_item_detail_view_img"
-            tools:text="여기에 이제 description이 들어가는데요\n(1)안녕하세요 지하철 7번 출구로 들어가세요\n(2)엘리베이터는 남자화장실에서 오른쪽으로 180m 돌아가시면 있숩니다" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.drawerlayout.widget.DrawerLayout>

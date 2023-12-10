@@ -4,13 +4,16 @@ import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.drawerlayout.widget.DrawerLayout
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.davemorrissey.labs.subscaleview.ImageSource.bitmap
 import com.davemorrissey.labs.subscaleview.ImageSource.uri
+import com.founder.easy_route_assistant.R
 import com.founder.easy_route_assistant.Utils.MyApplication
 import com.founder.easy_route_assistant.Utils.showToast
 import com.founder.easy_route_assistant.data.model.response.ResponseRouteDetailDto
@@ -22,16 +25,32 @@ import retrofit2.Response
 
 class RouteDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRouteDetailBinding
-    val id = 6
+    val id = 3
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRouteDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Intent로 클릭한 아이템의 id 받아오기
+        binding.imvBackBtn.bringToFront()
+        binding.imvReloadBtn.bringToFront()
+
+        // 연결할 때 Intent로 클릭한 아이템의 id 받아오기
+        setDrawer()
         setRouteDetailItemList()
         addOnBackPressedCallback()
         clickBackBtn()
+        reloadClick()
+    }
+
+    private fun setDrawer(){
+        val drawer = binding.layoutDrawer
+        drawer.openDrawer(Gravity.LEFT)
+
+        if (drawer.isDrawerOpen(Gravity.LEFT)) {
+            drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN)
+        } else {
+            drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+        }
     }
 
     private fun setRouteDetailItemList() {
@@ -61,25 +80,29 @@ class RouteDetailActivity : AppCompatActivity() {
             })
     }
 
-    private fun setRouteDetailItemAdapter(routeDetailItemList: List<ResponseRouteDetailDto.RouteDetail>) {
+    private fun setRouteDetailItemAdapter(routeDetailItemList: List<ResponseRouteDetailDto.RouteDetail>?) {
         val routeDetailItemAdapter = RouteDetailAdapter(this, ::clickDetail)
         routeDetailItemAdapter.setRouteDetailList(routeDetailItemList)
         binding.rvRouteDetail.adapter = routeDetailItemAdapter
     }
 
-    private fun clickDetail(imgPath: String, description: List<String>) {
-        Glide.with(this)
-            .asBitmap()
-            .load(uri(imgPath))
-            .into(object : CustomTarget<Bitmap>() {
-                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                    binding.imvItemDetailViewImg.setImage(bitmap(resource))
-                }
+    private fun clickDetail(description: List<ResponseRouteDetailDto.RouteDetail.Descriptions>) {
+        val bundle = Bundle()
+        bundle.putString("imgPath1", description[0].imgPath)
+        bundle.putString("description1", description[0].descriptions.toString())
+        bundle.putString("imgPath2", description[1].imgPath)
+        bundle.putString("description2", description[1].descriptions.toString())
+        bundle.putString("imgPath3", description[2].imgPath)
+        bundle.putString("description3", description[2].descriptions.toString())
+        bundle.putString("imgPath4", description[3].imgPath)
+        bundle.putString("description4", description[3].descriptions.toString())
 
-                override fun onLoadCleared(placeholder: Drawable?) {}
-            })
+        val routeDetailFragment = RouteDetailFragment()
+        routeDetailFragment.arguments = bundle
 
-        binding.tvItemDetailViewDescription.text = description.toString()
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.fragment_container, routeDetailFragment)
+        transaction.commit()
     }
 
     private fun addOnBackPressedCallback() {
@@ -100,6 +123,16 @@ class RouteDetailActivity : AppCompatActivity() {
     }
 
     private fun clickBackBtn() {
-        binding.btnItemDetailViewExit.setOnClickListener { finish() }
+        val drawer = binding.layoutDrawer
+        binding.imvBackBtn.setOnClickListener {
+            drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+            drawer.closeDrawer(Gravity.LEFT)
+        }
+    }
+
+    private fun reloadClick() {
+        binding.imvReloadBtn.setOnClickListener {
+            setRouteDetailItemList()
+        }
     }
 }

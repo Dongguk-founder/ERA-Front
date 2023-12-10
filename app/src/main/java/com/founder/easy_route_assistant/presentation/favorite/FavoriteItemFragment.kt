@@ -1,6 +1,5 @@
 package com.founder.easy_route_assistant.presentation.favorite
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,8 +10,6 @@ import com.founder.easy_route_assistant.Utils.showToast
 import com.founder.easy_route_assistant.data.model.response.ResponseFavoriteListDto
 import com.founder.easy_route_assistant.data.service.ServicePool
 import com.founder.easy_route_assistant.databinding.FragmentFavoriteItemBinding
-import com.founder.easy_route_assistant.presentation.MainActivity
-import com.founder.easy_route_assistant.presentation.auth.LoginActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -70,9 +67,36 @@ class FavoriteItemFragment : Fragment() {
     }
 
     private fun setFavoriteItemAdapter(favoriteItemList: List<ResponseFavoriteListDto.FavoriteList>) {
-        val favoriteItemAdapter = FavoriteAdapter(requireContext())
+        val favoriteItemAdapter = FavoriteAdapter(requireContext(), ::deleteOnClick)
         favoriteItemAdapter.setFavoriteList(favoriteItemList)
         binding.rvFavorites.adapter = favoriteItemAdapter
+    }
+
+    private fun deleteOnClick(
+        id: Long
+    ){
+        val header = MyApplication.prefs.getString("jwt", "")
+        ServicePool.favoriteListService.deleteFavorite(header, id)
+            .enqueue(object : Callback<ResponseFavoriteListDto> {
+                override fun onResponse(
+                    call: Call<ResponseFavoriteListDto>,
+                    response: Response<ResponseFavoriteListDto>,
+                ) {
+                    when (response.code()) {
+                        200 -> {
+                            context!!.showToast("즐겨찾기에서 삭제했습니다.")
+                            val data: ResponseFavoriteListDto = response.body()!!
+                            setFavoriteItemAdapter(data.favoriteList)
+                        }
+
+                        else -> context!!.showToast("서버 에러 발생")
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseFavoriteListDto>, t: Throwable) {
+                    context!!.showToast("네트워크 오류 발생")
+                }
+            })
     }
 
     private fun onClickBack(){

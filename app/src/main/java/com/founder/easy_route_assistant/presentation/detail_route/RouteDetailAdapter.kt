@@ -9,7 +9,7 @@ import com.founder.easy_route_assistant.databinding.ItemRouteDetailBinding
 
 class RouteDetailAdapter(
     context: Context,
-    private val clickDetail: (String, List<String>) -> Unit
+    private val clickDetail: (List<ResponseRouteDetailDto.RouteDetail.Descriptions>) -> Unit
 ) : RecyclerView.Adapter<RouteDetailViewHolder>() {
     private val inflater by lazy { LayoutInflater.from(context) }
     private var routeDetailList: List<ResponseRouteDetailDto.RouteDetail> = emptyList()
@@ -25,8 +25,10 @@ class RouteDetailAdapter(
 
     override fun getItemCount() = routeDetailList.size
 
-    fun setRouteDetailList(routeDetailList_: List<ResponseRouteDetailDto.RouteDetail>) {
-        routeDetailList = routeDetailList_.toList()
+    fun setRouteDetailList(routeDetailList_: List<ResponseRouteDetailDto.RouteDetail>?) {
+        if (routeDetailList_ != null) {
+            routeDetailList = routeDetailList_.toList()
+        }
         notifyDataSetChanged()
     }
 }
