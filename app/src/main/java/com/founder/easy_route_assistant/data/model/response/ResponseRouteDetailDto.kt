@@ -8,7 +8,7 @@ data class ResponseRouteDetailDto(
     @SerialName("totalTime")
     val totalTime: String?,
     @SerialName("detailElements")
-    val routeDetails: List<RouteDetail>
+    val routeDetails: List<RouteDetail>?
 ) {
     @Serializable
     data class RouteDetail(
@@ -16,27 +16,31 @@ data class ResponseRouteDetailDto(
         val departure: String?,
         @SerialName("end")
         val arrival: String?,
-        @SerialName("mode") // WALK, BUS, SUBWAY, elevator
-        val moveMode: String?,
-        @SerialName("routeColor")
-        val routeColor: String?,
-        @SerialName("name")
-        val detail: String?,
         @SerialName("line")
         val subwayNum: String?,
-        @SerialName("distance")
-        val distanceMeter: Long?,
+        @SerialName("mode") // WALK, BUS, SUBWAY, elevator
+        val moveMode: String,
+        @SerialName("name")
+        val detail: String?,
+        @SerialName("routeColor")
+        val routeColor: String?,
         @SerialName("sectionTime")
         val timeSecond: String?,
+        @SerialName("arrmsg1")
+        val busMessage1: String?,
+        @SerialName("arrmsg2")
+        val busMessage2: String?,
+        @SerialName("distance")
+        val distanceMeter: Long?,
         @SerialName("description")
-        val description: List<Descriptions>
+        val description: List<Descriptions>?
     ) {
         @Serializable
         data class Descriptions(
             @SerialName("descriptions")
-            val descriptions: ArrayList<String>,
+            val descriptions: List<String>?,
             @SerialName("imgPath")
-            val imgPath: String,
+            val imgPath: String?,
         )
     }
 }
