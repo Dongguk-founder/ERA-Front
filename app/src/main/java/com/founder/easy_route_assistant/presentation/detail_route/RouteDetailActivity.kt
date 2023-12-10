@@ -4,8 +4,10 @@ import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.drawerlayout.widget.DrawerLayout
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
@@ -22,16 +24,32 @@ import retrofit2.Response
 
 class RouteDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRouteDetailBinding
-    val id = 6
+    val id = 3
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRouteDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Intent로 클릭한 아이템의 id 받아오기
+        binding.slideRouteIc.bringToFront()
+        binding.imvReloadBtn.bringToFront()
+
+        // 연결할 때 Intent로 클릭한 아이템의 id 받아오기
+        setDrawer()
         setRouteDetailItemList()
         addOnBackPressedCallback()
         clickBackBtn()
+        reloadClick()
+    }
+
+    private fun setDrawer(){
+        val drawer = binding.layoutDrawer
+        drawer.openDrawer(Gravity.LEFT)
+
+        if (drawer.isDrawerOpen(Gravity.LEFT)) {
+            drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN)
+        } else {
+            drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+        }
     }
 
     private fun setRouteDetailItemList() {
@@ -61,7 +79,7 @@ class RouteDetailActivity : AppCompatActivity() {
             })
     }
 
-    private fun setRouteDetailItemAdapter(routeDetailItemList: List<ResponseRouteDetailDto.RouteDetail>) {
+    private fun setRouteDetailItemAdapter(routeDetailItemList: List<ResponseRouteDetailDto.RouteDetail>?) {
         val routeDetailItemAdapter = RouteDetailAdapter(this, ::clickDetail)
         routeDetailItemAdapter.setRouteDetailList(routeDetailItemList)
         binding.rvRouteDetail.adapter = routeDetailItemAdapter
@@ -100,6 +118,16 @@ class RouteDetailActivity : AppCompatActivity() {
     }
 
     private fun clickBackBtn() {
-        binding.btnItemDetailViewExit.setOnClickListener { finish() }
+        val drawer = binding.layoutDrawer
+        binding.slideRouteIc.setOnClickListener {
+            drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+            drawer.closeDrawer(Gravity.LEFT)
+        }
+    }
+
+    private fun reloadClick() {
+        binding.imvReloadBtn.setOnClickListener {
+            setRouteDetailItemList()
+        }
     }
 }

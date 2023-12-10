@@ -4,7 +4,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("kotlin-parcelize")
-    id ("kotlin-kapt")
+    id("kotlin-kapt")
     id("org.jetbrains.kotlin.plugin.serialization") version ("1.9.0")
 }
 
@@ -20,7 +20,7 @@ android {
     buildFeatures {
         viewBinding = true
         buildConfig = true
-}
+    }
 
     defaultConfig {
         applicationId = "com.founder.easy_route_assistant"
@@ -67,12 +67,12 @@ dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
     // Network
-    implementation (platform("com.squareup.okhttp3:okhttp-bom:4.11.0"))
-    implementation ("com.squareup.okhttp3:okhttp")
-    implementation ("com.squareup.okhttp3:logging-interceptor")
-    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation ("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0")
-    implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
+    implementation(platform("com.squareup.okhttp3:okhttp-bom:4.11.0"))
+    implementation("com.squareup.okhttp3:okhttp")
+    implementation("com.squareup.okhttp3:logging-interceptor")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
 
     implementation("androidx.activity:activity:1.8.0")
     implementation("com.kakao.sdk:v2-all:2.17.0") // 전체 모듈 설치, 2.11.0 버전부터 지원
@@ -91,12 +91,12 @@ dependencies {
     implementation("com.google.android.material:material:1.10.0")
 
     // CircleImageView
-    implementation ("de.hdodenhof:circleimageview:3.1.0")
+    implementation("de.hdodenhof:circleimageview:3.1.0")
 
     // SubScaleView
-    implementation ("com.davemorrissey.labs:subsampling-scale-image-view-androidx:3.10.0")
+    implementation("com.davemorrissey.labs:subsampling-scale-image-view-androidx:3.10.0")
 
     // Glide
-    implementation ("com.github.bumptech.glide:glide:4.11.0")
-    annotationProcessor ("com.github.bumptech.glide:compiler:4.11.0")
+    implementation("com.github.bumptech.glide:glide:4.11.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.11.0")
 }
