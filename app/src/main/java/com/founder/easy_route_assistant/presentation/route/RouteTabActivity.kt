@@ -69,6 +69,7 @@ class RouteTabActivity : AppCompatActivity() {
 
         routeAdapter.setItemClickListener(object : RouteDTOAdapter.OnItemClickListener {
             override fun onClick(view: View, position: Int) {
+                Log.e("POSITION","${position}")
                 val nextIntent =
                     Intent(this@RouteTabActivity, RouteDetailActivity::class.java)
                 nextIntent.putExtra("id", position)

@@ -41,6 +41,7 @@ class RouteDetailActivity : AppCompatActivity() {
     }
 
     private fun setRouteDetailItemList() {
+        val id = intent.getIntExtra("id",1)
         val header = MyApplication.prefs.getString("jwt", "")
         ServicePool.routeDetailService.getRouteDetail(header, id)
             .enqueue(object : Callback<ResponseRouteDetailDto> {
