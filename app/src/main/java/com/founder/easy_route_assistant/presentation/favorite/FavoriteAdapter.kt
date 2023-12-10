@@ -2,10 +2,12 @@ package com.founder.easy_route_assistant.presentation.favorite
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.founder.easy_route_assistant.data.model.response.ResponseFavoriteListDto
 import com.founder.easy_route_assistant.databinding.ItemFavoriteBinding
+import com.founder.testrecyclerview.RouteDTOAdapter
 
 class FavoriteAdapter(
     context: Context,
@@ -30,4 +32,5 @@ class FavoriteAdapter(
         this.favoriteList = favoriteList.toList()
         notifyDataSetChanged()
     }
+
 }

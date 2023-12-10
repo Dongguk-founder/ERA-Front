@@ -1,6 +1,7 @@
 package com.founder.easy_route_assistant.presentation.convenience
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +19,7 @@ import retrofit2.Response
 class ConvenienceApplyFragment : BottomSheetDialogFragment() {
     private var _binding: BottomSheetConvenienceApplyBinding? = null
     private val binding get() = _binding!!
+    private var type = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -58,6 +60,8 @@ class ConvenienceApplyFragment : BottomSheetDialogFragment() {
                     position: Int,
                     id: Long,
                 ) {
+                    Log.e("CONVENINENT", "${position}")
+                    type = position
                     binding.spinnerBsConvenienceTypeResult.getItemAtPosition(position).toString()
                 }
 
@@ -75,7 +79,7 @@ class ConvenienceApplyFragment : BottomSheetDialogFragment() {
         binding.tvBsAddressResult.text = placeAddress
 
         val header = MyApplication.prefs.getString("jwt", "")
-        val convenientType = binding.spinnerBsConvenienceTypeResult.getItemAtPosition(0).toString()
+        val convenientType = binding.spinnerBsConvenienceTypeResult.getItemAtPosition(type).toString()
 
         val pointX = arguments?.getDouble("pointX")!!
         val pointY = arguments?.getDouble("pointY")!!
