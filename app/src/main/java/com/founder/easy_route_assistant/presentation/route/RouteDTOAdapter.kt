@@ -9,7 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.founder.easy_route_assistant.data.model.response.RouteDTO
 import com.founder.easy_route_assistant.databinding.ItemRouteBinding
 
-class RouteDTOAdapter(val items: List<RouteDTO>) : RecyclerView.Adapter<RouteDTOAdapter.ViewHolder>() {
+class RouteDTOAdapter(val items: List<RouteDTO>) :
+    RecyclerView.Adapter<RouteDTOAdapter.ViewHolder>() {
 
     private var itemClickListener: OnItemClickListener? = null
 
@@ -30,7 +31,8 @@ class RouteDTOAdapter(val items: List<RouteDTO>) : RecyclerView.Adapter<RouteDTO
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RouteDTOAdapter.ViewHolder {
-        return ViewHolder(ItemRouteBinding.inflate(LayoutInflater.from(parent.context), parent, false),
+        return ViewHolder(
+            ItemRouteBinding.inflate(LayoutInflater.from(parent.context), parent, false),
             parent.context
         )
     }
@@ -47,13 +49,12 @@ class RouteDTOAdapter(val items: List<RouteDTO>) : RecyclerView.Adapter<RouteDTO
     override fun getItemCount(): Int = items.size
 
     interface OnItemClickListener {
-        fun onClick(view: View,position: Int)
+        fun onClick(view: View, position: Int)
     }
 
     fun setItemClickListener(onItemClickListener: OnItemClickListener?) {
         this.itemClickListener = onItemClickListener
     }
-
 
 
 }

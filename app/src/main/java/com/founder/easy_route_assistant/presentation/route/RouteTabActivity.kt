@@ -11,6 +11,7 @@ import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.founder.easy_route_assistant.Utils.MyApplication
@@ -23,6 +24,7 @@ import com.founder.easy_route_assistant.data.service.ServicePool
 import com.founder.easy_route_assistant.databinding.ActivityTabBinding
 import com.founder.easy_route_assistant.presentation.ListLayout
 import com.founder.easy_route_assistant.presentation.MainActivity
+import com.founder.easy_route_assistant.presentation.auth.LoginActivity
 import com.founder.easy_route_assistant.presentation.detail_route.RouteDetailActivity
 import com.founder.testrecyclerview.RouteDTOAdapter
 import retrofit2.Call
@@ -56,6 +58,7 @@ class RouteTabActivity : AppCompatActivity() {
         binding = ActivityTabBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+        addOnBackPressedCallback()
 
         // 리사이클러 뷰
         binding.rvList.layoutManager =
@@ -69,7 +72,7 @@ class RouteTabActivity : AppCompatActivity() {
 
         routeAdapter.setItemClickListener(object : RouteDTOAdapter.OnItemClickListener {
             override fun onClick(view: View, position: Int) {
-                Log.e("POSITION","${position}")
+                Log.e("POSITION", "${position}")
                 val nextIntent =
                     Intent(this@RouteTabActivity, RouteDetailActivity::class.java)
                 nextIntent.putExtra("id", position)
@@ -127,7 +130,6 @@ class RouteTabActivity : AppCompatActivity() {
                             // 즐겨찾기 추가 성공
                             addItems(response.body())
                             Log.d("Test", "Body: ${response.body()}")
-                            showToast("길찾기 리스트 받아오기 성공!")
                         }
 
                         else -> {
@@ -202,15 +204,15 @@ class RouteTabActivity : AppCompatActivity() {
 
     private fun addItems(searchResult: ResponseRouteListDto?) {
         RouteItems.clear()
-            for (document in searchResult!!.routeDTOS) {
-                // 결과를 리사이클러 뷰에 추가
-                val item = RouteDTO(
-                    document.id,
-                    document.totalTime,
-                    document.routeElements
-                )
-                RouteItems.add(item)
-            }
+        for (document in searchResult!!.routeDTOS) {
+            // 결과를 리사이클러 뷰에 추가
+            val item = RouteDTO(
+                document.id,
+                document.totalTime,
+                document.routeElements
+            )
+            RouteItems.add(item)
+        }
 
         binding.rvPalette.apply {
             layoutManager =
@@ -219,6 +221,27 @@ class RouteTabActivity : AppCompatActivity() {
         }
     }
 
+    private fun addOnBackPressedCallback() {
+        var backPressedTime: Long = 0
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                // 뒤로 가기 버튼이 눌렸을 때 처리 동작
+                if (System.currentTimeMillis() - backPressedTime >= 2000) {
+                    backPressedTime = System.currentTimeMillis()
+                    showToast("뒤로 버튼을 한번 더 누르면 소셜로그인 창으로 이동합니다.")
+                } else if (System.currentTimeMillis() - backPressedTime < 2000) {
+                    backPressedTime = 0
+                    navigateToLoginActivity()
+                }
+            }
+        }
+        this.onBackPressedDispatcher.addCallback(this, callback)
+    }
+
+    private fun navigateToLoginActivity() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+    }
 
 
 }

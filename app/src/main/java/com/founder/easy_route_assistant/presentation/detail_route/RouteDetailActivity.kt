@@ -41,7 +41,7 @@ class RouteDetailActivity : AppCompatActivity() {
     }
 
     private fun setRouteDetailItemList() {
-        val id = intent.getIntExtra("id",1)
+        val id = intent.getIntExtra("id", 1)
         val header = MyApplication.prefs.getString("jwt", "")
         ServicePool.routeDetailService.getRouteDetail(header, id)
             .enqueue(object : Callback<ResponseRouteDetailDto> {
@@ -76,18 +76,20 @@ class RouteDetailActivity : AppCompatActivity() {
 
     private fun clickDetail(description: List<ResponseRouteDetailDto.RouteDetail.Descriptions>) {
         val bundle = Bundle()
-        when(description.size){
+        when (description.size) {
             1 -> {
                 bundle.putString("imgPath1", description[0].imgPath)
                 bundle.putString("description1", description[0].descriptions.toString())
             }
-            2->{
+
+            2 -> {
                 bundle.putString("imgPath1", description[0].imgPath)
                 bundle.putString("description1", description[0].descriptions.toString())
                 bundle.putString("imgPath2", description[1].imgPath)
                 bundle.putString("description2", description[1].descriptions.toString())
             }
-            3->{
+
+            3 -> {
                 bundle.putString("imgPath1", description[0].imgPath)
                 bundle.putString("description1", description[0].descriptions.toString())
                 bundle.putString("imgPath2", description[1].imgPath)
@@ -95,6 +97,7 @@ class RouteDetailActivity : AppCompatActivity() {
                 bundle.putString("imgPath3", description[2].imgPath)
                 bundle.putString("description3", description[2].descriptions.toString())
             }
+
             4 -> {
                 bundle.putString("imgPath1", description[0].imgPath)
                 bundle.putString("description1", description[0].descriptions.toString())
