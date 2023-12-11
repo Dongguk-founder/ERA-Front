@@ -383,7 +383,6 @@ class MainActivity : AppCompatActivity() {
                         arrayListOf(list.description, list.weekday, list.holiday, list.saturday)
                 }
                 binding.mapView.addPOIItem(points)
-                binding.mapView.setMapCenterPointAndZoomLevel(points.mapPoint, 1, true)
             }
         }
     }
