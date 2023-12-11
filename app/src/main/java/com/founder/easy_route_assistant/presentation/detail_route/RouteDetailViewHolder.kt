@@ -46,6 +46,9 @@ class RouteDetailViewHolder(
         else if (item.timeSecond == "0분" || item.distanceMeter?.toInt() == 0) {
             binding.tvItemRouteDetail.visibility = View.INVISIBLE
         } else {
+            if (item.moveMode == "SUBWAY"){
+                binding.tvItemRouteDetail.text = "${item.timeSecond}, ${item.distanceMeter}개 정류장 이동"
+            }
             binding.tvItemRouteDetail.text = "${item.timeSecond}, ${item.distanceMeter}m 이동"
         }
     }
