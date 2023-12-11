@@ -60,7 +60,6 @@ class ConvenienceApplyFragment : BottomSheetDialogFragment() {
                     position: Int,
                     id: Long,
                 ) {
-                    Log.e("CONVENINENT", "${position}")
                     type = position
                     binding.spinnerBsConvenienceTypeResult.getItemAtPosition(position).toString()
                 }
@@ -80,6 +79,18 @@ class ConvenienceApplyFragment : BottomSheetDialogFragment() {
 
         val header = MyApplication.prefs.getString("jwt", "")
         val convenientType = binding.spinnerBsConvenienceTypeResult.getItemAtPosition(type).toString()
+        var setType = "elevator"
+        when(convenientType){
+            "리프트/엘리베이터" -> {
+                setType = "elevator"
+            }
+            "장애인 화장실" ->{
+                setType = "bathroom"
+            }
+            "휠체어 충전소" -> {
+                setType = "charger"
+            }
+        }
 
         val pointX = arguments?.getDouble("pointX")!!
         val pointY = arguments?.getDouble("pointY")!!
@@ -89,7 +100,7 @@ class ConvenienceApplyFragment : BottomSheetDialogFragment() {
 
         ServicePool.ConvenienceService.sendConvenienceApply(
             header,
-            RequestConvenienceApplyDto(convenientType, point, placeAddress, content),
+            RequestConvenienceApplyDto(setType, point, placeAddress, content),
         )
             .enqueue(object : retrofit2.Callback<Void> {
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
