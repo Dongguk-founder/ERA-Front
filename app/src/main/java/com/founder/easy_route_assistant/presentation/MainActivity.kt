@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity() {
         // 메뉴바에서 나가기 버튼 클릭시
         binding.ivExit.setOnClickListener {
             binding.layoutMenu.visibility = View.GONE
-            binding.btnSearch1.visibility=VISIBLE
+            binding.btnSearch1.visibility = VISIBLE
         }
 
         // 메뉴바에서 나가기 버튼 클릭시
@@ -328,8 +328,8 @@ class MainActivity : AppCompatActivity() {
 
     // 즐겨찾기 목록 마커 출력
     private fun addfavoritemarker(favoriteList: ResponseFavoriteList?) {
-                if (!favoriteList?.favoriteLists.isNullOrEmpty()) {
-                    binding.mapView.removeAllPOIItems() // 지도의 마커 모두 제거
+        if (!favoriteList?.favoriteLists.isNullOrEmpty()) {
+            binding.mapView.removeAllPOIItems() // 지도의 마커 모두 제거
             for (list in favoriteList!!.favoriteLists) {
                 // 지도에 마커 추가
                 val points = MapPOIItem()
@@ -342,7 +342,7 @@ class MainActivity : AppCompatActivity() {
                     markerType = MapPOIItem.MarkerType.CustomImage
                     customImageResourceId = R.drawable.tag_marker
                     isCustomImageAutoscale = true
-                    selectedMarkerType = MapPOIItem.MarkerType.RedPin
+                    selectedMarkerType = MapPOIItem.MarkerType.CustomImage
                     userObject = arrayListOf(list.roadNameAddress, "", "", "")
                 }
                 binding.mapView.addPOIItem(points)
@@ -367,15 +367,15 @@ class MainActivity : AppCompatActivity() {
                     markerType = MapPOIItem.MarkerType.CustomImage
                     customImageResourceId = R.drawable.tag_marker
                     isCustomImageAutoscale = true
-                    selectedMarkerType = MapPOIItem.MarkerType.RedPin
-                    if(list.weekday==null){
-                        list.weekday = ""
+                    selectedMarkerType = MapPOIItem.MarkerType.CustomImage
+                    if (list.weekday == null) {
+                        list.weekday = "정보 없음"
                     }
-                    if(list.holiday==null){
-                        list.holiday = ""
+                    if (list.holiday == null) {
+                        list.holiday = "정보 없음"
                     }
-                    if(list.saturday==null){
-                        list.saturday = ""
+                    if (list.saturday == null) {
+                        list.saturday = "정보 없음"
                     }
                     userObject =
                         arrayListOf(list.description, list.weekday, list.holiday, list.saturday)
@@ -414,7 +414,7 @@ class MainActivity : AppCompatActivity() {
                     markerType = MapPOIItem.MarkerType.CustomImage
                     customImageResourceId = R.drawable.tag_marker
                     isCustomImageAutoscale = true
-                    selectedMarkerType = MapPOIItem.MarkerType.RedPin
+                    selectedMarkerType = MapPOIItem.MarkerType.CustomImage
                     userObject = arrayListOf(document.address_name, "", "", "")
                 }
                 binding.mapView.addPOIItem(point)
@@ -454,7 +454,8 @@ class MainActivity : AppCompatActivity() {
         override fun getPressedCalloutBalloon(poiItem: MapPOIItem?): View {
             val result = poiItem?.userObject.toString().split("[", ",", "]")
             // 말풍선 클릭 시
-            address.text = "weekday: "+result[2] + "\n" + "holiday: "+result[3] + "\n" + "saturday: "+result[4]
+            address.text =
+                "weekday: " + result[2] + "\n" + "holiday: " + result[3] + "\n" + "saturday: " + result[4]
             return mCalloutBalloon
         }
     }
