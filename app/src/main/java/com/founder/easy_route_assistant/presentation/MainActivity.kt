@@ -343,7 +343,8 @@ class MainActivity : AppCompatActivity() {
                     customImageResourceId = R.drawable.tag_marker
                     isCustomImageAutoscale = true
                     selectedMarkerType = MapPOIItem.MarkerType.CustomImage
-                    userObject = arrayListOf(list.roadNameAddress, "", "", "")
+                    customSelectedImageResourceId = R.drawable.tag_marker
+                    userObject = arrayListOf(list.roadNameAddress, "정보 없음", "정보 없음", "정보 없음")
                 }
                 binding.mapView.addPOIItem(points)
                 binding.mapView.setMapCenterPointAndZoomLevel(points.mapPoint, 1, true)
@@ -368,6 +369,7 @@ class MainActivity : AppCompatActivity() {
                     customImageResourceId = R.drawable.tag_marker
                     isCustomImageAutoscale = true
                     selectedMarkerType = MapPOIItem.MarkerType.CustomImage
+                    customSelectedImageResourceId = R.drawable.tag_marker
                     if (list.weekday == null) {
                         list.weekday = "정보 없음"
                     }
@@ -415,7 +417,8 @@ class MainActivity : AppCompatActivity() {
                     customImageResourceId = R.drawable.tag_marker
                     isCustomImageAutoscale = true
                     selectedMarkerType = MapPOIItem.MarkerType.CustomImage
-                    userObject = arrayListOf(document.address_name, "", "", "")
+                    customSelectedImageResourceId = R.drawable.tag_marker
+                    userObject = arrayListOf(document.address_name, "정보 없음", "정보 없음", "정보 없음")
                 }
                 binding.mapView.addPOIItem(point)
             }
